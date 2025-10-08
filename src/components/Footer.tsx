@@ -2,10 +2,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Mail, Twitter, Linkedin, Instagram } from "lucide-react";
 import uxsgLogo from "@/assets/uxsg-logo-dark-bg.png";
-
 const Footer = () => {
-  return (
-    <footer className="bg-foreground text-background py-16">
+  return <footer className="bg-foreground text-background py-16">
       <div className="container mx-auto px-4">
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
           <div>
@@ -18,17 +16,7 @@ const Footer = () => {
               <p className="text-background/60 text-xs mb-2">Organized by</p>
               <img src={uxsgLogo} alt="UXSG" className="h-8 w-auto" />
             </div>
-            <div className="flex gap-4">
-              <a href="#" className="hover:text-primary transition-colors">
-                <Twitter className="w-5 h-5" />
-              </a>
-              <a href="#" className="hover:text-primary transition-colors">
-                <Linkedin className="w-5 h-5" />
-              </a>
-              <a href="#" className="hover:text-primary transition-colors">
-                <Instagram className="w-5 h-5" />
-              </a>
-            </div>
+            
           </div>
           
           <div>
@@ -57,11 +45,7 @@ const Footer = () => {
               Get the latest updates on future events and AI x UX insights
             </p>
             <div className="flex gap-2">
-              <Input 
-                type="email" 
-                placeholder="Your email" 
-                className="bg-background/10 border-background/20 text-background placeholder:text-background/60"
-              />
+              <Input type="email" placeholder="Your email" className="bg-background/10 border-background/20 text-background placeholder:text-background/60" />
               <Button variant="ghost" className="shrink-0 border border-white hover:border-white/80">
                 <Mail className="w-4 h-4" />
               </Button>
@@ -78,8 +62,6 @@ const Footer = () => {
           </div>
         </div>
       </div>
-    </footer>
-  );
+    </footer>;
 };
-
 export default Footer;
