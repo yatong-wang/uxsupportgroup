@@ -32,7 +32,7 @@ const Hero = () => {
           
           
           <div className="flex flex-col sm:flex-row gap-4 items-start">
-            <Button size="lg" className="text-lg px-8 py-6 bg-white text-foreground hover:bg-white/90 shadow-lg hover:shadow-xl transition-all group">
+            <Button size="lg" className="text-lg px-8 py-6 bg-foreground text-background hover:bg-foreground/90 shadow-lg hover:shadow-xl transition-all group">
               Claim Your Ticket
               <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
             </Button>
