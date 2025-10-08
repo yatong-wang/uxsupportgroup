@@ -12,7 +12,7 @@ const Hero = () => {
       <div className="absolute top-20 right-10 w-96 h-96 bg-secondary/20 rounded-full blur-3xl" />
       <div className="absolute bottom-20 left-10 w-96 h-96 bg-primary/20 rounded-full blur-3xl" />
       
-      <div className="container relative z-10 mx-auto px-4 py-20">
+      <div className="container relative z-10 mx-auto px-4 pt-6 pb-20">
         <div className="max-w-4xl">
           <div className="mb-8 flex items-center justify-between">
             <div>
