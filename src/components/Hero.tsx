@@ -15,7 +15,7 @@ const Hero = () => {
       <div className="container relative z-10 mx-auto px-4 py-20">
         <div className="max-w-4xl">
           <div className="mb-8">
-            <p className="text-foreground/70 text-sm font-medium mb-3">Organized by</p>
+            <p className="text-foreground/70 font-medium mb-3 text-xs">Organized by</p>
             <img src={uxsgLogo} alt="UXSG" className="h-12 w-auto" />
           </div>
           
