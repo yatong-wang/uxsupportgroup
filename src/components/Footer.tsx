@@ -11,7 +11,7 @@ const Footer = () => {
             <p className="text-background/80 mb-4">The anti-conference for UX professionals</p>
             <div className="mb-4">
               <p className="text-background/60 text-xs mb-2">Organized by</p>
-              <img src={uxsgLogo} alt="UXSG" className="h-12 w-auto" />
+              <img src={uxsgLogo} alt="UXSG" className="h-18 w-auto" />
             </div>
             
           </div>
