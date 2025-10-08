@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Award, Star, Users2 } from "lucide-react";
 const ProfileCallout = () => {
-  return <section className="py-24 bg-gradient-accent">
+  return <section className="py-24 bg-background">
       <div className="container mx-auto px-4">
         <div className="max-w-5xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12 items-center">

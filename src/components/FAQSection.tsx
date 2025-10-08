@@ -50,7 +50,7 @@ const FAQSection = () => {
   ];
 
   return (
-    <section className="py-24">
+    <section className="py-24 bg-gradient-accent">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-16">

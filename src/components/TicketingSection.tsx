@@ -29,15 +29,15 @@ const TicketingSection = () => {
   ];
 
   return (
-    <section className="py-24 relative overflow-hidden">
-      <div className="absolute inset-0 gradient-hero opacity-5" />
+    <section className="py-24 relative overflow-hidden bg-foreground text-background">
+      <div className="absolute inset-0 gradient-hero opacity-10" />
       
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-16">
           <h2 className="text-5xl md:text-6xl font-bold mb-6">
             Secure Your <span className="text-gradient">Spot</span>
           </h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-xl text-background/70 max-w-2xl mx-auto">
             {isEarlyBird 
               ? "Early bird tickets selling fast—unlock your future at a special price"
               : "Join the inaugural AIxUX Summit and connect with industry pioneers"
@@ -46,15 +46,15 @@ const TicketingSection = () => {
         </div>
         
         {!isEarlyBird && (
-          <div className="max-w-3xl mx-auto mb-8 bg-muted/50 border border-muted-foreground/20 rounded-xl p-4 text-center">
-            <p className="text-sm text-muted-foreground">
+          <div className="max-w-3xl mx-auto mb-8 bg-background/10 border border-background/20 rounded-xl p-4 text-center">
+            <p className="text-sm text-background/80">
               ⚡ <strong>Early Bird Tickets Sold Out</strong> — Regular pricing now in effect
             </p>
           </div>
         )}
         
         <div className="max-w-2xl mx-auto mb-16">
-          <Card className="p-10 relative overflow-hidden border-2 border-border shadow-2xl">
+          <Card className="p-10 relative overflow-hidden border-2 border-background/20 shadow-2xl bg-background text-foreground">
             {isEarlyBird && (
               <div className="absolute top-0 right-0 bg-gradient-to-br from-primary to-secondary text-white px-6 py-2 text-sm font-bold rounded-bl-2xl flex items-center gap-2">
                 <Zap className="w-4 h-4" />
@@ -119,7 +119,7 @@ const TicketingSection = () => {
             </div>
             
             <Button 
-              className="w-full h-14 text-lg font-bold bg-foreground text-background hover:bg-foreground/90 shadow-lg hover:shadow-xl transition-all"
+              className="w-full h-14 text-lg font-bold gradient-hero text-white hover:opacity-90 shadow-lg hover:shadow-xl transition-all"
               size="lg"
             >
               {isEarlyBird ? "Claim Early Bird Ticket" : "Get Your Ticket"}
@@ -134,17 +134,17 @@ const TicketingSection = () => {
         </div>
         
         <div className="max-w-3xl mx-auto grid md:grid-cols-3 gap-6">
-          <div className="text-center p-6 rounded-xl bg-card border border-border">
+          <div className="text-center p-6 rounded-xl bg-background/10 border border-background/20">
             <div className="text-4xl font-bold text-primary mb-2">{totalSeats}</div>
-            <p className="text-sm text-muted-foreground">Total Seats</p>
+            <p className="text-sm text-background/70">Total Seats</p>
           </div>
-          <div className="text-center p-6 rounded-xl bg-card border border-border">
+          <div className="text-center p-6 rounded-xl bg-background/10 border border-background/20">
             <div className="text-4xl font-bold text-primary mb-2">{totalAvailable}</div>
-            <p className="text-sm text-muted-foreground">Still Available</p>
+            <p className="text-sm text-background/70">Still Available</p>
           </div>
-          <div className="text-center p-6 rounded-xl bg-card border border-border">
+          <div className="text-center p-6 rounded-xl bg-background/10 border border-background/20">
             <div className="text-4xl font-bold text-primary mb-2">1</div>
-            <p className="text-sm text-muted-foreground">Day Event</p>
+            <p className="text-sm text-background/70">Day Event</p>
           </div>
         </div>
       </div>
