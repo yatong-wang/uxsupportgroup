@@ -1,9 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Award, Star, Users2 } from "lucide-react";
-
 const ProfileCallout = () => {
-  return (
-    <section className="py-24 bg-gradient-accent">
+  return <section className="py-24 bg-gradient-accent">
       <div className="container mx-auto px-4">
         <div className="max-w-5xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12 items-center">
@@ -16,9 +14,7 @@ const ProfileCallout = () => {
                 Get noticed by peers and industry leaders. Testimonials and milestone 
                 shoutouts included as part of your inaugural attendee status.
               </p>
-              <Button size="lg" className="gradient-hero text-white">
-                Elevate Your Career
-              </Button>
+              
             </div>
             
             <div className="space-y-6">
@@ -52,8 +48,6 @@ const ProfileCallout = () => {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default ProfileCallout;
