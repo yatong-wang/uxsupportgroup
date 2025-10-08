@@ -7,26 +7,17 @@ const FAQSection = () => {
     question: "Is there a refund policy?",
     answer: "Yes, we offer full refunds up to 30 days before the event. Between 30-14 days, we offer 50% refunds. No refunds within 14 days of the event, but tickets are transferable to another attendee."
   }, {
-    question: "Will there be a virtual or hybrid option?",
-    answer: "This inaugural summit is designed as an in-person experience to maximize networking and collaboration. However, we're exploring hybrid options for future events based on attendee feedback."
-  }, {
     question: "What's the dress code?",
     answer: "Smart casual. Come comfortable and ready to create! We're all about authentic connections and creative energy."
   }, {
     question: "What AI tools will we use?",
     answer: "We'll be working with a variety of AI tools including Suno, ChatGPT, Midjourney, and others. No prior AI experience required—our workshops are designed for all skill levels."
   }, {
-    question: "Can I bring a guest?",
-    answer: "Each attendee needs their own ticket as our capacity is limited to 60 people. However, we encourage teams to attend together—group discounts available for 3+ tickets."
-  }, {
     question: "What should I bring?",
     answer: "Just bring yourself, your laptop, and an open mind! We'll provide everything else including notebooks, charging stations, and workshop materials."
   }, {
     question: "Will there be recordings?",
     answer: "Key sessions will be recorded and made available to attendees only. However, the real magic happens in live participation and networking!"
-  }, {
-    question: "How do I get to the venue?",
-    answer: "Detailed venue information and directions will be sent to all ticket holders 2 weeks before the event. The venue is centrally located in NYC with easy access to public transportation."
   }];
   return <section className="py-24 bg-gradient-accent">
       <div className="container mx-auto px-4">
