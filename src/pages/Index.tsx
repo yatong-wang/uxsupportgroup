@@ -13,8 +13,8 @@ const Index = () => {
     <main className="min-h-screen">
       <Hero />
       <StatsSection />
-      <SocialProof />
       <ConceptSection />
+      <SocialProof />
       <AgendaSection />
       <TicketingSection />
       <ProfileCallout />
