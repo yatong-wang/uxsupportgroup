@@ -54,7 +54,7 @@ const TicketingSection = () => {
         )}
         
         <div className="max-w-2xl mx-auto mb-16">
-          <Card className="p-10 relative overflow-hidden border-2 border-primary/30 shadow-2xl">
+          <Card className="p-10 relative overflow-hidden border-2 border-border shadow-2xl">
             {isEarlyBird && (
               <div className="absolute top-0 right-0 bg-gradient-to-br from-primary to-secondary text-white px-6 py-2 text-sm font-bold rounded-bl-2xl flex items-center gap-2">
                 <Zap className="w-4 h-4" />
