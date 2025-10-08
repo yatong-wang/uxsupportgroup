@@ -34,9 +34,7 @@ const Hero = () => {
           </h1>
           
           <h2 className="text-3xl md:text-5xl font-bold text-white/95 mb-8 leading-tight">
-            Unlock Your Profile,<br />
-            Build the Future of<br />
-            Design & AI
+            Unlock your UX super powers with AI
           </h2>
           
           <p className="text-xl md:text-2xl text-white/90 mb-12 max-w-2xl">
