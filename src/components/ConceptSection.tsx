@@ -6,8 +6,8 @@ const ConceptSection = () => {
       gradient: "from-primary/20 to-transparent"
     },
     {
-      title: "You'll make friends.",
-      description: "The format forces collaboration. By end of day, inside jokes turn into ongoing partnerships and actual friendships.",
+      title: "You'll make friends and feel less alone.",
+      description: "The format forces collaboration. By end of day, inside jokes turn into ongoing partnerships. Everyone's figuring this out—even the experts are improvising.",
       gradient: "from-secondary/20 to-transparent"
     },
     {
@@ -29,11 +29,6 @@ const ConceptSection = () => {
       title: "You'll build real momentum.",
       description: "Confidence from doing, not listening. A network actively working on what's next. Career moves six months from now trace back to here.",
       gradient: "from-secondary/20 to-transparent"
-    },
-    {
-      title: "You'll feel less alone.",
-      description: "Everyone's figuring this out. Even the experts are improvising. Relief happens in the first few hours.",
-      gradient: "from-primary/20 to-transparent"
     }
   ];
 
@@ -48,7 +43,7 @@ const ConceptSection = () => {
             <span className="text-gradient">at This Summit</span>
           </h2>
           
-          <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <div className="grid md:grid-cols-3 gap-6">
             {outcomes.map((outcome, index) => (
               <div
                 key={index}
