@@ -1,5 +1,3 @@
-import { Sparkles, Users, Award } from "lucide-react";
-
 const ConceptSection = () => {
   return (
     <section className="py-24 relative overflow-hidden">
@@ -7,46 +5,60 @@ const ConceptSection = () => {
       
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-4xl mx-auto">
-          <div className="mb-16">
-            <h2 className="text-5xl md:text-7xl font-bold mb-8 leading-tight">
-              Not another conference.{" "}
-              <span className="text-gradient">
-                This is an experiment in collaborative possibility.
-              </span>
+          <div className="mb-12">
+            <h2 className="text-5xl md:text-7xl font-bold mb-16 leading-tight">
+              What Actually Happens at This Summit
             </h2>
             
-            <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed">
-              The real value is you. Every attendee unlocks new connections, ideas, 
-              and visibility. Your profile is your pass—showcase your talent and be celebrated.
-            </p>
-          </div>
-          
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="p-8 rounded-2xl bg-card border border-border hover:border-primary/50 transition-colors">
-              <Sparkles className="w-12 h-12 text-primary mb-4" />
-              <h3 className="text-2xl font-bold mb-3">Co-Create</h3>
-              <p className="text-muted-foreground">
-                Hands-on workshops where you build, learn, and create artifacts 
-                that showcase your skills
-              </p>
-            </div>
-            
-            <div className="p-8 rounded-2xl bg-card border border-border hover:border-primary/50 transition-colors">
-              <Users className="w-12 h-12 text-primary mb-4" />
-              <h3 className="text-2xl font-bold mb-3">Connect</h3>
-              <p className="text-muted-foreground">
-                AI-powered networking that matches you with peers, collaborators, 
-                and future partners
-              </p>
-            </div>
-            
-            <div className="p-8 rounded-2xl bg-card border border-border hover:border-primary/50 transition-colors">
-              <Award className="w-12 h-12 text-primary mb-4" />
-              <h3 className="text-2xl font-bold mb-3">Get Noticed</h3>
-              <p className="text-muted-foreground">
-                Every participant gets a profile highlight, featured in our 
-                inaugural attendee showcase
-              </p>
+            <div className="space-y-8">
+              <div>
+                <h3 className="text-2xl md:text-3xl font-bold mb-3">You'll build something.</h3>
+                <p className="text-xl text-muted-foreground leading-relaxed">
+                  An actual prototype or tool you can use Monday morning. Real challenges, not hypotheticals.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-2xl md:text-3xl font-bold mb-3">You'll make friends.</h3>
+                <p className="text-xl text-muted-foreground leading-relaxed">
+                  The format forces collaboration. By end of day, inside jokes turn into ongoing partnerships and actual friendships.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-2xl md:text-3xl font-bold mb-3">You'll find your position in the AI landscape.</h3>
+                <p className="text-xl text-muted-foreground leading-relaxed">
+                  See where you naturally fit and leave with a clear roadmap for what to develop next.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-2xl md:text-3xl font-bold mb-3">You'll know how to actually use AI tools.</h3>
+                <p className="text-xl text-muted-foreground leading-relaxed">
+                  Use them, watch others apply them. That same evening, techniques that cut your work time in half.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-2xl md:text-3xl font-bold mb-3">You'll see new possibilities.</h3>
+                <p className="text-xl text-muted-foreground leading-relaxed">
+                  Watch different approaches to the same problem. That stuck project suddenly has five new angles.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-2xl md:text-3xl font-bold mb-3">You'll build real momentum.</h3>
+                <p className="text-xl text-muted-foreground leading-relaxed">
+                  Confidence from doing, not listening. A network actively working on what's next. Career moves six months from now trace back to here.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-2xl md:text-3xl font-bold mb-3">You'll feel less alone.</h3>
+                <p className="text-xl text-muted-foreground leading-relaxed">
+                  Everyone's figuring this out. Even the experts are improvising. Relief happens in the first few hours.
+                </p>
+              </div>
             </div>
           </div>
         </div>
