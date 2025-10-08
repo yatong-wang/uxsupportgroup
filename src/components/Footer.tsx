@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Mail, Twitter, Linkedin, Instagram } from "lucide-react";
+import uxsgLogo from "@/assets/uxsg-logo.svg";
 
 const Footer = () => {
   return (
@@ -13,6 +14,10 @@ const Footer = () => {
               The anti-conference for designers and product builders. 
               October 2025, NYC.
             </p>
+            <div className="mb-4">
+              <p className="text-background/60 text-xs mb-2">Organized by</p>
+              <img src={uxsgLogo} alt="UXSG" className="h-8 w-auto brightness-0 invert opacity-80" />
+            </div>
             <div className="flex gap-4">
               <a href="#" className="hover:text-primary transition-colors">
                 <Twitter className="w-5 h-5" />

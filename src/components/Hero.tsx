@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import heroBg from "@/assets/hero-bg.jpg";
+import uxsgLogo from "@/assets/uxsg-logo.svg";
 
 const Hero = () => {
   return (
@@ -19,6 +20,11 @@ const Hero = () => {
       
       <div className="container relative z-10 mx-auto px-4 py-20">
         <div className="max-w-4xl">
+          <div className="mb-8">
+            <p className="text-white/70 text-sm font-medium mb-3">Organized by</p>
+            <img src={uxsgLogo} alt="UXSG" className="h-12 w-auto" />
+          </div>
+          
           <div className="inline-block mb-6 px-6 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20">
             <p className="text-white/90 text-sm font-medium">October 2025 · NYC · Just 60 Seats</p>
           </div>
