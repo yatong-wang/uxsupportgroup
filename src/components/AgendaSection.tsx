@@ -4,7 +4,6 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import professionalsWorking from "@/assets/professionals-working.jpg";
 
 const AgendaSection = () => {
   const sessions = [
@@ -25,16 +24,8 @@ const AgendaSection = () => {
   ];
 
   return (
-    <section className="py-24 bg-gradient-accent relative overflow-hidden">
-      {/* Background image faded */}
-      <div className="absolute inset-0 overflow-hidden">
-        <img 
-          src={professionalsWorking} 
-          alt="" 
-          className="absolute top-0 left-0 w-1/3 h-full object-cover opacity-10 blur-sm"
-        />
-      </div>
-      <div className="container mx-auto px-4 relative z-10">
+    <section className="py-24 bg-gradient-accent">
+      <div className="container mx-auto px-4">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-5xl md:text-6xl font-bold mb-6">
