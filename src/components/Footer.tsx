@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Mail, Twitter, Linkedin, Instagram } from "lucide-react";
-import uxsgLogo from "@/assets/uxsg-logo.svg";
+import uxsgLogo from "@/assets/uxsg-logo-dark-bg.png";
 
 const Footer = () => {
   return (
@@ -16,7 +16,7 @@ const Footer = () => {
             </p>
             <div className="mb-4">
               <p className="text-background/60 text-xs mb-2">Organized by</p>
-              <img src={uxsgLogo} alt="UXSG" className="h-8 w-auto brightness-0 invert opacity-80" />
+              <img src={uxsgLogo} alt="UXSG" className="h-8 w-auto" />
             </div>
             <div className="flex gap-4">
               <a href="#" className="hover:text-primary transition-colors">
