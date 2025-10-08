@@ -1,25 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Check, Crown, Zap } from "lucide-react";
+import { Check, Zap } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 
 const TicketingSection = () => {
   const tickets = [
-    {
-      name: "VIP / Influencer",
-      price: "Invite Only",
-      seats: 20,
-      available: 5,
-      icon: Crown,
-      features: [
-        "Exclusive pre-event dinner",
-        "Priority seating",
-        "VIP networking lounge",
-        "Featured speaker access",
-        "Premium swag bag"
-      ],
-      highlight: true,
-    },
     {
       name: "Early Bird",
       price: "$99",
@@ -67,7 +52,7 @@ const TicketingSection = () => {
           </p>
         </div>
         
-        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto mb-16">
+        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-16">
           {tickets.map((ticket, index) => {
             const Icon = ticket.icon;
             const percentSold = ((ticket.seats - ticket.available) / ticket.seats) * 100;
@@ -75,11 +60,7 @@ const TicketingSection = () => {
             return (
               <Card 
                 key={index}
-                className={`p-8 relative overflow-hidden transition-all hover:scale-105 ${
-                  ticket.highlight 
-                    ? 'border-primary border-2 shadow-xl' 
-                    : 'border-border hover:border-primary/50'
-                }`}
+                className="p-8 relative overflow-hidden transition-all hover:scale-105 border-border hover:border-primary/50"
               >
                 {ticket.urgent && (
                   <div className="absolute top-0 right-0 bg-primary text-white px-4 py-1 text-sm font-bold rounded-bl-lg">
@@ -88,7 +69,7 @@ const TicketingSection = () => {
                 )}
                 
                 <div className="mb-6">
-                  <Icon className={`w-12 h-12 mb-4 ${ticket.highlight ? 'text-primary' : 'text-muted-foreground'}`} />
+                  <Icon className="w-12 h-12 mb-4 text-muted-foreground" />
                   <h3 className="text-2xl font-bold mb-2">{ticket.name}</h3>
                   <div className="flex items-baseline gap-2">
                     <span className="text-4xl font-bold text-primary">{ticket.price}</span>
@@ -118,11 +99,10 @@ const TicketingSection = () => {
                 </ul>
                 
                 <Button 
-                  className={`w-full ${ticket.highlight ? 'gradient-hero text-white' : ''}`}
+                  className="w-full"
                   size="lg"
-                  disabled={ticket.price === "Invite Only"}
                 >
-                  {ticket.price === "Invite Only" ? "By Invitation" : "Claim Ticket"}
+                  Claim Ticket
                 </Button>
               </Card>
             );
