@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Check, Zap, Clock } from "lucide-react";
+import { Check, Zap, Clock, ArrowRight } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 
 const TicketingSection = () => {
@@ -119,10 +119,11 @@ const TicketingSection = () => {
             </div>
             
             <Button 
-              className="w-full h-14 text-lg font-bold gradient-hero text-white hover:opacity-90 shadow-lg hover:shadow-xl transition-all"
+              className="w-full h-14 text-lg font-bold bg-foreground text-background hover:bg-foreground/90 shadow-lg hover:shadow-xl transition-all group"
               size="lg"
             >
               {isEarlyBird ? "Claim Early Bird Ticket" : "Get Your Ticket"}
+              <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
             </Button>
             
             {isEarlyBird && (
