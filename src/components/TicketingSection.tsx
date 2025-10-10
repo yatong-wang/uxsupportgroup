@@ -5,23 +5,18 @@ import { Progress } from "@/components/ui/progress";
 import { supabase } from "@/integrations/supabase/client";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-
 const EARLY_BIRD_PRICE_ID = "price_1SGlggEt4aAP5ylPfhAvGpJW";
 const REGULAR_PRICE_ID = "price_1SGlhNEt4aAP5ylPGONodFHs";
-
 const TicketingSection = () => {
   const [isEarlyBird, setIsEarlyBird] = useState(true);
   const [earlyBirdRemaining, setEarlyBirdRemaining] = useState(15);
   const [isLoading, setIsLoading] = useState(false);
   const [isCheckingAvailability, setIsCheckingAvailability] = useState(true);
-
   const earlyBirdSeats = 40;
   const totalSeats = 100;
   const currentPrice = isEarlyBird ? "$99" : "$199";
   const originalPrice = isEarlyBird ? "$199" : null;
-  const percentSold = isEarlyBird 
-    ? ((earlyBirdSeats - earlyBirdRemaining) / earlyBirdSeats * 100) 
-    : 65; // Placeholder for regular tickets
+  const percentSold = isEarlyBird ? (earlyBirdSeats - earlyBirdRemaining) / earlyBirdSeats * 100 : 65; // Placeholder for regular tickets
 
   useEffect(() => {
     checkAvailability();
@@ -29,11 +24,12 @@ const TicketingSection = () => {
     const interval = setInterval(checkAvailability, 30000);
     return () => clearInterval(interval);
   }, []);
-
   const checkAvailability = async () => {
     try {
-      const { data, error } = await supabase.functions.invoke('check-ticket-availability');
-      
+      const {
+        data,
+        error
+      } = await supabase.functions.invoke('check-ticket-availability');
       if (error) {
         console.error('Availability check error:', error);
         toast.error('Unable to check ticket availability');
@@ -44,7 +40,6 @@ const TicketingSection = () => {
         setEarlyBirdRemaining(cutoff > now ? 40 : 0);
         return;
       }
-      
       setIsEarlyBird(data.isEarlyBird);
       setEarlyBirdRemaining(data.earlyBirdRemaining);
     } catch (error) {
@@ -58,22 +53,23 @@ const TicketingSection = () => {
       setIsCheckingAvailability(false);
     }
   };
-
   const handlePurchase = async () => {
     setIsLoading(true);
     try {
       const priceId = isEarlyBird ? EARLY_BIRD_PRICE_ID : REGULAR_PRICE_ID;
-      
-      const { data, error } = await supabase.functions.invoke('create-checkout', {
-        body: { priceId }
+      const {
+        data,
+        error
+      } = await supabase.functions.invoke('create-checkout', {
+        body: {
+          priceId
+        }
       });
-
       if (error) {
         console.error('Checkout error:', error);
         toast.error(`Checkout failed: ${error.message || 'Please try again'}`);
         return;
       }
-
       if (data?.url) {
         window.open(data.url, '_blank');
         toast.success('Checkout opened in new tab');
@@ -115,9 +111,7 @@ const TicketingSection = () => {
               </div>}
             
             <div className="text-center mb-8">
-              <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-primary/20 to-secondary/20 mb-4">
-                {isEarlyBird ? <Zap className="w-10 h-10 text-primary" /> : <Clock className="w-10 h-10 text-primary" />}
-              </div>
+              
               <h3 className="text-3xl font-bold mb-3">
                 {isEarlyBird ? "Early Bird Ticket" : "General Admission"}
               </h3>
@@ -149,12 +143,7 @@ const TicketingSection = () => {
             
             
             
-            <Button 
-              className="w-full h-14 text-lg font-bold bg-foreground text-background hover:bg-foreground/90 shadow-lg hover:shadow-xl transition-all group" 
-              size="lg"
-              onClick={handlePurchase}
-              disabled={isLoading || isCheckingAvailability}
-            >
+            <Button className="w-full h-14 text-lg font-bold bg-foreground text-background hover:bg-foreground/90 shadow-lg hover:shadow-xl transition-all group" size="lg" onClick={handlePurchase} disabled={isLoading || isCheckingAvailability}>
               {isLoading ? "Processing..." : isEarlyBird ? "Claim Early Bird Ticket" : "Get Your Ticket"}
               <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
             </Button>
