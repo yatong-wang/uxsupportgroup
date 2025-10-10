@@ -40,6 +40,10 @@ serve(async (req) => {
         },
       ],
       mode: "payment",
+      metadata: {
+        price_id: priceId,
+        ticket_type: priceId === "price_1SGlggEt4aAP5ylPfhAvGpJW" ? 'early_bird' : 'regular'
+      },
       success_url: `${req.headers.get("origin")}/?success=true`,
       cancel_url: `${req.headers.get("origin")}/?canceled=true`,
     });

@@ -34,12 +34,26 @@ const TicketingSection = () => {
     try {
       const { data, error } = await supabase.functions.invoke('check-ticket-availability');
       
-      if (error) throw error;
+      if (error) {
+        console.error('Availability check error:', error);
+        toast.error('Unable to check ticket availability');
+        // Fallback: show early bird until Dec 1st, 2025
+        const now = new Date();
+        const cutoff = new Date("2025-12-01T00:00:00Z");
+        setIsEarlyBird(now < cutoff);
+        setEarlyBirdRemaining(cutoff > now ? 40 : 0);
+        return;
+      }
       
       setIsEarlyBird(data.isEarlyBird);
       setEarlyBirdRemaining(data.earlyBirdRemaining);
     } catch (error) {
       console.error('Error checking availability:', error);
+      toast.error('Connection error. Please refresh the page.');
+      // Fallback to date-based logic
+      const now = new Date();
+      const cutoff = new Date("2025-12-01T00:00:00Z");
+      setIsEarlyBird(now < cutoff);
     } finally {
       setIsCheckingAvailability(false);
     }
@@ -54,14 +68,22 @@ const TicketingSection = () => {
         body: { priceId }
       });
 
-      if (error) throw error;
+      if (error) {
+        console.error('Checkout error:', error);
+        toast.error(`Checkout failed: ${error.message || 'Please try again'}`);
+        return;
+      }
 
-      if (data.url) {
+      if (data?.url) {
         window.open(data.url, '_blank');
+        toast.success('Checkout opened in new tab');
+      } else {
+        console.error('No checkout URL received:', data);
+        toast.error('No checkout URL received. Please try again.');
       }
     } catch (error) {
       console.error('Error creating checkout:', error);
-      toast.error('Failed to create checkout session. Please try again.');
+      toast.error('Unable to start checkout. Please try again.');
     } finally {
       setIsLoading(false);
     }

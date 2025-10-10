@@ -33,31 +33,38 @@ serve(async (req) => {
     const isPastCutoff = now >= EARLY_BIRD_CUTOFF_DATE;
     logStep("Date check", { now: now.toISOString(), cutoff: EARLY_BIRD_CUTOFF_DATE.toISOString(), isPastCutoff });
 
-    // Count successful early bird payments
-    // Note: We need to fetch each session individually with expanded line_items
-    // or use a more efficient approach with payment_intents
-    const paymentIntents = await stripe.paymentIntents.list({
+    // Count successful early bird payments by retrieving completed sessions
+    // List all completed checkout sessions (limited to last 100)
+    const sessions = await stripe.checkout.sessions.list({
       limit: 100,
     });
 
+    logStep("Sessions retrieved", { count: sessions.data.length });
+
     let earlyBirdSold = 0;
-    for (const pi of paymentIntents.data) {
-      if (pi.status === "succeeded") {
-        // Get the checkout session for this payment intent
-        const sessions = await stripe.checkout.sessions.list({
-          payment_intent: pi.id,
-          limit: 1,
-          expand: ['line_items']
-        });
-        
-        if (sessions.data.length > 0) {
-          const session = sessions.data[0];
-          const hasEarlyBird = session.line_items?.data?.some(
+    
+    // For each completed session, retrieve full details with line_items expanded
+    for (const session of sessions.data) {
+      if (session.payment_status === "paid") {
+        try {
+          // Retrieve individual session with line_items expanded
+          const fullSession = await stripe.checkout.sessions.retrieve(session.id, {
+            expand: ['line_items'],
+          });
+          
+          const hasEarlyBird = fullSession.line_items?.data?.some(
             (item: any) => item.price?.id === EARLY_BIRD_PRICE_ID
           );
+          
           if (hasEarlyBird) {
             earlyBirdSold++;
+            logStep("Early bird session found", { sessionId: session.id });
           }
+        } catch (retrieveError) {
+          logStep("Error retrieving session", { 
+            sessionId: session.id, 
+            error: retrieveError instanceof Error ? retrieveError.message : String(retrieveError)
+          });
         }
       }
     }
