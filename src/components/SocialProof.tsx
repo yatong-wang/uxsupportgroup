@@ -1,6 +1,16 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { ExternalLink } from "lucide-react";
+import SuyenL from "@/assets/SuyenL-2.jpeg";
+import SilviaB from "@/assets/SilviaB-2.jpeg";
+import AlexisB from "@/assets/AlexisB-2.png";
+import VolkanU from "@/assets/VolkanU-2.jpeg";
+import RenataR from "@/assets/RenataR-2.jpeg";
+import DannyS from "@/assets/DannyS-2.jpeg";
+import HayleyD from "@/assets/HayleyD-2.jpeg";
+import FarooqK from "@/assets/FarooqK-2.jpeg";
+import FarahK from "@/assets/FarahK-2.jpeg";
+import YatongW from "@/assets/YatongW-2.jpeg";
 
 const SocialProof = () => {
   const facilitators = [
@@ -10,7 +20,7 @@ const SocialProof = () => {
       company: null,
       bio: "Specialist in UX design and conference moderation.",
       linkedin: "https://www.linkedin.com/in/suyenlyn/",
-      initials: "SS"
+      image: SuyenL
     },
     {
       name: "Silvia Balu",
@@ -18,7 +28,7 @@ const SocialProof = () => {
       company: "Team Gesundheit GmbH",
       bio: "Lead, International UX & AI Community. Speaker and host of AI-powered UX webinars, recognized for innovation in design research.",
       linkedin: "https://www.linkedin.com/in/silviabalu/",
-      initials: "SB"
+      image: SilviaB
     },
     {
       name: "Alexis Brochu",
@@ -26,7 +36,7 @@ const SocialProof = () => {
       company: "California Governor's Office of Emergency Services",
       bio: "Expert in government digital transformation and product leadership. Former: Sikich, Mallinckrodt Pharmaceuticals.",
       linkedin: "https://www.linkedin.com/in/alexisbrochu/",
-      initials: "AB"
+      image: AlexisB
     },
     {
       name: "Volkan Unsal",
@@ -34,7 +44,7 @@ const SocialProof = () => {
       company: "Amazon Web Services (AWS)",
       bio: "Expert in cloud technology, civic tech, and startup development. Former: Co-Founder, Citiesense; Code for America.",
       linkedin: "https://www.linkedin.com/in/volkanunsal/",
-      initials: "VU"
+      image: VolkanU
     },
     {
       name: "Renata Rocha",
@@ -42,7 +52,7 @@ const SocialProof = () => {
       company: "Amazon",
       bio: "Specialist in e-commerce design and experience at global technology brands. Former: ContentSquare, Academy Product Design Studio.",
       linkedin: "https://www.linkedin.com/in/rerocha/",
-      initials: "RR"
+      image: RenataR
     },
     {
       name: "Danny Setiawan",
@@ -50,7 +60,7 @@ const SocialProof = () => {
       company: "CoCreate Consulting",
       bio: "Leader in UX strategy for global media and startup growth. Former: Yahoo!, The Economist.",
       linkedin: "https://www.linkedin.com/in/dnystwn/",
-      initials: "DS"
+      image: DannyS
     },
     {
       name: "Hayley Dahle",
@@ -58,7 +68,7 @@ const SocialProof = () => {
       company: "FULLBEAUTY Brands",
       bio: "Expert in digital transformation and consumer brand experience design.",
       linkedin: "#",
-      initials: "HD"
+      image: HayleyD
     },
     {
       name: "Farooq Shad",
@@ -66,7 +76,7 @@ const SocialProof = () => {
       company: "ibex. Pakistan",
       bio: "Specialist in enterprise UI/UX for global platforms. Former: UI/UX Designer, YPO Project.",
       linkedin: "#",
-      initials: "FS"
+      image: FarooqK
     },
     {
       name: "Farah Khan",
@@ -74,7 +84,7 @@ const SocialProof = () => {
       company: "Paytient",
       bio: "Product strategy for fintech and enterprise technology. Former: Stripe, Dell EMC.",
       linkedin: "#",
-      initials: "FK"
+      image: FarahK
     },
     {
       name: "Yatong Wang",
@@ -82,7 +92,7 @@ const SocialProof = () => {
       company: "Lenovo",
       bio: "Specialist in UX/Product design for technology and nonprofits. Former: Spatial Front Inc.",
       linkedin: "#",
-      initials: "YW"
+      image: YatongW
     }
   ];
 
@@ -104,10 +114,9 @@ const SocialProof = () => {
             <Card key={index} className="group hover:shadow-lg transition-shadow">
               <CardContent className="p-6">
                 <div className="flex items-start gap-4 mb-4">
-                  <Avatar className="w-20 h-20 flex-shrink-0 bg-primary/10">
-                    <AvatarFallback className="text-2xl font-bold text-primary bg-transparent">
-                      {facilitator.initials}
-                    </AvatarFallback>
+                  <Avatar className="w-20 h-20 flex-shrink-0">
+                    <AvatarImage src={facilitator.image} alt={facilitator.name} className="object-cover" />
+                    <AvatarFallback>{facilitator.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
                   </Avatar>
                   <div className="flex-1 min-w-0">
                     <h3 className="font-bold text-lg mb-1">{facilitator.name}</h3>
