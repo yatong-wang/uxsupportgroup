@@ -93,8 +93,8 @@ const Footer = () => {
                   {...register("email")}
                   className="bg-background/10 border-background/20 text-background placeholder:text-background/60" 
                 />
-                {errors.email && (
-                  <p className="text-red-400 text-xs mt-1">{errors.email.message}</p>
+                {!!errors.email && (
+                  <p className="text-red-400 text-xs mt-1">{errors.email.message as string}</p>
                 )}
               </div>
               <Button type="submit" variant="ghost" className="shrink-0 border border-white hover:border-white/80">
