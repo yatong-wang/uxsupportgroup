@@ -12,7 +12,7 @@ const Header = () => {
         
         <nav className="hidden md:flex items-center gap-8">
           <Link to="/summit" className="text-sm font-medium text-foreground/70 hover:text-foreground transition-colors">
-            AIxUX Virtual Summit
+            AI Summit 2025
           </Link>
           <Link to="/summit" className="text-sm font-medium text-foreground/70 hover:text-foreground transition-colors">
             Events
