@@ -49,17 +49,11 @@ const Footer = () => {
 
   return <footer className="bg-foreground text-background py-16">
       <div className="container mx-auto px-4">
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
-          <div>
-            <h3 className="text-3xl font-bold mb-4">AIxUX Summit</h3>
-            <p className="text-background/80 mb-4">The anti-conference for UX professionals</p>
-            <div className="mb-4">
-              <p className="text-background/60 text-xs mb-2">Organized by</p>
-              <img src={uxsgLogo} alt="UXSG" className="h-12 w-auto" />
-            </div>
-            
-          </div>
-          
+        <div className="mb-12">
+          <img src={uxsgLogo} alt="UXSG" className="h-18 w-auto mb-12" />
+        </div>
+        
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-12 mb-12">
           <div>
             <h4 className="text-xl font-bold mb-4">Quick Links</h4>
             <ul className="space-y-2 text-background/80">
