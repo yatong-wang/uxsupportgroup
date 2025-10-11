@@ -49,10 +49,6 @@ const Footer = () => {
 
   return <footer className="bg-foreground text-background py-16">
       <div className="container mx-auto px-4">
-        <div className="mb-12">
-          <img src={uxsgLogo} alt="UXSG" className="h-14 w-auto mb-12" />
-        </div>
-        
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-12 mb-12">
           <div>
             <h4 className="text-xl font-bold mb-4">Quick Links</h4>
@@ -99,7 +95,10 @@ const Footer = () => {
         </div>
         
         <div className="border-t border-background/20 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-background/60 text-sm">
-          <p>© 2025 UX Support Group. All rights reserved.</p>
+          <div className="flex items-center gap-4">
+            <img src={uxsgLogo} alt="UXSG" className="h-14 w-auto" />
+            <p>© 2025 UX Support Group. All rights reserved.</p>
+          </div>
           <div className="flex gap-6">
             <a href="#" className="hover:text-primary transition-colors">Privacy Policy</a>
             <a href="#" className="hover:text-primary transition-colors">Terms of Service</a>
