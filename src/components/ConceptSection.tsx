@@ -38,7 +38,7 @@ const ConceptSection = () => {
       
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-5xl md:text-7xl font-bold mb-20 leading-tight text-center">
+          <h2 className="text-4xl md:text-5xl font-bold mb-20 leading-tight text-center">
             What <span className="text-gradient">Actually Happens</span> <br />
             at This Summit
           </h2>
