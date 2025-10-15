@@ -28,7 +28,7 @@ const Hero = () => {
       behavior: 'smooth'
     });
   };
-  return <section className="relative min-h-screen flex items-center overflow-hidden">
+  return <section className="relative min-h-[80vh] flex items-center overflow-hidden">
       {/* Background with gradient overlay */}
       <img src={heroBg} alt="" className="absolute inset-0 w-full h-full object-cover" />
       <div className="absolute inset-0 bg-gradient-to-br from-white/95 via-white/90 to-white/85" />
