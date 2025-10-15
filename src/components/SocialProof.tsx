@@ -62,7 +62,7 @@ const SocialProof = () => {
     linkedin: "#",
     image: HayleyD
   }, {
-    name: "Farooq Shad",
+    name: "Farooq Khayyat",
     title: "Senior Software Engineer UI/UX",
     company: "ibex. Pakistan",
     bio: "Specialist in enterprise UI/UX for global platforms. Former: UI/UX Designer, YPO Project.",
