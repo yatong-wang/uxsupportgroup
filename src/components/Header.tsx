@@ -26,7 +26,7 @@ const Header = () => {
         </nav>
         
         <div className="flex items-center gap-4">
-          <Button size="sm" asChild>
+          <Button size="sm" className="bg-foreground text-background hover:bg-foreground/90" asChild>
             <a href="/summit">Get Summit Tickets</a>
           </Button>
         </div>
