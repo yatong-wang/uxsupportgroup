@@ -89,7 +89,7 @@ const TicketingSection = () => {
       
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-16">
-          <h2 className="text-5xl md:text-6xl font-bold mb-6">
+          <h2 className="text-4xl md:text-5xl font-bold mb-6">
             Secure Your <span className="text-gradient">Spot</span>
           </h2>
           <p className="text-xl text-background/70 max-w-2xl mx-auto">

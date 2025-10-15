@@ -28,7 +28,7 @@ const AgendaSection = () => {
       <div className="container mx-auto px-4">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-5xl md:text-6xl font-bold mb-6">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">
               <span className="text-gradient">Agenda</span> at a Glance
             </h2>
             <p className="text-xl text-muted-foreground">

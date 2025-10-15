@@ -86,7 +86,7 @@ const SocialProof = () => {
   return <section className="py-24 bg-card">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <h2 className="text-5xl md:text-6xl font-bold mb-6">
+          <h2 className="text-4xl md:text-5xl font-bold mb-6">
             Meet the <span className="text-gradient">Facilitators</span>
           </h2>
           
