@@ -1,6 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { Linkedin } from "lucide-react";
+import { ExternalLink } from "lucide-react";
 import SuyenL from "@/assets/SuyenL-2.jpeg";
 import SilviaB from "@/assets/SilviaB-2.jpeg";
 import AlexisB from "@/assets/AlexisB-2.png";
@@ -114,10 +114,11 @@ const SocialProof = () => {
                     href={facilitator.linkedin} 
                     target="_blank" 
                     rel="noopener noreferrer" 
-                    className="text-primary hover:text-primary/80 transition-colors text-sm font-medium"
+                    className="flex items-center gap-2 text-primary hover:text-primary/80 transition-colors text-sm font-medium"
                     aria-label={`Visit ${facilitator.name}'s LinkedIn profile`}
                   >
                     LinkedIn Profile
+                    <ExternalLink className="w-4 h-4" />
                   </a>
                 )}
               </CardContent>
