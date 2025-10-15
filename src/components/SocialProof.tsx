@@ -114,10 +114,9 @@ const SocialProof = () => {
                     href={facilitator.linkedin} 
                     target="_blank" 
                     rel="noopener noreferrer" 
-                    className="flex items-center gap-2 text-primary hover:text-primary/80 transition-colors text-sm font-medium"
+                    className="text-primary hover:text-primary/80 transition-colors text-sm font-medium"
                     aria-label={`Visit ${facilitator.name}'s LinkedIn profile`}
                   >
-                    <Linkedin className="w-4 h-4" />
                     LinkedIn Profile
                   </a>
                 )}
