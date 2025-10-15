@@ -131,7 +131,7 @@ const TicketingSection = () => {
                 <span className="text-muted-foreground">
                   {isEarlyBird ? "Early Bird Availability" : "Tickets Remaining"}
                 </span>
-                <span className="font-bold text-primary">
+                <span className="font-bold text-muted-foreground">
                   {isEarlyBird ? `${earlyBirdRemaining}/${earlyBirdSeats}` : `35/${totalSeats}`} left
                 </span>
               </div>
