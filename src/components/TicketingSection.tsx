@@ -13,6 +13,7 @@ const TicketingSection = () => {
   const [earlyBirdRemaining, setEarlyBirdRemaining] = useState(15);
   const [isLoading, setIsLoading] = useState(false);
   const [isCheckingAvailability, setIsCheckingAvailability] = useState(true);
+  const [timeRemaining, setTimeRemaining] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   const earlyBirdSeats = 40;
   const totalSeats = 100;
   const currentPrice = isEarlyBird ? "$99" : "$199";
@@ -23,6 +24,30 @@ const TicketingSection = () => {
     checkAvailability();
     // Check availability every 30 seconds
     const interval = setInterval(checkAvailability, 30000);
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    const calculateTimeRemaining = () => {
+      const cutoffDate = new Date("2025-12-01T00:00:00Z");
+      const now = new Date();
+      const diff = cutoffDate.getTime() - now.getTime();
+
+      if (diff <= 0) {
+        setTimeRemaining({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+        return;
+      }
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+      setTimeRemaining({ days, hours, minutes, seconds });
+    };
+
+    calculateTimeRemaining();
+    const interval = setInterval(calculateTimeRemaining, 1000);
     return () => clearInterval(interval);
   }, []);
   const checkAvailability = async () => {
@@ -112,7 +137,9 @@ const TicketingSection = () => {
               </div>
               <Progress value={percentSold} className="h-3 mb-2" />
               <p className="text-xs text-muted-foreground text-center">
-                {isEarlyBird ? "Early bird pricing ends when sold out or 2 weeks before event" : "Limited seats remaining for this exclusive event"}
+                {isEarlyBird 
+                  ? `Ends in ${timeRemaining.days}d ${timeRemaining.hours}h ${timeRemaining.minutes}m ${timeRemaining.seconds}s`
+                  : "Limited seats remaining for this exclusive event"}
               </p>
             </div>
             
