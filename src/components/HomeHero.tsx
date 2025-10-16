@@ -35,7 +35,7 @@ const HomeHero = () => {
               <p className="text-muted-foreground text-xs">Members</p>
             </div>
             <div className="text-center">
-              <div className="text-2xl md:text-3xl font-bold text-muted-foreground mb-1">50+</div>
+              <div className="text-2xl md:text-3xl font-bold text-muted-foreground mb-1">250+</div>
               <p className="text-muted-foreground text-xs">Events Per Year</p>
             </div>
             <div className="text-center">
