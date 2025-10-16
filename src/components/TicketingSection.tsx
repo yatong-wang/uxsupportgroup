@@ -22,7 +22,7 @@ const TicketingSection = () => {
   const totalSeats = 100;
   const currentPrice = isEarlyBird ? "$99" : "$199";
   const originalPrice = isEarlyBird ? "$199" : null;
-  const percentSold = isEarlyBird ? (earlyBirdSeats - earlyBirdRemaining) / earlyBirdSeats * 100 : 65; // Placeholder for regular tickets
+  const percentRemaining = isEarlyBird ? (earlyBirdRemaining / earlyBirdSeats) * 100 : 35; // Shows remaining tickets
 
   useEffect(() => {
     checkAvailability();
@@ -144,7 +144,7 @@ const TicketingSection = () => {
                   {isEarlyBird ? `${earlyBirdRemaining}/${earlyBirdSeats}` : `35/${totalSeats}`} left
                 </span>
               </div>
-              <Progress value={percentSold} className="h-3 mb-2" />
+              <Progress value={percentRemaining} className="h-3 mb-2" />
               <p className="text-xs text-center text-neutral-950">
                 {isEarlyBird ? `Ends in ${timeRemaining.days}d ${timeRemaining.hours}h ${timeRemaining.minutes}m ${timeRemaining.seconds}s` : "Limited seats remaining for this exclusive event"}
               </p>
