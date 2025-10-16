@@ -48,7 +48,7 @@ const Hero = () => {
           </h2>
           
           <div className="mb-10">
-            <p className="text-lg font-bold text-foreground">10 Dec 2025  |  limited to  100 Seats</p>
+            <p className="text-lg text-foreground font-normal">10 Dec 2025  |  limited to  100 Seats</p>
           </div>
           
           <div className="flex flex-col sm:flex-row gap-4 items-start">
