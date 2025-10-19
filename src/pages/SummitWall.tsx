@@ -502,42 +502,37 @@ const SummitWall = () => {
                   </div>
                 </div>) : (/* View Mode */
           <div className="space-y-6">
-                {/* Profile Photo */}
-                <div className="flex justify-center">
-                  <div className="w-32 h-32 rounded-full bg-[#E5E7EB] overflow-hidden">
-                    {selectedProfile.profile_photo_url ? <img src={selectedProfile.profile_photo_url} alt={selectedProfile.name} className="w-full h-full object-cover" /> : <div className="w-full h-full flex items-center justify-center text-[#9CA3AF]">
-                        No photo
-                      </div>}
+                {/* Two Column Layout: Photo Left, Info Right */}
+                <div className="flex gap-4">
+                  {/* Left Column - Photo */}
+                  <div className="flex-shrink-0">
+                    <div className="w-24 h-24 rounded-full bg-[#E5E7EB] overflow-hidden">
+                      {selectedProfile.profile_photo_url ? <img src={selectedProfile.profile_photo_url} alt={selectedProfile.name} className="w-full h-full object-cover" /> : <div className="w-full h-full flex items-center justify-center text-[#9CA3AF] text-xs">
+                          No photo
+                        </div>}
+                    </div>
+                  </div>
+
+                  {/* Right Column - Info */}
+                  <div className="flex-1 min-w-0 space-y-2">
+                    <h2 className="text-xl font-bold text-[#1F2937]">{selectedProfile.name}</h2>
+                    
+                    {selectedProfile.job_title && <p className="text-base font-semibold text-[#8B5CF6]">{selectedProfile.job_title}</p>}
+                    
+                    {selectedProfile.company_name && <p className="text-sm text-[#6B7280]">{selectedProfile.company_name}</p>}
+                    
+                    {selectedProfile.linkedin_url && <a href={selectedProfile.linkedin_url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-sm text-[#8B5CF6] hover:text-[#7C3AED] transition-colors">
+                        View LinkedIn
+                        <ExternalLink className="w-3 h-3" />
+                      </a>}
                   </div>
                 </div>
-
-                {/* Name */}
-                <div className="text-center">
-                  <h2 className="text-2xl font-bold text-[#1F2937]">{selectedProfile.name}</h2>
-                </div>
-
-                {/* Job Title */}
-                {selectedProfile.job_title && <div className="text-center">
-                    <p className="text-lg font-semibold text-[#8B5CF6]">{selectedProfile.job_title}</p>
-                  </div>}
-
-                {/* Company */}
-                {selectedProfile.company_name && <div className="text-center">
-                    <p className="text-base text-[#6B7280]">{selectedProfile.company_name}</p>
-                  </div>}
 
                 {/* Bio */}
                 {selectedProfile.bio && <div className="bg-[#F9FAFB] rounded-lg p-4">
                     <p className="text-sm text-[#4B5563] leading-relaxed">{selectedProfile.bio}</p>
                   </div>}
 
-                {/* LinkedIn */}
-                {selectedProfile.linkedin_url && <div className="flex justify-center">
-                    <a href={selectedProfile.linkedin_url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm text-[#8B5CF6] hover:text-[#7C3AED] transition-colors">
-                      View LinkedIn Profile
-                      <ExternalLink className="w-4 h-4" />
-                    </a>
-                  </div>}
 
                 {/* Enrichments/Links */}
                 {enrichments.length > 0 && <div className="border-t pt-4">
