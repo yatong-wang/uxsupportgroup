@@ -6,12 +6,14 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { toast } from "sonner";
-import { Minus, Plus, Maximize2, UserPlus, CheckCircle2 } from "lucide-react";
+import { Minus, Plus, Maximize2, UserPlus } from "lucide-react";
 import logo from "@/assets/uxsg-logo-dark-bg.png";
 
 interface ProfileCard {
   id: string;
   name: string;
+  job_title: string | null;
+  company_name: string | null;
   bio: string;
   profile_photo_url: string | null;
   wall_position_x: number;
@@ -24,10 +26,13 @@ const SummitWall = () => {
   const [zoom, setZoom] = useState(100);
   const [isLoading, setIsLoading] = useState(true);
   const [showCreateModal, setShowCreateModal] = useState(false);
-  const [createStep, setCreateStep] = useState<'email' | 'linkedin' | 'generating'>('email');
-  const [email, setEmail] = useState('');
-  const [linkedinUrl, setLinkedinUrl] = useState('');
   const [isProcessing, setIsProcessing] = useState(false);
+  const [formData, setFormData] = useState({
+    name: '',
+    jobTitle: '',
+    companyName: '',
+    linkedinUrl: ''
+  });
 
   useEffect(() => {
     loadProfiles();
@@ -37,7 +42,7 @@ const SummitWall = () => {
     try {
       const { data, error } = await supabase
         .from('user_profiles')
-        .select('id, name, bio, profile_photo_url, wall_position_x, wall_position_y')
+        .select('id, name, job_title, company_name, bio, profile_photo_url, wall_position_x, wall_position_y')
         .not('name', 'is', null);
 
       if (error) throw error;
@@ -64,105 +69,47 @@ const SummitWall = () => {
 
   const handleCreateProfile = () => {
     setShowCreateModal(true);
-    setCreateStep('email');
-    setEmail('');
-    setLinkedinUrl('');
+    setFormData({
+      name: '',
+      jobTitle: '',
+      companyName: '',
+      linkedinUrl: ''
+    });
   };
 
-  const handleEmailSubmit = async (e: React.FormEvent) => {
+  const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!email || !email.includes('@')) {
-      toast.error("Please enter a valid email address");
+    if (!formData.name.trim()) {
+      toast.error("Please enter your name");
       return;
     }
 
-    setIsProcessing(true);
-    
-    try {
-      const { data, error } = await supabase.functions.invoke('send-magic-link', {
-        body: { email }
-      });
-
-      if (error) throw error;
-
-      // For development, auto-verify and move to LinkedIn step
-      if (data.magicLink) {
-        const url = new URL(data.magicLink);
-        const token = url.searchParams.get('token');
-        if (token) {
-          const { data: verifyData, error: verifyError } = await supabase.functions.invoke('verify-magic-link', {
-            body: { token }
-          });
-
-          if (verifyError) throw verifyError;
-
-          if (verifyData.valid) {
-            sessionStorage.setItem('summit_email', verifyData.email);
-            sessionStorage.setItem('summit_user_id', verifyData.userId || '');
-            
-            if (verifyData.hasProfile) {
-              toast.success("Profile already exists!");
-              navigate('/summit-profiles/edit');
-              setShowCreateModal(false);
-              return;
-            }
-            
-            setCreateStep('linkedin');
-          }
-        }
-      }
-    } catch (error) {
-      console.error('Error:', error);
-      toast.error("Failed to verify email. Please try again.");
-    } finally {
-      setIsProcessing(false);
+    if (!formData.jobTitle.trim()) {
+      toast.error("Please enter your job title");
+      return;
     }
-  };
 
-  const handleLinkedinSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    if (!linkedinUrl.includes('linkedin.com/in/')) {
+    if (formData.linkedinUrl && !formData.linkedinUrl.includes('linkedin.com/in/')) {
       toast.error("Please enter a valid LinkedIn profile URL");
       return;
     }
 
-    setCreateStep('generating');
     setIsProcessing(true);
 
     try {
-      const storedEmail = sessionStorage.getItem('summit_email');
-      if (!storedEmail) {
-        toast.error("Session expired. Please start over.");
-        setShowCreateModal(false);
-        return;
-      }
-
-      // Generate bio using AI
-      const { data: bioData, error: bioError } = await supabase.functions.invoke('generate-bio', {
-        body: { linkedinUrl }
-      });
-
-      if (bioError) throw bioError;
-
-      // Extract name from LinkedIn URL
-      const urlParts = linkedinUrl.split('/in/')[1]?.split('/')[0]?.split('-') || [];
-      const name = urlParts.map(part => 
-        part.charAt(0).toUpperCase() + part.slice(1)
-      ).join(' ') || 'UX Professional';
-
       // Create slug from name
-      const slug = name.toLowerCase().replace(/\s+/g, '-') + '-' + Date.now();
+      const slug = formData.name.toLowerCase().replace(/\s+/g, '-') + '-' + Date.now();
 
       // Create user profile
       const { data: profile, error: profileError } = await supabase
         .from('user_profiles')
         .insert({
-          email: storedEmail,
-          name,
-          bio: bioData.bio,
-          linkedin_url: linkedinUrl,
+          email: `${slug}@temp.com`, // Temporary email until we add real auth later
+          name: formData.name.trim(),
+          job_title: formData.jobTitle.trim(),
+          company_name: formData.companyName.trim() || null,
+          linkedin_url: formData.linkedinUrl.trim() || null,
           slug,
         })
         .select()
@@ -179,7 +126,6 @@ const SummitWall = () => {
     } catch (error) {
       console.error('Error creating profile:', error);
       toast.error("Failed to create profile. Please try again.");
-      setCreateStep('linkedin');
     } finally {
       setIsProcessing(false);
     }
@@ -280,9 +226,23 @@ const SummitWall = () => {
                   {profile.name}
                 </h3>
                 
-                <p className="text-xs text-[#6B7280] text-center line-clamp-2">
-                  {profile.bio || 'No bio yet'}
-                </p>
+                {profile.job_title && (
+                  <p className="text-xs font-medium text-[#8B5CF6] text-center line-clamp-1">
+                    {profile.job_title}
+                  </p>
+                )}
+                
+                {profile.company_name && (
+                  <p className="text-xs text-[#6B7280] text-center line-clamp-1">
+                    {profile.company_name}
+                  </p>
+                )}
+                
+                {profile.bio && (
+                  <p className="text-xs text-[#9CA3AF] text-center line-clamp-2 mt-1">
+                    {profile.bio}
+                  </p>
+                )}
               </div>
             </div>
           ))}
@@ -303,120 +263,81 @@ const SummitWall = () => {
               <img src={logo} alt="UXSG Logo" className="h-16 w-16 rounded-xl" />
             </div>
             <DialogTitle className="text-center text-2xl">
-              {createStep === 'email' && 'Create Your Profile Card'}
-              {createStep === 'linkedin' && 'Add Your LinkedIn Profile'}
-              {createStep === 'generating' && 'Creating Your Profile...'}
+              Create Your Profile Card
             </DialogTitle>
           </DialogHeader>
 
-          {createStep === 'email' && (
-            <form onSubmit={handleEmailSubmit} className="space-y-4">
-              {/* Progress indicator */}
-              <div className="flex justify-center gap-4 mb-6">
-                <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-full bg-[#8B5CF6] flex items-center justify-center text-white text-sm font-semibold">
-                    1
-                  </div>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-full bg-[#E5E7EB] flex items-center justify-center text-[#9CA3AF] text-sm font-semibold">
-                    2
-                  </div>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-full bg-[#E5E7EB] flex items-center justify-center text-[#9CA3AF] text-sm font-semibold">
-                    3
-                  </div>
-                </div>
-              </div>
+          <form onSubmit={handleFormSubmit} className="space-y-4">
+            <p className="text-center text-[#6B7280] text-sm mb-4">
+              Welcome to the AI x UX Virtual Summit! Let's create your unique profile card.
+            </p>
 
-              <p className="text-center text-[#6B7280] text-sm mb-4">
-                Welcome to the AI x UX Virtual Summit! Let's create your unique profile card.
-              </p>
-
-              <div>
-                <Label htmlFor="modal-email">Email Address</Label>
-                <Input
-                  id="modal-email"
-                  type="email"
-                  placeholder="your.email@example.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="mt-2"
-                  disabled={isProcessing}
-                />
-              </div>
-
-              <Button 
-                type="submit"
-                className="w-full bg-gradient-to-r from-[#8B5CF6] to-[#7C3AED] hover:opacity-90"
+            <div>
+              <Label htmlFor="name">Full Name *</Label>
+              <Input
+                id="name"
+                type="text"
+                placeholder="Sarah Chen"
+                value={formData.name}
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                className="mt-2"
                 disabled={isProcessing}
-              >
-                {isProcessing ? "Verifying..." : "Continue"}
-              </Button>
-
-              <p className="text-center text-xs text-[#9CA3AF]">
-                We'll verify your email to create your profile
-              </p>
-            </form>
-          )}
-
-          {createStep === 'linkedin' && (
-            <form onSubmit={handleLinkedinSubmit} className="space-y-4">
-              {/* Progress indicator */}
-              <div className="flex justify-center gap-4 mb-6">
-                <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-full bg-[#10B981] flex items-center justify-center text-white">
-                    <CheckCircle2 className="w-4 h-4" />
-                  </div>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-full bg-[#8B5CF6] flex items-center justify-center text-white text-sm font-semibold">
-                    2
-                  </div>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-full bg-[#E5E7EB] flex items-center justify-center text-[#9CA3AF] text-sm font-semibold">
-                    3
-                  </div>
-                </div>
-              </div>
-
-              <p className="text-center text-[#6B7280] text-sm mb-4">
-                We'll pull your photo and generate a short bio from your LinkedIn profile
-              </p>
-
-              <div>
-                <Label htmlFor="modal-linkedin">LinkedIn Profile URL</Label>
-                <Input
-                  id="modal-linkedin"
-                  type="url"
-                  placeholder="https://www.linkedin.com/in/yourprofile"
-                  value={linkedinUrl}
-                  onChange={(e) => setLinkedinUrl(e.target.value)}
-                  className="mt-2"
-                  disabled={isProcessing}
-                />
-              </div>
-
-              <Button 
-                type="submit"
-                className="w-full bg-gradient-to-r from-[#8B5CF6] to-[#7C3AED] hover:opacity-90"
-                disabled={isProcessing}
-              >
-                Generate Profile
-              </Button>
-            </form>
-          )}
-
-          {createStep === 'generating' && (
-            <div className="text-center py-8">
-              <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-[#8B5CF6] mx-auto mb-4"></div>
-              <p className="text-[#6B7280]">
-                AI is analyzing your LinkedIn profile and generating your bio
-              </p>
+                required
+              />
             </div>
-          )}
+
+            <div>
+              <Label htmlFor="jobTitle">Job Title *</Label>
+              <Input
+                id="jobTitle"
+                type="text"
+                placeholder="Senior Product Designer"
+                value={formData.jobTitle}
+                onChange={(e) => setFormData({ ...formData, jobTitle: e.target.value })}
+                className="mt-2"
+                disabled={isProcessing}
+                required
+              />
+            </div>
+
+            <div>
+              <Label htmlFor="companyName">Company Name</Label>
+              <Input
+                id="companyName"
+                type="text"
+                placeholder="TechCorp"
+                value={formData.companyName}
+                onChange={(e) => setFormData({ ...formData, companyName: e.target.value })}
+                className="mt-2"
+                disabled={isProcessing}
+              />
+            </div>
+
+            <div>
+              <Label htmlFor="linkedinUrl">LinkedIn Profile URL</Label>
+              <Input
+                id="linkedinUrl"
+                type="url"
+                placeholder="https://www.linkedin.com/in/yourprofile"
+                value={formData.linkedinUrl}
+                onChange={(e) => setFormData({ ...formData, linkedinUrl: e.target.value })}
+                className="mt-2"
+                disabled={isProcessing}
+              />
+            </div>
+
+            <Button 
+              type="submit"
+              className="w-full bg-gradient-to-r from-[#8B5CF6] to-[#7C3AED] hover:opacity-90"
+              disabled={isProcessing}
+            >
+              {isProcessing ? "Creating..." : "Create Profile"}
+            </Button>
+
+            <p className="text-center text-xs text-[#9CA3AF]">
+              * Required fields
+            </p>
+          </form>
         </DialogContent>
       </Dialog>
     </div>

@@ -22,7 +22,11 @@ interface Enrichment {
 const SummitEdit = () => {
   const navigate = useNavigate();
   const [profile, setProfile] = useState<any>(null);
-  const [bio, setBio] = useState("");
+  const [formData, setFormData] = useState({
+    jobTitle: '',
+    companyName: '',
+    bio: ''
+  });
   const [charCount, setCharCount] = useState(0);
   const [enrichments, setEnrichments] = useState<Enrichment[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -48,7 +52,11 @@ const SummitEdit = () => {
       if (profileError) throw profileError;
 
       setProfile(profileData);
-      setBio(profileData.bio || '');
+      setFormData({
+        jobTitle: profileData.job_title || '',
+        companyName: profileData.company_name || '',
+        bio: profileData.bio || ''
+      });
       setCharCount(profileData.bio?.length || 0);
 
       const { data: enrichmentsData, error: enrichmentsError } = await supabase
@@ -70,23 +78,33 @@ const SummitEdit = () => {
 
   const handleBioChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const newBio = e.target.value.substring(0, 280);
-    setBio(newBio);
+    setFormData({ ...formData, bio: newBio });
     setCharCount(newBio.length);
   };
 
-  const handleBioBlur = async () => {
+  const handleFieldBlur = async (field: 'jobTitle' | 'companyName' | 'bio') => {
     try {
+      const updateData: any = {};
+      
+      if (field === 'jobTitle') {
+        updateData.job_title = formData.jobTitle;
+      } else if (field === 'companyName') {
+        updateData.company_name = formData.companyName;
+      } else if (field === 'bio') {
+        updateData.bio = formData.bio;
+      }
+
       const { error } = await supabase
         .from('user_profiles')
-        .update({ bio })
+        .update(updateData)
         .eq('id', profile.id);
 
       if (error) throw error;
 
-      toast.success("Bio updated");
+      toast.success(`${field === 'jobTitle' ? 'Job title' : field === 'companyName' ? 'Company name' : 'Bio'} updated`);
     } catch (error) {
-      console.error('Error updating bio:', error);
-      toast.error("Failed to update bio");
+      console.error(`Error updating ${field}:`, error);
+      toast.error(`Failed to update ${field}`);
     }
   };
 
@@ -189,22 +207,52 @@ const SummitEdit = () => {
               <div className="flex-1">
                 <h2 className="text-2xl font-bold text-[#1F2937] mb-4">{profile.name}</h2>
                 
-                <div>
-                  <Label htmlFor="bio" className="text-sm font-medium text-[#1F2937] mb-2 block">
-                    Bio
-                  </Label>
-                  <Textarea
-                    id="bio"
-                    value={bio}
-                    onChange={handleBioChange}
-                    onBlur={handleBioBlur}
-                    rows={4}
-                    className="resize-none border-[#E5E7EB] focus:border-[#8B5CF6]"
-                    placeholder="Tell us about yourself..."
-                  />
-                  <p className="text-xs text-[#9CA3AF] text-right mt-1">
-                    {charCount} / 280 characters
-                  </p>
+                <div className="space-y-4">
+                  <div>
+                    <Label htmlFor="jobTitle" className="text-sm font-medium text-[#1F2937] mb-2 block">
+                      Job Title
+                    </Label>
+                    <Input
+                      id="jobTitle"
+                      value={formData.jobTitle}
+                      onChange={(e) => setFormData({ ...formData, jobTitle: e.target.value })}
+                      onBlur={() => handleFieldBlur('jobTitle')}
+                      className="border-[#E5E7EB] focus:border-[#8B5CF6]"
+                      placeholder="Senior Product Designer"
+                    />
+                  </div>
+
+                  <div>
+                    <Label htmlFor="companyName" className="text-sm font-medium text-[#1F2937] mb-2 block">
+                      Company Name
+                    </Label>
+                    <Input
+                      id="companyName"
+                      value={formData.companyName}
+                      onChange={(e) => setFormData({ ...formData, companyName: e.target.value })}
+                      onBlur={() => handleFieldBlur('companyName')}
+                      className="border-[#E5E7EB] focus:border-[#8B5CF6]"
+                      placeholder="TechCorp"
+                    />
+                  </div>
+
+                  <div>
+                    <Label htmlFor="bio" className="text-sm font-medium text-[#1F2937] mb-2 block">
+                      Bio (Optional)
+                    </Label>
+                    <Textarea
+                      id="bio"
+                      value={formData.bio}
+                      onChange={handleBioChange}
+                      onBlur={() => handleFieldBlur('bio')}
+                      rows={3}
+                      className="resize-none border-[#E5E7EB] focus:border-[#8B5CF6]"
+                      placeholder="Tell us about yourself..."
+                    />
+                    <p className="text-xs text-[#9CA3AF] text-right mt-1">
+                      {charCount} / 280 characters
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>

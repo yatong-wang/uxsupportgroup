@@ -117,9 +117,11 @@ export type Database = {
       user_profiles: {
         Row: {
           bio: string | null
+          company_name: string | null
           created_at: string
           email: string
           id: string
+          job_title: string | null
           linkedin_url: string | null
           name: string | null
           profile_photo_url: string | null
@@ -130,9 +132,11 @@ export type Database = {
         }
         Insert: {
           bio?: string | null
+          company_name?: string | null
           created_at?: string
           email: string
           id?: string
+          job_title?: string | null
           linkedin_url?: string | null
           name?: string | null
           profile_photo_url?: string | null
@@ -143,9 +147,11 @@ export type Database = {
         }
         Update: {
           bio?: string | null
+          company_name?: string | null
           created_at?: string
           email?: string
           id?: string
+          job_title?: string | null
           linkedin_url?: string | null
           name?: string | null
           profile_photo_url?: string | null
