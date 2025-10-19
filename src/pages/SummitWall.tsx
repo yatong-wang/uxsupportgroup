@@ -153,9 +153,25 @@ const SummitWall = () => {
     }
   };
 
-  const handleCardClick = (profile: ProfileCard) => {
+  const handleCardClick = async (profile: ProfileCard) => {
     setSelectedProfile(profile);
     setIsEditMode(false);
+    
+    // Load enrichments for view mode
+    try {
+      const { data: enrichmentsData, error } = await supabase
+        .from('enrichments')
+        .select('*')
+        .eq('user_id', profile.id)
+        .order('display_order', { ascending: true });
+
+      if (error) throw error;
+      setEnrichments((enrichmentsData || []) as Enrichment[]);
+    } catch (error) {
+      console.error('Error loading enrichments:', error);
+      setEnrichments([]);
+    }
+    
     setShowDetailModal(true);
   };
 
@@ -721,6 +737,35 @@ const SummitWall = () => {
                       View LinkedIn Profile
                       <ExternalLink className="w-4 h-4" />
                     </a>
+                  </div>
+                )}
+
+                {/* Enrichments/Links */}
+                {enrichments.length > 0 && (
+                  <div className="border-t pt-4">
+                    <h3 className="text-sm font-semibold text-[#1F2937] mb-3">Shared Links</h3>
+                    <div className="space-y-2">
+                      {enrichments.map((enrichment) => (
+                        <a
+                          key={enrichment.id}
+                          href={enrichment.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-3 p-3 bg-[#F9FAFB] rounded-lg border hover:border-[#8B5CF6] transition-colors group"
+                        >
+                          <LinkIcon className="w-4 h-4 text-[#8B5CF6] flex-shrink-0" />
+                          <div className="flex-1 min-w-0">
+                            <p className="text-sm text-[#1F2937] truncate group-hover:text-[#8B5CF6]">
+                              {enrichment.title || enrichment.url}
+                            </p>
+                            <p className="text-xs text-[#9CA3AF] truncate">
+                              {enrichment.url}
+                            </p>
+                          </div>
+                          <ExternalLink className="w-4 h-4 text-[#9CA3AF] group-hover:text-[#8B5CF6] flex-shrink-0" />
+                        </a>
+                      ))}
+                    </div>
                   </div>
                 )}
 
