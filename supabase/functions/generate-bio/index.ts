@@ -54,7 +54,7 @@ serve(async (req) => {
     console.error('Error generating bio:', error);
     return new Response(
       JSON.stringify({ 
-        error: error.message,
+        error: error instanceof Error ? error.message : 'Unknown error',
         bio: 'UX professional passionate about human-centered design and innovation.'
       }),
       { 
