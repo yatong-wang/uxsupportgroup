@@ -65,6 +65,8 @@ const SummitWall = () => {
   const [currentUserId, setCurrentUserId] = useState<string | null>(null);
   const [editFromWall, setEditFromWall] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [showAddLinkDialog, setShowAddLinkDialog] = useState(false);
+  const [newLinkData, setNewLinkData] = useState({ url: '', title: '' });
 
   // Generate deterministic animation properties based on profile ID
   const getFloatAnimation = (profileId: string) => {
@@ -432,14 +434,29 @@ const SummitWall = () => {
       setIsEditMode(false);
     }
   };
-  const handleAddLink = async () => {
+  const handleAddLink = () => {
     if (!selectedProfile) return;
     if (enrichments.length >= 10) {
       toast.error("Maximum 10 enrichments allowed");
       return;
     }
-    const url = prompt("Enter URL:");
-    if (!url) return;
+    setNewLinkData({ url: '', title: '' });
+    setShowAddLinkDialog(true);
+  };
+
+  const handleSaveNewLink = async () => {
+    if (!selectedProfile) return;
+    
+    // Validation
+    if (!newLinkData.url.trim()) {
+      toast.error("URL is required");
+      return;
+    }
+    if (!newLinkData.title.trim()) {
+      toast.error("Title/Label is required");
+      return;
+    }
+
     try {
       const {
         data,
@@ -447,13 +464,15 @@ const SummitWall = () => {
       } = await supabase.from('enrichments').insert({
         user_id: selectedProfile.id,
         type: 'link',
-        url,
-        title: url,
+        url: newLinkData.url.trim(),
+        title: newLinkData.title.trim(),
         display_order: enrichments.length
       }).select().single();
       if (error) throw error;
       setEnrichments([...enrichments, data as Enrichment]);
       toast.success("Link added");
+      setShowAddLinkDialog(false);
+      setNewLinkData({ url: '', title: '' });
     } catch (error) {
       console.error('Error adding link:', error);
       toast.error("Failed to add link");
@@ -898,6 +917,46 @@ const SummitWall = () => {
                 </div>
               </div>)}
             </>}
+        </DialogContent>
+      </Dialog>
+
+      {/* Add Link Dialog */}
+      <Dialog open={showAddLinkDialog} onOpenChange={setShowAddLinkDialog}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Add New Link</DialogTitle>
+            <DialogDescription>
+              Add a custom link with a title to your profile
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4 py-4">
+            <div className="space-y-2">
+              <Label htmlFor="link-url">URL *</Label>
+              <Input
+                id="link-url"
+                placeholder="https://suno.com/song/xyz"
+                value={newLinkData.url}
+                onChange={(e) => setNewLinkData({ ...newLinkData, url: e.target.value })}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="link-title">Title/Label *</Label>
+              <Input
+                id="link-title"
+                placeholder="My Jazz Composition"
+                value={newLinkData.title}
+                onChange={(e) => setNewLinkData({ ...newLinkData, title: e.target.value })}
+              />
+            </div>
+          </div>
+          <div className="flex justify-end gap-3">
+            <Button variant="outline" onClick={() => setShowAddLinkDialog(false)}>
+              Cancel
+            </Button>
+            <Button onClick={handleSaveNewLink} className="bg-gradient-to-r from-[#8B5CF6] to-[#7C3AED] hover:opacity-90">
+              Save Link
+            </Button>
+          </div>
         </DialogContent>
       </Dialog>
     </div>;
