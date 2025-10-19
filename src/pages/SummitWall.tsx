@@ -74,11 +74,49 @@ const SummitWall = () => {
     const duration = 12 + (hash % 8); // 12-19 seconds
     const delay = (hash % 10); // 0-9 seconds
     
+    // Define keyframe names
+    const keyframeName = `float-${animationType}-${profileId.substring(0, 8)}`;
+    
     return {
-      animation: `float-${animationType}`,
+      animationName: keyframeName,
+      animationType,
       duration: `${duration}s`,
       delay: `${delay}s`,
     };
+  };
+
+  // Create keyframes dynamically for each profile
+  const createKeyframes = (profileId: string, animationType: number) => {
+    const keyframeName = `float-${animationType}-${profileId.substring(0, 8)}`;
+    
+    // Different movement patterns
+    const patterns = {
+      1: `
+        @keyframes ${keyframeName} {
+          0%, 100% { transform: translate(0px, 0px); }
+          25% { transform: translate(12px, -15px); }
+          50% { transform: translate(-10px, -12px); }
+          75% { transform: translate(-15px, 10px); }
+        }
+      `,
+      2: `
+        @keyframes ${keyframeName} {
+          0%, 100% { transform: translate(0px, 0px); }
+          25% { transform: translate(-18px, 12px); }
+          50% { transform: translate(15px, 15px); }
+          75% { transform: translate(10px, -18px); }
+        }
+      `,
+      3: `
+        @keyframes ${keyframeName} {
+          0%, 100% { transform: translate(0px, 0px); }
+          33% { transform: translate(14px, 16px); }
+          66% { transform: translate(-16px, -11px); }
+        }
+      `,
+    };
+    
+    return patterns[animationType as keyof typeof patterns];
   };
 
   useEffect(() => {
@@ -583,17 +621,25 @@ const SummitWall = () => {
             </h2>
           </div>
 
+          {/* Inject keyframes for all profiles */}
+          <style>
+            {profiles.map(profile => {
+              const floatAnimation = getFloatAnimation(profile.id);
+              return createKeyframes(profile.id, floatAnimation.animationType);
+            }).join('\n')}
+          </style>
+
           {profiles.map(profile => {
             const floatAnimation = getFloatAnimation(profile.id);
             return (
               <div 
                 key={profile.id} 
-                className={`absolute bg-white rounded-xl shadow-md hover:shadow-xl transition-all cursor-pointer p-4 animate-${floatAnimation.animation}`}
+                className="absolute bg-white rounded-xl shadow-md hover:shadow-xl transition-shadow cursor-pointer p-4"
                 style={{
                   left: `${profile.wall_position_x || 0}px`,
                   top: `${profile.wall_position_y || 0}px`,
                   width: '200px',
-                  animationDuration: floatAnimation.duration,
+                  animation: `${floatAnimation.animationName} ${floatAnimation.duration} ease-in-out infinite`,
                   animationDelay: floatAnimation.delay,
                 }} 
                 onClick={() => handleCardClick(profile)}
