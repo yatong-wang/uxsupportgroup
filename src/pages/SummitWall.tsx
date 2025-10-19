@@ -667,7 +667,7 @@ const SummitWall = () => {
                 <div className="flex items-center gap-1 pb-6 border-b border-gray-200">
                   <img src={uxsgLogo} alt="UXSG" className="h-11 w-auto -mr-[15px]" />
                   <div className="w-px h-12 bg-gray-200" />
-                  <h3 className="text-3xl font-semibold text-black">
+                  <h3 className="text-3xl font-semibold text-black ml-[10px]">
                     AI<span className="text-gradient">x</span>UX Summit 2025
                   </h3>
                 </div>
