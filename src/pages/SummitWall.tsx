@@ -519,8 +519,8 @@ const SummitWall = () => {
         {currentUserId ? (
           <>
             <div className="bg-white rounded-lg shadow-md px-4 py-2 flex items-center gap-2">
-              <span className="text-sm text-[#6B7280]">Logged in as</span>
-              <span className="text-sm font-medium text-[#1F2937]">{userEmail}</span>
+              <span className="text-sm text-black">Logged in as</span>
+              <span className="text-sm font-medium text-black">{userEmail}</span>
               <button
                 onClick={handleLogout}
                 className="text-sm text-[#8B5CF6] hover:text-[#7C3AED] ml-2"
@@ -570,7 +570,7 @@ const SummitWall = () => {
         <Button variant="ghost" size="sm" onClick={handleZoomOut} disabled={zoom <= 50}>
           <Minus className="w-4 h-4" />
         </Button>
-        <span className="text-sm font-medium text-[#1F2937] min-w-[60px] text-center">
+        <span className="text-sm font-medium text-black min-w-[60px] text-center">
           {zoom}%
         </span>
         <Button variant="ghost" size="sm" onClick={handleZoomIn} disabled={zoom >= 200}>
@@ -609,7 +609,7 @@ const SummitWall = () => {
                     </div>}
                 </div>
                 
-                <h3 className="text-sm font-semibold text-[#1F2937] text-center line-clamp-1">
+                <h3 className="text-sm font-semibold text-black text-center line-clamp-1">
                   {profile.name}
                 </h3>
                 
@@ -617,18 +617,18 @@ const SummitWall = () => {
                     {profile.job_title}
                   </p>}
                 
-                {profile.company_name && <p className="text-xs text-[#6B7280] text-center line-clamp-1">
+                {profile.company_name && <p className="text-xs text-black text-center line-clamp-1">
                     {profile.company_name}
                   </p>}
                 
-                {profile.bio && <p className="text-xs text-[#9CA3AF] text-center line-clamp-2 mt-1">
+                {profile.bio && <p className="text-xs text-black text-center line-clamp-2 mt-1">
                     {profile.bio}
                   </p>}
               </div>
             </div>)}
 
           {profiles.length === 0 && <div className="absolute inset-0 flex items-center justify-center">
-              <p className="text-[#9CA3AF] text-lg">No profiles yet</p>
+              <p className="text-black text-lg">No profiles yet</p>
             </div>}
         </div>
       </div>
@@ -643,7 +643,7 @@ const SummitWall = () => {
             <DialogTitle className="text-center text-2xl">
               Create Your Profile Card
             </DialogTitle>
-            <DialogDescription className="text-center text-[#6B7280] text-sm">
+            <DialogDescription className="text-center text-black text-sm">
               Welcome to the AI x UX Virtual Summit! Let's create your unique profile card.
             </DialogDescription>
           </DialogHeader>
@@ -685,7 +685,7 @@ const SummitWall = () => {
               {isProcessing ? "Creating..." : "Create Profile"}
             </Button>
 
-            <p className="text-center text-xs text-[#9CA3AF]">
+            <p className="text-center text-xs text-black">
               * Required fields
             </p>
           </form>
@@ -724,7 +724,7 @@ const SummitWall = () => {
                   </div>
 
                   <div className="text-center mb-4">
-                    <h3 className="text-lg font-semibold text-[#1F2937]">{selectedProfile.name}</h3>
+                    <h3 className="text-lg font-semibold text-black">{selectedProfile.name}</h3>
                   </div>
 
                   <div>
@@ -757,7 +757,7 @@ const SummitWall = () => {
                 ...editFormData,
                 bio: e.target.value
               })} className="mt-2 w-full min-h-[100px] px-3 py-2 text-sm rounded-md border border-input bg-background ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" disabled={isSaving} maxLength={280} />
-                    <p className="text-xs text-[#9CA3AF] mt-1">
+                    <p className="text-xs text-black mt-1">
                       {editFormData.bio.length}/280 characters
                     </p>
                   </div>
@@ -777,10 +777,10 @@ const SummitWall = () => {
                             <div className="flex items-center gap-3 flex-1 min-w-0">
                               <LinkIcon className="w-4 h-4 text-[#8B5CF6] flex-shrink-0" />
                               <div className="flex-1 min-w-0">
-                                <p className="text-sm text-[#1F2937] truncate">
+                                <p className="text-sm text-black truncate">
                                   {enrichment.title || enrichment.url}
                                 </p>
-                                <p className="text-xs text-[#9CA3AF] truncate">
+                                <p className="text-xs text-black truncate">
                                   {enrichment.url}
                                 </p>
                               </div>
@@ -815,7 +815,7 @@ const SummitWall = () => {
 
                   {/* Right Column - Info */}
                   <div className="flex-1 min-w-0 space-y-2">
-                    <h2 className="text-xl font-bold text-[#1F2937]">{selectedProfile.name}</h2>
+                    <h2 className="text-xl font-bold text-black">{selectedProfile.name}</h2>
                     
                     {(selectedProfile.job_title || selectedProfile.company_name) && (
                       <p className="text-base font-semibold text-[#8B5CF6]">
@@ -834,25 +834,25 @@ const SummitWall = () => {
 
                 {/* Bio */}
                 {selectedProfile.bio && <div className="bg-[#F9FAFB] rounded-lg p-4">
-                    <p className="text-sm text-[#4B5563] leading-relaxed">{selectedProfile.bio}</p>
+                    <p className="text-sm text-black leading-relaxed">{selectedProfile.bio}</p>
                   </div>}
 
 
                 {/* Enrichments/Links */}
                 {enrichments.length > 0 && <div className="border-t pt-4">
-                    <h3 className="text-sm font-semibold text-[#1F2937] mb-3">My Creations</h3>
+                    <h3 className="text-sm font-semibold text-black mb-3">My Creations</h3>
                     <div className="space-y-2">
                       {enrichments.map(enrichment => <a key={enrichment.id} href={enrichment.url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 p-3 bg-[#F9FAFB] rounded-lg border hover:border-[#8B5CF6] transition-colors group">
                           <LinkIcon className="w-4 h-4 text-[#8B5CF6] flex-shrink-0" />
                           <div className="flex-1 min-w-0">
-                            <p className="text-sm text-[#1F2937] truncate group-hover:text-[#8B5CF6]">
+                            <p className="text-sm text-[#8B5CF6] truncate group-hover:underline">
                               {enrichment.title || enrichment.url}
                             </p>
-                            <p className="text-xs text-[#9CA3AF] truncate">
+                            <p className="text-xs text-black truncate">
                               {enrichment.url}
                             </p>
                           </div>
-                          <ExternalLink className="w-4 h-4 text-[#9CA3AF] group-hover:text-[#8B5CF6] flex-shrink-0" />
+                          <ExternalLink className="w-4 h-4 text-[#8B5CF6] flex-shrink-0" />
                         </a>)}
                     </div>
                   </div>}
