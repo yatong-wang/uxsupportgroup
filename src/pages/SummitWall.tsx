@@ -70,25 +70,24 @@ const SummitWall = () => {
   const getFloatAnimation = (profileId: string) => {
     // Use profile ID to generate consistent random values
     const hash = profileId.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
-    const animationType = (hash % 3) + 1; // 1, 2, or 3
-    const duration = 12 + (hash % 8); // 12-19 seconds
-    const delay = (hash % 10); // 0-9 seconds
-    
+    const animationType = hash % 3 + 1; // 1, 2, or 3
+    const duration = 12 + hash % 8; // 12-19 seconds
+    const delay = hash % 10; // 0-9 seconds
+
     // Define keyframe names
     const keyframeName = `float-${animationType}-${profileId.substring(0, 8)}`;
-    
     return {
       animationName: keyframeName,
       animationType,
       duration: `${duration}s`,
-      delay: `${delay}s`,
+      delay: `${delay}s`
     };
   };
 
   // Create keyframes dynamically for each profile
   const createKeyframes = (profileId: string, animationType: number) => {
     const keyframeName = `float-${animationType}-${profileId.substring(0, 8)}`;
-    
+
     // Different movement patterns
     const patterns = {
       1: `
@@ -113,12 +112,10 @@ const SummitWall = () => {
           33% { transform: translate(14px, 16px); }
           66% { transform: translate(-16px, -11px); }
         }
-      `,
+      `
     };
-    
     return patterns[animationType as keyof typeof patterns];
   };
-
   useEffect(() => {
     loadProfiles();
     checkAuthStatus();
@@ -624,26 +621,20 @@ const SummitWall = () => {
           {/* Inject keyframes for all profiles */}
           <style>
             {profiles.map(profile => {
-              const floatAnimation = getFloatAnimation(profile.id);
-              return createKeyframes(profile.id, floatAnimation.animationType);
-            }).join('\n')}
+            const floatAnimation = getFloatAnimation(profile.id);
+            return createKeyframes(profile.id, floatAnimation.animationType);
+          }).join('\n')}
           </style>
 
           {profiles.map(profile => {
-            const floatAnimation = getFloatAnimation(profile.id);
-            return (
-              <div 
-                key={profile.id} 
-                className="absolute bg-white rounded-xl shadow-md hover:shadow-xl transition-shadow cursor-pointer p-4"
-                style={{
-                  left: `${profile.wall_position_x || 0}px`,
-                  top: `${profile.wall_position_y || 0}px`,
-                  width: '200px',
-                  animation: `${floatAnimation.animationName} ${floatAnimation.duration} ease-in-out infinite`,
-                  animationDelay: floatAnimation.delay,
-                }} 
-                onClick={() => handleCardClick(profile)}
-              >
+          const floatAnimation = getFloatAnimation(profile.id);
+          return <div key={profile.id} className="absolute bg-white rounded-xl shadow-md hover:shadow-xl transition-shadow cursor-pointer p-4" style={{
+            left: `${profile.wall_position_x || 0}px`,
+            top: `${profile.wall_position_y || 0}px`,
+            width: '200px',
+            animation: `${floatAnimation.animationName} ${floatAnimation.duration} ease-in-out infinite`,
+            animationDelay: floatAnimation.delay
+          }} onClick={() => handleCardClick(profile)}>
               <div className="flex flex-col items-center gap-3">
                 <div className="w-16 h-16 rounded-full bg-[#E5E7EB] overflow-hidden flex-shrink-0">
                   {profile.profile_photo_url ? <img src={profile.profile_photo_url} alt={profile.name} className="w-full h-full object-cover" /> : <div className="w-full h-full flex items-center justify-center text-[#9CA3AF] text-xs">
@@ -655,7 +646,7 @@ const SummitWall = () => {
                   {profile.name}
                 </h3>
                 
-                {profile.job_title && <p className="text-xs font-medium text-black text-center line-clamp-1 mt-1">
+                {profile.job_title && <p className="text-xs font-medium text-black text-center line-clamp-1 mt-1 my-0">
                     {profile.job_title}
                   </p>}
                 
@@ -667,8 +658,7 @@ const SummitWall = () => {
                     {profile.bio}
                    </p>}
               </div>
-            </div>
-          );
+            </div>;
         })}
 
           {profiles.length === 0 && <div className="absolute inset-0 flex items-center justify-center">
