@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { toast } from "sonner";
-import { Minus, Plus, Maximize2, UserPlus, ExternalLink, Share2, Edit, Link as LinkIcon, Trash2, LogOut } from "lucide-react";
+import { Minus, Plus, Maximize2, UserPlus, ExternalLink, Share2, Edit, Link as LinkIcon, Trash2, LogOut, Shield } from "lucide-react";
 import logo from "@/assets/uxsg-logo-dark-bg.png";
 import AuthModal from "@/components/AuthModal";
 interface ProfileCard {
@@ -57,6 +57,7 @@ const SummitWall = () => {
   const [userEmail, setUserEmail] = useState<string | null>(null);
   const [currentUserId, setCurrentUserId] = useState<string | null>(null);
   const [editFromWall, setEditFromWall] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
     loadProfiles();
@@ -70,6 +71,16 @@ const SummitWall = () => {
     if (userId && email) {
       setCurrentUserId(userId);
       setUserEmail(email);
+      
+      // Check if user is admin
+      try {
+        const { data: adminData } = await supabase.functions.invoke('check-admin', {
+          body: { userId }
+        });
+        setIsAdmin(adminData?.isAdmin || false);
+      } catch (error) {
+        console.error('Error checking admin status:', error);
+      }
     } else if (userId) {
       // Fetch email from database if we have userId but not email
       try {
@@ -512,6 +523,20 @@ const SummitWall = () => {
           </Button>
         )}
       </div>
+
+      {/* Admin Link - Top Right */}
+      {isAdmin && (
+        <div className="fixed top-4 left-4 z-10">
+          <Button
+            onClick={() => navigate('/admin')}
+            variant="outline"
+            className="bg-white shadow-md"
+          >
+            <Shield className="w-4 h-4 mr-2" />
+            Admin Panel
+          </Button>
+        </div>
+      )}
 
       <AuthModal open={showAuthModal} onOpenChange={setShowAuthModal} />
 

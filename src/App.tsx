@@ -13,6 +13,7 @@ import MediaKit from "./pages/MediaKit";
 import SummitEdit from "./pages/SummitEdit";
 import SummitWall from "./pages/SummitWall";
 import SummitVerify from "./pages/SummitVerify";
+import AdminPanel from "./pages/AdminPanel";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -34,6 +35,7 @@ const App = () => (
           <Route path="/summit-profiles" element={<SummitWall />} />
           <Route path="/summit-profiles/verify" element={<SummitVerify />} />
           <Route path="/summit-profiles/edit" element={<SummitEdit />} />
+          <Route path="/admin" element={<AdminPanel />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
