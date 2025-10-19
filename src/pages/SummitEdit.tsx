@@ -23,11 +23,10 @@ const SummitEdit = () => {
   const navigate = useNavigate();
   const [profile, setProfile] = useState<any>(null);
   const [formData, setFormData] = useState({
+    name: '',
     jobTitle: '',
-    companyName: '',
-    bio: ''
+    companyName: ''
   });
-  const [charCount, setCharCount] = useState(0);
   const [enrichments, setEnrichments] = useState<Enrichment[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -53,11 +52,10 @@ const SummitEdit = () => {
 
       setProfile(profileData);
       setFormData({
+        name: profileData.name || '',
         jobTitle: profileData.job_title || '',
-        companyName: profileData.company_name || '',
-        bio: profileData.bio || ''
+        companyName: profileData.company_name || ''
       });
-      setCharCount(profileData.bio?.length || 0);
 
       const { data: enrichmentsData, error: enrichmentsError } = await supabase
         .from('enrichments')
@@ -76,22 +74,16 @@ const SummitEdit = () => {
     }
   };
 
-  const handleBioChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const newBio = e.target.value.substring(0, 280);
-    setFormData({ ...formData, bio: newBio });
-    setCharCount(newBio.length);
-  };
-
-  const handleFieldBlur = async (field: 'jobTitle' | 'companyName' | 'bio') => {
+  const handleFieldBlur = async (field: 'name' | 'jobTitle' | 'companyName') => {
     try {
       const updateData: any = {};
       
-      if (field === 'jobTitle') {
+      if (field === 'name') {
+        updateData.name = formData.name;
+      } else if (field === 'jobTitle') {
         updateData.job_title = formData.jobTitle;
       } else if (field === 'companyName') {
         updateData.company_name = formData.companyName;
-      } else if (field === 'bio') {
-        updateData.bio = formData.bio;
       }
 
       const { error } = await supabase
@@ -101,7 +93,7 @@ const SummitEdit = () => {
 
       if (error) throw error;
 
-      toast.success(`${field === 'jobTitle' ? 'Job title' : field === 'companyName' ? 'Company name' : 'Bio'} updated`);
+      toast.success(`${field === 'name' ? 'Name' : field === 'jobTitle' ? 'Job title' : 'Company name'} updated`);
     } catch (error) {
       console.error(`Error updating ${field}:`, error);
       toast.error(`Failed to update ${field}`);
@@ -205,9 +197,21 @@ const SummitEdit = () => {
               </div>
 
               <div className="flex-1">
-                <h2 className="text-2xl font-bold text-[#1F2937] mb-4">{profile.name}</h2>
-                
                 <div className="space-y-4">
+                  <div>
+                    <Label htmlFor="name" className="text-sm font-medium text-[#1F2937] mb-2 block">
+                      Full Name
+                    </Label>
+                    <Input
+                      id="name"
+                      value={formData.name}
+                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      onBlur={() => handleFieldBlur('name')}
+                      className="border-[#E5E7EB] focus:border-[#8B5CF6]"
+                      placeholder="Sarah Chen"
+                    />
+                  </div>
+
                   <div>
                     <Label htmlFor="jobTitle" className="text-sm font-medium text-[#1F2937] mb-2 block">
                       Job Title
@@ -234,24 +238,6 @@ const SummitEdit = () => {
                       className="border-[#E5E7EB] focus:border-[#8B5CF6]"
                       placeholder="TechCorp"
                     />
-                  </div>
-
-                  <div>
-                    <Label htmlFor="bio" className="text-sm font-medium text-[#1F2937] mb-2 block">
-                      Bio (Optional)
-                    </Label>
-                    <Textarea
-                      id="bio"
-                      value={formData.bio}
-                      onChange={handleBioChange}
-                      onBlur={() => handleFieldBlur('bio')}
-                      rows={3}
-                      className="resize-none border-[#E5E7EB] focus:border-[#8B5CF6]"
-                      placeholder="Tell us about yourself..."
-                    />
-                    <p className="text-xs text-[#9CA3AF] text-right mt-1">
-                      {charCount} / 280 characters
-                    </p>
                   </div>
                 </div>
               </div>

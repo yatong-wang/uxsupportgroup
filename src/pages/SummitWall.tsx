@@ -46,9 +46,9 @@ const SummitWall = () => {
   const [selectedProfile, setSelectedProfile] = useState<ProfileCard | null>(null);
   const [isEditMode, setIsEditMode] = useState(false);
   const [editFormData, setEditFormData] = useState({
+    name: '',
     jobTitle: '',
     companyName: '',
-    bio: '',
     linkedinUrl: ''
   });
   const [enrichments, setEnrichments] = useState<Enrichment[]>([]);
@@ -233,9 +233,9 @@ const SummitWall = () => {
       // Set as selected profile and load enrichments
       setSelectedProfile(profile);
       setEditFormData({
+        name: profile.name || '',
         jobTitle: profile.job_title || '',
         companyName: profile.company_name || '',
-        bio: profile.bio || '',
         linkedinUrl: profile.linkedin_url || ''
       });
 
@@ -354,9 +354,9 @@ const SummitWall = () => {
       return;
     }
     setEditFormData({
+      name: selectedProfile.name || '',
       jobTitle: selectedProfile.job_title || '',
       companyName: selectedProfile.company_name || '',
-      bio: selectedProfile.bio || '',
       linkedinUrl: selectedProfile.linkedin_url || ''
     });
 
@@ -385,9 +385,9 @@ const SummitWall = () => {
       const {
         error
       } = await supabase.from('user_profiles').update({
+        name: editFormData.name.trim() || null,
         job_title: editFormData.jobTitle.trim() || null,
         company_name: editFormData.companyName.trim() || null,
-        bio: editFormData.bio.trim() || null,
         linkedin_url: editFormData.linkedinUrl.trim() || null
       }).eq('id', selectedProfile.id);
       if (error) throw error;
@@ -397,9 +397,9 @@ const SummitWall = () => {
       // Update selected profile to show new data
       setSelectedProfile({
         ...selectedProfile,
+        name: editFormData.name.trim() || selectedProfile.name,
         job_title: editFormData.jobTitle.trim() || null,
         company_name: editFormData.companyName.trim() || null,
-        bio: editFormData.bio.trim() || null,
         linkedin_url: editFormData.linkedinUrl.trim() || null
       });
 
@@ -760,8 +760,12 @@ const SummitWall = () => {
                     </button>
                   </div>
 
-                  <div className="text-center mb-4">
-                    <h3 className="text-lg font-semibold text-black">{selectedProfile.name}</h3>
+                  <div>
+                    <Label htmlFor="edit-name">Full Name *</Label>
+                    <Input id="edit-name" type="text" placeholder="Sarah Chen" value={editFormData.name} onChange={e => setEditFormData({
+                ...editFormData,
+                name: e.target.value
+              })} className="mt-2" disabled={isSaving} required />
                   </div>
 
                   <div>
@@ -786,17 +790,6 @@ const SummitWall = () => {
                 ...editFormData,
                 linkedinUrl: e.target.value
               })} className="mt-2" disabled={isSaving} />
-                  </div>
-
-                  <div>
-                    <Label htmlFor="edit-bio">Bio</Label>
-                    <textarea id="edit-bio" placeholder="Tell us about yourself..." value={editFormData.bio} onChange={e => setEditFormData({
-                ...editFormData,
-                bio: e.target.value
-              })} className="mt-2 w-full min-h-[100px] px-3 py-2 text-sm rounded-md border border-input bg-background ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" disabled={isSaving} maxLength={280} />
-                    <p className="text-xs text-black mt-1">
-                      {editFormData.bio.length}/280 characters
-                    </p>
                   </div>
 
                   {/* Enrichments Section */}
