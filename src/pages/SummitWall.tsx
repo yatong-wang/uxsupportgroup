@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams, useParams } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -31,6 +31,7 @@ interface Enrichment {
 }
 const SummitWall = () => {
   const navigate = useNavigate();
+  const { slug } = useParams<{ slug: string }>();
   const [searchParams, setSearchParams] = useSearchParams();
   const [profiles, setProfiles] = useState<ProfileCard[]>([]);
   const [zoom, setZoom] = useState(100);
@@ -74,6 +75,18 @@ const SummitWall = () => {
       }
     }
   }, []);
+
+  // Handle direct profile link via slug
+  useEffect(() => {
+    if (slug && profiles.length > 0) {
+      const profile = profiles.find(p => p.slug === slug || p.id === slug);
+      if (profile) {
+        handleCardClick(profile);
+        // Update URL to remove slug after opening modal
+        navigate('/summit-profiles', { replace: true });
+      }
+    }
+  }, [slug, profiles]);
 
   const checkAuthStatus = async () => {
     const userId = sessionStorage.getItem('summit_user_id');
