@@ -593,8 +593,8 @@ const SummitWall = () => {
       }}>
           {/* Centered Watermark Branding */}
           <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center pointer-events-none opacity-10">
-            <img src={uxsgLogo} alt="UXSG" className="h-32 w-auto mb-4" />
-            <h2 className="text-4xl font-bold text-[#1F2937]">AI x UX Summit 2025</h2>
+            <img src={uxsgLogo} alt="UXSG" className="h-48 w-auto mb-6" />
+            <h2 className="text-[8rem] font-bold text-black">AI x UX Summit 2025</h2>
           </div>
 
           {profiles.map(profile => <div key={profile.id} className="absolute bg-white rounded-xl shadow-md hover:shadow-xl transition-all cursor-pointer p-4" style={{
@@ -613,11 +613,11 @@ const SummitWall = () => {
                   {profile.name}
                 </h3>
                 
-                {profile.job_title && <p className="text-xs font-medium text-[#8B5CF6] text-center line-clamp-1">
+                {profile.job_title && <p className="text-xs font-medium text-black text-center line-clamp-1 mt-1">
                     {profile.job_title}
                   </p>}
                 
-                {profile.company_name && <p className="text-xs text-black text-center line-clamp-1">
+                {profile.company_name && <p className="text-xs text-black text-center line-clamp-1 mt-1">
                     {profile.company_name}
                   </p>}
                 
@@ -697,9 +697,9 @@ const SummitWall = () => {
         <DialogContent className="sm:max-w-lg">
           {selectedProfile && <>
               <DialogHeader>
-                <div className="flex flex-col items-center gap-2 mb-4">
-                  <img src={uxsgLogo} alt="UXSG" className="h-16 w-auto" />
-                  <h3 className="text-lg font-semibold text-[#8B5CF6]">AI x UX Summit 2025</h3>
+                <div className="flex flex-col items-center gap-2 mb-4 pb-4 border-b border-gray-200">
+                  <img src={uxsgLogo} alt="UXSG" className="h-11 w-auto" />
+                  <h3 className="text-4xl font-semibold text-black">AI x UX Summit 2025</h3>
                 </div>
                 <DialogTitle className="sr-only">
                   {isEditMode ? 'Edit Profile' : 'Profile'}
@@ -818,7 +818,7 @@ const SummitWall = () => {
                     <h2 className="text-xl font-bold text-black">{selectedProfile.name}</h2>
                     
                     {(selectedProfile.job_title || selectedProfile.company_name) && (
-                      <p className="text-base font-semibold text-[#8B5CF6]">
+                      <p className="text-sm text-black">
                         {selectedProfile.job_title}
                         {selectedProfile.job_title && selectedProfile.company_name && " at "}
                         {selectedProfile.company_name}
