@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { toast } from "sonner";
-import { Minus, Plus, Maximize2, UserPlus } from "lucide-react";
+import { Minus, Plus, Maximize2, UserPlus, ExternalLink, Share2, Edit } from "lucide-react";
 import logo from "@/assets/uxsg-logo-dark-bg.png";
 
 interface ProfileCard {
@@ -18,6 +18,8 @@ interface ProfileCard {
   profile_photo_url: string | null;
   wall_position_x: number;
   wall_position_y: number;
+  slug: string | null;
+  linkedin_url: string | null;
 }
 
 const SummitWall = () => {
@@ -26,6 +28,8 @@ const SummitWall = () => {
   const [zoom, setZoom] = useState(100);
   const [isLoading, setIsLoading] = useState(true);
   const [showCreateModal, setShowCreateModal] = useState(false);
+  const [showDetailModal, setShowDetailModal] = useState(false);
+  const [selectedProfile, setSelectedProfile] = useState<ProfileCard | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
@@ -42,7 +46,7 @@ const SummitWall = () => {
     try {
       const { data, error } = await supabase
         .from('user_profiles')
-        .select('id, name, job_title, company_name, bio, profile_photo_url, wall_position_x, wall_position_y')
+        .select('id, name, job_title, company_name, bio, profile_photo_url, wall_position_x, wall_position_y, slug, linkedin_url')
         .not('name', 'is', null);
 
       if (error) throw error;
@@ -131,9 +135,24 @@ const SummitWall = () => {
     }
   };
 
-  const handleCardClick = (profileId: string) => {
-    // For now, just show a toast. In full implementation, open detail modal
-    toast.info("Click to view profile details (coming soon)");
+  const handleCardClick = (profile: ProfileCard) => {
+    setSelectedProfile(profile);
+    setShowDetailModal(true);
+  };
+
+  const handleEdit = () => {
+    if (selectedProfile) {
+      sessionStorage.setItem('summit_user_id', selectedProfile.id);
+      navigate('/summit-profiles/edit');
+    }
+  };
+
+  const handleShare = () => {
+    if (selectedProfile) {
+      const url = `${window.location.origin}/summit-profiles/${selectedProfile.slug || selectedProfile.id}`;
+      navigator.clipboard.writeText(url);
+      toast.success("Profile link copied to clipboard!");
+    }
   };
 
   if (isLoading) {
@@ -205,7 +224,7 @@ const SummitWall = () => {
                 top: `${profile.wall_position_y || 0}px`,
                 width: '200px',
               }}
-              onClick={() => handleCardClick(profile.id)}
+              onClick={() => handleCardClick(profile)}
             >
               <div className="flex flex-col items-center gap-3">
                 <div className="w-16 h-16 rounded-full bg-[#E5E7EB] overflow-hidden flex-shrink-0">
@@ -337,6 +356,99 @@ const SummitWall = () => {
               * Required fields
             </p>
           </form>
+        </DialogContent>
+      </Dialog>
+
+      {/* Profile Detail Modal */}
+      <Dialog open={showDetailModal} onOpenChange={setShowDetailModal}>
+        <DialogContent className="sm:max-w-lg">
+          {selectedProfile && (
+            <>
+              <DialogHeader>
+                <DialogTitle className="text-center text-2xl">Profile</DialogTitle>
+                <DialogDescription className="sr-only">View profile details</DialogDescription>
+              </DialogHeader>
+
+              <div className="space-y-6">
+                {/* Profile Photo */}
+                <div className="flex justify-center">
+                  <div className="w-32 h-32 rounded-full bg-[#E5E7EB] overflow-hidden">
+                    {selectedProfile.profile_photo_url ? (
+                      <img 
+                        src={selectedProfile.profile_photo_url} 
+                        alt={selectedProfile.name} 
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center text-[#9CA3AF]">
+                        No photo
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* Name */}
+                <div className="text-center">
+                  <h2 className="text-2xl font-bold text-[#1F2937]">{selectedProfile.name}</h2>
+                </div>
+
+                {/* Job Title */}
+                {selectedProfile.job_title && (
+                  <div className="text-center">
+                    <p className="text-lg font-semibold text-[#8B5CF6]">{selectedProfile.job_title}</p>
+                  </div>
+                )}
+
+                {/* Company */}
+                {selectedProfile.company_name && (
+                  <div className="text-center">
+                    <p className="text-base text-[#6B7280]">{selectedProfile.company_name}</p>
+                  </div>
+                )}
+
+                {/* Bio */}
+                {selectedProfile.bio && (
+                  <div className="bg-[#F9FAFB] rounded-lg p-4">
+                    <p className="text-sm text-[#4B5563] leading-relaxed">{selectedProfile.bio}</p>
+                  </div>
+                )}
+
+                {/* LinkedIn */}
+                {selectedProfile.linkedin_url && (
+                  <div className="flex justify-center">
+                    <a
+                      href={selectedProfile.linkedin_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 text-sm text-[#8B5CF6] hover:text-[#7C3AED] transition-colors"
+                    >
+                      View LinkedIn Profile
+                      <ExternalLink className="w-4 h-4" />
+                    </a>
+                  </div>
+                )}
+
+                {/* Action Buttons */}
+                <div className="flex gap-3 pt-4">
+                  <Button
+                    onClick={handleEdit}
+                    variant="outline"
+                    className="flex-1 border-[#8B5CF6] text-[#8B5CF6] hover:bg-[#8B5CF6] hover:text-white"
+                  >
+                    <Edit className="w-4 h-4 mr-2" />
+                    Edit
+                  </Button>
+                  <Button
+                    onClick={handleShare}
+                    className="flex-1 bg-gradient-to-r from-[#8B5CF6] to-[#7C3AED] hover:opacity-90"
+                  >
+                    <Share2 className="w-4 h-4 mr-2" />
+                    Share
+                  </Button>
+                </div>
+              </div>
+            </>
+          )}
         </DialogContent>
       </Dialog>
     </div>
