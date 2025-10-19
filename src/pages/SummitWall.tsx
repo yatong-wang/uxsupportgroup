@@ -923,7 +923,7 @@ const SummitWall = () => {
 
                 {/* Enrichments/Links */}
                 {enrichments.length > 0 && <div className="border-t pt-4">
-                    <h3 className="text-sm font-semibold text-black mb-3">My Creations</h3>
+                    <h3 className="text-sm font-semibold text-black mb-3">What I created during the summit</h3>
                     <div className="space-y-2">
                       {enrichments.map(enrichment => <a key={enrichment.id} href={enrichment.url} target="_blank" rel="noopener noreferrer" className="flex w-full items-center gap-3 p-3 bg-[#F9FAFB] rounded-lg border hover:border-[#8B5CF6] transition-colors group overflow-hidden">
                           <LinkIcon className="w-4 h-4 text-[#8B5CF6] flex-shrink-0" />
