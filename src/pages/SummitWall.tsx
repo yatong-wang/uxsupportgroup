@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { toast } from "sonner";
-import { Minus, Plus, Maximize2, UserPlus, ExternalLink, Share2, Edit } from "lucide-react";
+import { Minus, Plus, Maximize2, UserPlus, ExternalLink, Share2, Edit, Link as LinkIcon, Trash2 } from "lucide-react";
 import logo from "@/assets/uxsg-logo-dark-bg.png";
 
 interface ProfileCard {
@@ -20,6 +20,15 @@ interface ProfileCard {
   wall_position_y: number;
   slug: string | null;
   linkedin_url: string | null;
+}
+
+interface Enrichment {
+  id: string;
+  type: 'link' | 'image';
+  url: string;
+  title: string | null;
+  image_url: string | null;
+  thumbnail_url: string | null;
 }
 
 const SummitWall = () => {
@@ -37,6 +46,7 @@ const SummitWall = () => {
     bio: '',
     linkedinUrl: ''
   });
+  const [enrichments, setEnrichments] = useState<Enrichment[]>([]);
   const [isSaving, setIsSaving] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const [formData, setFormData] = useState({
@@ -149,7 +159,7 @@ const SummitWall = () => {
     setShowDetailModal(true);
   };
 
-  const handleEdit = () => {
+  const handleEdit = async () => {
     if (selectedProfile) {
       setEditFormData({
         jobTitle: selectedProfile.job_title || '',
@@ -157,6 +167,21 @@ const SummitWall = () => {
         bio: selectedProfile.bio || '',
         linkedinUrl: selectedProfile.linkedin_url || ''
       });
+      
+      // Load enrichments
+      try {
+        const { data: enrichmentsData, error } = await supabase
+          .from('enrichments')
+          .select('*')
+          .eq('user_id', selectedProfile.id)
+          .order('display_order', { ascending: true });
+
+        if (error) throw error;
+        setEnrichments((enrichmentsData || []) as Enrichment[]);
+      } catch (error) {
+        console.error('Error loading enrichments:', error);
+      }
+      
       setIsEditMode(true);
     }
   };
@@ -200,6 +225,63 @@ const SummitWall = () => {
 
   const handleCancelEdit = () => {
     setIsEditMode(false);
+  };
+
+  const handleAddLink = async () => {
+    if (!selectedProfile) return;
+    
+    if (enrichments.length >= 10) {
+      toast.error("Maximum 10 enrichments allowed");
+      return;
+    }
+
+    const url = prompt("Enter URL:");
+    if (!url) return;
+
+    try {
+      const { data, error } = await supabase
+        .from('enrichments')
+        .insert({
+          user_id: selectedProfile.id,
+          type: 'link',
+          url,
+          title: url,
+          display_order: enrichments.length
+        })
+        .select()
+        .single();
+
+      if (error) throw error;
+
+      setEnrichments([...enrichments, data as Enrichment]);
+      toast.success("Link added");
+    } catch (error) {
+      console.error('Error adding link:', error);
+      toast.error("Failed to add link");
+    }
+  };
+
+  const handleDeleteEnrichment = async (id: string) => {
+    if (!confirm("Delete this item? This cannot be undone.")) return;
+
+    try {
+      const { error } = await supabase
+        .from('enrichments')
+        .delete()
+        .eq('id', id);
+
+      if (error) throw error;
+
+      setEnrichments(enrichments.filter(e => e.id !== id));
+      toast.success("Item deleted");
+    } catch (error) {
+      console.error('Error deleting enrichment:', error);
+      toast.error("Failed to delete item");
+    }
+  };
+
+  const handleChangePhoto = () => {
+    toast.info("Photo upload feature coming soon!");
   };
 
   const handleShare = () => {
@@ -431,6 +513,34 @@ const SummitWall = () => {
               {isEditMode ? (
                 /* Edit Mode */
                 <div className="space-y-4">
+                  {/* Profile Photo */}
+                  <div className="flex flex-col items-center gap-2 mb-4">
+                    <div className="w-24 h-24 rounded-full bg-[#E5E7EB] overflow-hidden">
+                      {selectedProfile.profile_photo_url ? (
+                        <img 
+                          src={selectedProfile.profile_photo_url} 
+                          alt={selectedProfile.name} 
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center text-[#9CA3AF] text-xs">
+                          No photo
+                        </div>
+                      )}
+                    </div>
+                    <button
+                      onClick={handleChangePhoto}
+                      className="text-sm text-[#8B5CF6] hover:text-[#7C3AED] underline"
+                      disabled={isSaving}
+                    >
+                      Change
+                    </button>
+                  </div>
+
+                  <div className="text-center mb-4">
+                    <h3 className="text-lg font-semibold text-[#1F2937]">{selectedProfile.name}</h3>
+                  </div>
+
                   <div>
                     <Label htmlFor="edit-jobTitle">Job Title</Label>
                     <Input
@@ -484,6 +594,55 @@ const SummitWall = () => {
                     <p className="text-xs text-[#9CA3AF] mt-1">
                       {editFormData.bio.length}/280 characters
                     </p>
+                  </div>
+
+                  {/* Enrichments Section */}
+                  <div className="border-t pt-4">
+                    <div className="flex justify-between items-center mb-3">
+                      <Label className="text-base">Your Creations</Label>
+                      <Button
+                        onClick={handleAddLink}
+                        variant="outline"
+                        size="sm"
+                        className="text-[#8B5CF6] border-[#8B5CF6] hover:bg-[#8B5CF6] hover:text-white"
+                        disabled={isSaving}
+                      >
+                        <LinkIcon className="w-4 h-4 mr-2" />
+                        Add Link
+                      </Button>
+                    </div>
+                    
+                    {enrichments.length > 0 && (
+                      <div className="space-y-2">
+                        {enrichments.map((enrichment) => (
+                          <div
+                            key={enrichment.id}
+                            className="flex items-center justify-between p-3 bg-[#F9FAFB] rounded-lg border"
+                          >
+                            <div className="flex items-center gap-3 flex-1 min-w-0">
+                              <LinkIcon className="w-4 h-4 text-[#8B5CF6] flex-shrink-0" />
+                              <div className="flex-1 min-w-0">
+                                <p className="text-sm text-[#1F2937] truncate">
+                                  {enrichment.title || enrichment.url}
+                                </p>
+                                <p className="text-xs text-[#9CA3AF] truncate">
+                                  {enrichment.url}
+                                </p>
+                              </div>
+                            </div>
+                            <Button
+                              onClick={() => handleDeleteEnrichment(enrichment.id)}
+                              variant="ghost"
+                              size="sm"
+                              className="text-[#DC2626] hover:text-[#DC2626] hover:bg-red-50 flex-shrink-0"
+                              disabled={isSaving}
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </Button>
+                          </div>
+                        ))}
+                      </div>
+                    )}
                   </div>
 
                   <div className="flex gap-3 pt-4">
