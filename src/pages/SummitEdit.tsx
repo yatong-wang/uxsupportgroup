@@ -224,7 +224,7 @@ const SummitEdit = () => {
 
                   <div>
                     <Label htmlFor="companyName" className="text-sm font-medium text-[#1F2937] mb-2 block">
-                      Company Name
+                      Company Name (Optional)
                     </Label>
                     <Input
                       id="companyName"
