@@ -8,6 +8,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { toast } from "sonner";
 import { Minus, Plus, Maximize2, UserPlus, ExternalLink, Share2, Edit, Link as LinkIcon, Trash2, LogOut, Shield } from "lucide-react";
 import logo from "@/assets/uxsg-logo-dark-bg.png";
+import uxsgLogo from "@/assets/uxsg-logo.svg";
 import AuthModal from "@/components/AuthModal";
 interface ProfileCard {
   id: string;
@@ -590,6 +591,12 @@ const SummitWall = () => {
         width: '2000px',
         height: '1500px'
       }}>
+          {/* Centered Watermark Branding */}
+          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center pointer-events-none opacity-10">
+            <img src={uxsgLogo} alt="UXSG" className="h-32 w-auto mb-4" />
+            <h2 className="text-4xl font-bold text-[#1F2937]">AI x UX Summit 2025</h2>
+          </div>
+
           {profiles.map(profile => <div key={profile.id} className="absolute bg-white rounded-xl shadow-md hover:shadow-xl transition-all cursor-pointer p-4" style={{
           left: `${profile.wall_position_x || 0}px`,
           top: `${profile.wall_position_y || 0}px`,
@@ -690,7 +697,11 @@ const SummitWall = () => {
         <DialogContent className="sm:max-w-lg">
           {selectedProfile && <>
               <DialogHeader>
-                <DialogTitle className="text-center text-2xl">
+                <div className="flex flex-col items-center gap-2 mb-4">
+                  <img src={uxsgLogo} alt="UXSG" className="h-16 w-auto" />
+                  <h3 className="text-lg font-semibold text-[#8B5CF6]">AI x UX Summit 2025</h3>
+                </div>
+                <DialogTitle className="sr-only">
                   {isEditMode ? 'Edit Profile' : 'Profile'}
                 </DialogTitle>
                 <DialogDescription className="sr-only">
