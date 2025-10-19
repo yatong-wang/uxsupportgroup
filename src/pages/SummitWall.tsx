@@ -56,6 +56,7 @@ const SummitWall = () => {
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [userEmail, setUserEmail] = useState<string | null>(null);
   const [currentUserId, setCurrentUserId] = useState<string | null>(null);
+  const [editFromWall, setEditFromWall] = useState(false);
 
   useEffect(() => {
     loadProfiles();
@@ -162,7 +163,8 @@ const SummitWall = () => {
       if (enrichmentsError) throw enrichmentsError;
       setEnrichments((enrichmentsData || []) as Enrichment[]);
 
-      // Open modal in edit mode
+      // Open modal in edit mode - mark as edit from wall
+      setEditFromWall(true);
       setIsEditMode(true);
       setShowDetailModal(true);
     } catch (error) {
@@ -292,6 +294,9 @@ const SummitWall = () => {
     } catch (error) {
       console.error('Error loading enrichments:', error);
     }
+    
+    // Mark as edit from card view (not from wall)
+    setEditFromWall(false);
     setIsEditMode(true);
   };
   const handleSaveEdit = async () => {
@@ -308,7 +313,6 @@ const SummitWall = () => {
       }).eq('id', selectedProfile.id);
       if (error) throw error;
       toast.success("Profile updated successfully!");
-      setIsEditMode(false);
       loadProfiles();
 
       // Update selected profile to show new data
@@ -319,6 +323,17 @@ const SummitWall = () => {
         bio: editFormData.bio.trim() || null,
         linkedin_url: editFormData.linkedinUrl.trim() || null
       });
+
+      // Check if edit was from wall or card view
+      if (editFromWall) {
+        // Came from wall - close modal completely
+        setIsEditMode(false);
+        setShowDetailModal(false);
+        setEditFromWall(false);
+      } else {
+        // Came from card view - return to card view
+        setIsEditMode(false);
+      }
     } catch (error) {
       console.error('Error updating profile:', error);
       toast.error("Failed to update profile. Please try again.");
@@ -327,7 +342,16 @@ const SummitWall = () => {
     }
   };
   const handleCancelEdit = () => {
-    setIsEditMode(false);
+    // Check if edit was from wall or card view
+    if (editFromWall) {
+      // Came from wall - close modal completely
+      setIsEditMode(false);
+      setShowDetailModal(false);
+      setEditFromWall(false);
+    } else {
+      // Came from card view - return to card view
+      setIsEditMode(false);
+    }
   };
   const handleAddLink = async () => {
     if (!selectedProfile) return;
