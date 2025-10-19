@@ -35,6 +35,127 @@ export type Database = {
         }
         Relationships: []
       }
+      enrichments: {
+        Row: {
+          created_at: string
+          display_order: number
+          id: string
+          image_url: string | null
+          thumbnail_url: string | null
+          title: string | null
+          type: string
+          url: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          display_order?: number
+          id?: string
+          image_url?: string | null
+          thumbnail_url?: string | null
+          title?: string | null
+          type: string
+          url: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          display_order?: number
+          id?: string
+          image_url?: string | null
+          thumbnail_url?: string | null
+          title?: string | null
+          type?: string
+          url?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "enrichments_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      magic_link_tokens: {
+        Row: {
+          created_at: string
+          email: string
+          expires_at: string
+          token: string
+          used_at: string | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          expires_at: string
+          token: string
+          used_at?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          expires_at?: string
+          token?: string
+          used_at?: string | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "magic_link_tokens_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_profiles: {
+        Row: {
+          bio: string | null
+          created_at: string
+          email: string
+          id: string
+          linkedin_url: string | null
+          name: string | null
+          profile_photo_url: string | null
+          slug: string | null
+          updated_at: string
+          wall_position_x: number | null
+          wall_position_y: number | null
+        }
+        Insert: {
+          bio?: string | null
+          created_at?: string
+          email: string
+          id?: string
+          linkedin_url?: string | null
+          name?: string | null
+          profile_photo_url?: string | null
+          slug?: string | null
+          updated_at?: string
+          wall_position_x?: number | null
+          wall_position_y?: number | null
+        }
+        Update: {
+          bio?: string | null
+          created_at?: string
+          email?: string
+          id?: string
+          linkedin_url?: string | null
+          name?: string | null
+          profile_photo_url?: string | null
+          slug?: string | null
+          updated_at?: string
+          wall_position_x?: number | null
+          wall_position_y?: number | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
