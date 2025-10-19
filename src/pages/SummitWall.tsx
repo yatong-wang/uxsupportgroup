@@ -559,9 +559,12 @@ const SummitWall = () => {
         height: '1500px'
       }}>
           {/* Centered Watermark Branding */}
-          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center pointer-events-none opacity-10">
-            <img src={uxsgLogo} alt="UXSG" className="h-48 w-auto mb-6" />
-            <h2 className="text-[8rem] font-bold text-black">AI x UX Summit 2025</h2>
+          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center gap-1 pointer-events-none opacity-10">
+            <img src={uxsgLogo} alt="UXSG" className="h-11 w-auto -mr-[15px]" />
+            <div className="w-px h-12 bg-gray-200" />
+            <h2 className="text-3xl font-semibold text-black ml-[10px]">
+              AI<span className="text-gradient">x</span>UX Summit 2025
+            </h2>
           </div>
 
           {profiles.map(profile => <div key={profile.id} className="absolute bg-white rounded-xl shadow-md hover:shadow-xl transition-all cursor-pointer p-4" style={{
