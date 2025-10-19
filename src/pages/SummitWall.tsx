@@ -697,7 +697,7 @@ const SummitWall = () => {
         <DialogContent className="sm:max-w-lg">
           {selectedProfile && <>
               <DialogHeader>
-                <div className="flex flex-col items-center gap-2 mb-4 pb-4 border-b border-gray-200">
+                <div className="flex flex-col items-start gap-2 mb-8 pb-6 border-b border-gray-200">
                   <img src={uxsgLogo} alt="UXSG" className="h-11 w-auto" />
                   <h3 className="text-4xl font-semibold text-black">AI x UX Summit 2025</h3>
                 </div>
