@@ -664,7 +664,7 @@ const SummitWall = () => {
         <DialogContent className="sm:max-w-lg">
           {selectedProfile && <>
               <DialogHeader>
-                <div className="flex items-center gap-3 pb-6 border-b border-gray-200">
+                <div className="flex items-center gap-1 pb-6 border-b border-gray-200">
                   <img src={uxsgLogo} alt="UXSG" className="h-11 w-auto" />
                   <div className="w-px h-12 bg-gray-200" />
                   <h3 className="text-3xl font-semibold text-black">
