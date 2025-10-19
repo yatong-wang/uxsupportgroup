@@ -699,7 +699,9 @@ const SummitWall = () => {
               <DialogHeader>
                 <div className="flex flex-col items-start gap-2 mb-8 pb-6 border-b border-gray-200">
                   <img src={uxsgLogo} alt="UXSG" className="h-11 w-auto" />
-                  <h3 className="text-4xl font-semibold text-black">AI x UX Summit 2025</h3>
+                  <h3 className="text-4xl font-semibold text-black">
+                    AI<span className="text-gradient">x</span>UX Summit 2025
+                  </h3>
                 </div>
                 <DialogTitle className="sr-only">
                   {isEditMode ? 'Edit Profile' : 'Profile'}
