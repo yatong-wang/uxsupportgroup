@@ -822,10 +822,10 @@ const SummitWall = () => {
                     </div>
                     
                     {enrichments.length > 0 && <div className="space-y-2">
-                        {enrichments.map(enrichment => <div key={enrichment.id} className="flex items-center justify-between p-3 bg-[#F9FAFB] rounded-lg border min-w-0">
-                            <div className="flex items-center gap-3 flex-1 min-w-0 overflow-hidden">
+                        {enrichments.map(enrichment => <div key={enrichment.id} className="flex w-full items-center justify-between p-3 bg-[#F9FAFB] rounded-lg border min-w-0 overflow-hidden">
+                            <div className="flex items-center gap-3 flex-1 min-w-0 w-0 overflow-hidden">
                               <LinkIcon className="w-4 h-4 text-[#8B5CF6] flex-shrink-0" />
-                              <div className="flex-1 min-w-0 overflow-hidden">
+                              <div className="flex-1 min-w-0 w-0 overflow-hidden">
                                 <p className="text-sm text-black truncate">
                                   {enrichment.title || enrichment.url}
                                 </p>
@@ -889,9 +889,9 @@ const SummitWall = () => {
                 {enrichments.length > 0 && <div className="border-t pt-4">
                     <h3 className="text-sm font-semibold text-black mb-3">My Creations</h3>
                     <div className="space-y-2">
-                      {enrichments.map(enrichment => <a key={enrichment.id} href={enrichment.url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 p-3 bg-[#F9FAFB] rounded-lg border hover:border-[#8B5CF6] transition-colors group min-w-0">
+                      {enrichments.map(enrichment => <a key={enrichment.id} href={enrichment.url} target="_blank" rel="noopener noreferrer" className="flex w-full items-center gap-3 p-3 bg-[#F9FAFB] rounded-lg border hover:border-[#8B5CF6] transition-colors group overflow-hidden">
                           <LinkIcon className="w-4 h-4 text-[#8B5CF6] flex-shrink-0" />
-                          <div className="flex-1 min-w-0 overflow-hidden">
+                          <div className="flex-1 min-w-0 w-0 overflow-hidden">
                             <p className="text-sm text-[#8B5CF6] truncate group-hover:underline">
                               {enrichment.title || enrichment.url}
                             </p>
