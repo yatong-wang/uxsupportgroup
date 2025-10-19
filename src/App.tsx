@@ -33,9 +33,9 @@ const App = () => (
           <Route path="/partner" element={<Partner />} />
           <Route path="/media-kit" element={<MediaKit />} />
           <Route path="/summit-profiles" element={<SummitWall />} />
-          <Route path="/summit-profiles/:slug" element={<SummitWall />} />
           <Route path="/summit-profiles/verify" element={<SummitVerify />} />
           <Route path="/summit-profiles/edit" element={<SummitEdit />} />
+          <Route path="/summit-profiles/:slug" element={<SummitWall />} />
           <Route path="/admin" element={<AdminPanel />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />

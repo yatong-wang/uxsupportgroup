@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { toast } from "sonner";
-import { Minus, Plus, Maximize2, UserPlus, ExternalLink, Share2, Edit, Link as LinkIcon, Trash2, LogOut, Shield } from "lucide-react";
+import { Minus, Plus, Maximize2, UserPlus, ExternalLink, Share2, Edit, Link as LinkIcon, Trash2, LogOut, Shield, Globe } from "lucide-react";
 import logo from "@/assets/uxsg-logo-dark-bg.png";
 import uxsgLogo from "@/assets/uxsg-logo.svg";
 import AuthModal from "@/components/AuthModal";
@@ -135,7 +135,7 @@ const SummitWall = () => {
 
   // Handle direct profile link via slug
   useEffect(() => {
-    if (slug && profiles.length > 0) {
+    if (slug && profiles.length > 0 && !isLoading) {
       const profile = profiles.find(p => p.slug === slug || p.id === slug);
       if (profile) {
         handleCardClick(profile);
@@ -143,9 +143,17 @@ const SummitWall = () => {
         navigate('/summit-profiles', {
           replace: true
         });
+      } else {
+        // Profile not found
+        toast.error("This profile no longer exists or the link is invalid.");
+        navigate('/summit-profiles', { replace: true });
       }
+    } else if (slug && !isLoading && profiles.length === 0) {
+      // Profiles loaded but empty
+      toast.error("Unable to find this profile.");
+      navigate('/summit-profiles', { replace: true });
     }
-  }, [slug, profiles]);
+  }, [slug, profiles, isLoading, navigate]);
   const checkAuthStatus = async () => {
     const userId = sessionStorage.getItem('summit_user_id');
     const email = sessionStorage.getItem('summit_user_email');
@@ -183,14 +191,24 @@ const SummitWall = () => {
   };
   const loadProfiles = async () => {
     try {
+      setIsLoading(true);
       const {
         data,
         error
       } = await supabase.from('user_profiles').select('id, name, job_title, company_name, bio, profile_photo_url, wall_position_x, wall_position_y, slug, linkedin_url').not('name', 'is', null);
-      if (error) throw error;
+      
+      if (error) {
+        console.error('Error loading profiles:', error);
+        toast.error("Unable to load profiles. Please refresh the page.");
+        setProfiles([]);
+        return;
+      }
+      
       setProfiles(data || []);
     } catch (error) {
-      console.error('Error loading profiles:', error);
+      console.error('Critical error loading profiles:', error);
+      toast.error("Something went wrong. Please try again later.");
+      setProfiles([]);
     } finally {
       setIsLoading(false);
     }
@@ -330,12 +348,21 @@ const SummitWall = () => {
       } = await supabase.from('enrichments').select('*').eq('user_id', profile.id).order('display_order', {
         ascending: true
       });
-      if (error) throw error;
-      setEnrichments((enrichmentsData || []) as Enrichment[]);
+      
+      if (error) {
+        console.error('Error loading enrichments:', error);
+        // Show enrichments section but with error state
+        setEnrichments([]);
+        toast.error("Unable to load profile links. The profile will still display.");
+      } else {
+        setEnrichments((enrichmentsData || []) as Enrichment[]);
+      }
     } catch (error) {
-      console.error('Error loading enrichments:', error);
+      console.error('Critical error loading enrichments:', error);
       setEnrichments([]);
     }
+    
+    // Always open modal regardless of enrichments load status
     setShowDetailModal(true);
   };
   const handleEdit = async () => {
@@ -559,11 +586,20 @@ const SummitWall = () => {
     };
     input.click();
   };
-  const handleShare = () => {
-    if (selectedProfile) {
-      const url = `${window.location.origin}/summit-profiles/${selectedProfile.slug || selectedProfile.id}`;
-      navigator.clipboard.writeText(url);
-      toast.success("Profile link copied to clipboard!");
+  const handleShare = async () => {
+    if (!selectedProfile) return;
+    
+    const shareUrl = `${window.location.origin}/summit-profiles/${selectedProfile.slug || selectedProfile.id}`;
+    
+    try {
+      await navigator.clipboard.writeText(shareUrl);
+      toast.success(
+        "Link copied! Anyone can view this profile without logging in.",
+        { duration: 5000 }
+      );
+    } catch (err) {
+      console.error('Error copying to clipboard:', err);
+      toast.error("Failed to copy link");
     }
   };
   if (isLoading) {
@@ -914,6 +950,12 @@ const SummitWall = () => {
                     <Share2 className="w-4 h-4 mr-2" />
                     Share
                   </Button>
+                </div>
+
+                {/* Public Access Indicator */}
+                <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground pt-2">
+                  <Globe className="w-3 h-3" />
+                  <span>Public Profile - No login required to view</span>
                 </div>
               </div>)}
             </>}
