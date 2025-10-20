@@ -77,9 +77,9 @@ const SocialProof = () => {
     image: FarahK
   }, {
     name: "Yatong Wang",
-    title: "User Experience Designer",
-    company: "Lenovo",
-    bio: "Specialist in UX/Product design for technology and nonprofits. Former: Spatial Front Inc.",
+    title: "Product Designer",
+    company: "Spatial Front Inc.",
+    bio: "UX design and research for scientific context and enterprise SaaS.",
     linkedin: "https://www.linkedin.com/in/yatong-wang/",
     image: YatongW
   }];
