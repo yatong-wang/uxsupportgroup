@@ -15,10 +15,9 @@ const AgendaSection = () => {
     { time: "12:15 PM", title: "Lunch & Community Gallery Tour", facilitator: "Open/Self-Guided", desc: "45-min lunch + gallery walk exploring attendee artifacts" },
     { time: "1:00 PM", title: "Agentic UX—Build Your Own Agent", facilitator: "Danny Setiawan", desc: "Step-by-step creation of a personal AI agent" },
     { time: "1:45 PM", title: "Learning to Learn with AI", facilitator: "Volkan Unsal", desc: "Skill-building: AI research and learning strategies" },
-    { time: "2:30 PM", title: "Community AMA: Solve the Wall", facilitator: "Suyen Stevenson", desc: "Apply new research/action skills; collaborative Q&A" },
-    { time: "3:15 PM", title: "Teach-Back Challenge: Learn & Share", facilitator: "Suyen Stevenson", desc: "Attendees teach back what they've learned using AI tools" },
-    { time: "4:00 PM", title: "Break the AI—Chaos Challenge", facilitator: "TBD", desc: "Teams compete to create wild/absurd AI outputs; audience voting" },
-    { time: "4:45 PM", title: "AI Learning & Development Roadmap", facilitator: "Renata Rocha", desc: "Reflective: Build a 6-month personal L&D/action plan with AI" },
+    { time: "2:30 PM", title: "Community AMA & Teach-Back Collaborative Challenge", facilitator: "Suyen Stevenson", desc: "Collaborative Q&A and teach-back challenge where attendees apply new research/action skills and teach back what they've learned using AI tools" },
+    { time: "3:45 PM", title: "AI Learning & Development Roadmap", facilitator: "Renata Rocha", desc: "Reflective: Build a 6-month personal L&D/action plan with AI" },
+    { time: "4:30 PM", title: "Break the AI—Chaos Challenge", facilitator: "TBD", desc: "Teams compete to create wild/absurd AI outputs; audience voting" },
     { time: "5:30 PM", title: "AI-Powered Networking Finale", facilitator: "Suyen Stevenson", desc: "Matchmaking based on artifacts, interests, questions" },
     { time: "6:00 PM", title: "Closing & Next Steps", facilitator: "Suyen Stevenson", desc: "Recap, announce winners, community wrap-up, future plans" },
   ];
