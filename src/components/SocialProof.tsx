@@ -42,9 +42,9 @@ const SocialProof = () => {
     image: AlexisB
   }, {
     name: "Renata Rocha",
-    title: "Product Designer",
+    title: "Senior UX Designer",
     company: "Amazon",
-    bio: "Specialist in e-commerce design and experience at global technology brands. Former: ContentSquare, Academy Product Design Studio.",
+    bio: "UX and product design leader specializing in digital financial services and e-commerce. Renata drives design for Amazon's payments platform and has led teams at JPMorgan Chase, impacting customer experience for millions. She has delivered over 600 websites, shaped major initiatives for Fortune 500s and Globo affiliates, and helped train the next generation of designers in academia.",
     linkedin: "https://www.linkedin.com/in/rerocha/",
     image: RenataR
   }, {
