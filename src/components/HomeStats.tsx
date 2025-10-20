@@ -6,13 +6,13 @@ const HomeStats = () => {
   ];
 
   return (
-    <section className="py-16 bg-background">
+    <section className="py-16 gradient-stats">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-3 gap-8 max-w-5xl mx-auto">
           {stats.map((stat, index) => (
-            <div key={index} className="text-center">
-              <div className="text-4xl md:text-5xl font-medium text-foreground mb-2">{stat.value}</div>
-              <p className="text-muted-foreground text-sm">{stat.label}</p>
+            <div key={index} className="text-center p-6 rounded-2xl bg-white/10 backdrop-blur-sm border border-white/20">
+              <div className="text-4xl md:text-5xl font-medium text-white mb-2">{stat.value}</div>
+              <p className="text-white/90 text-sm">{stat.label}</p>
             </div>
           ))}
         </div>
