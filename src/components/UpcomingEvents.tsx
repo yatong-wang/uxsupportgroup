@@ -57,14 +57,15 @@ const UpcomingEvents = () => {
                     <Card key={event.id} className="overflow-hidden hover:shadow-lg transition-shadow">
                       <div className="flex flex-col sm:flex-row items-stretch">
                         {/* Date Section - Left */}
-                        <div className="bg-primary text-primary-foreground p-6 flex flex-col items-center justify-center min-w-[120px]">
-                          <div className="text-sm font-semibold uppercase tracking-wide">
+                        <div className="gradient-stats text-white p-6 flex flex-col items-center justify-center min-w-[120px] relative">
+                          <div className="absolute inset-0 bg-black/40"></div>
+                          <div className="text-sm font-semibold uppercase tracking-wide relative z-10">
                             {format(eventDate, 'MMM')}
                           </div>
-                          <div className="text-4xl font-bold leading-none my-1">
+                          <div className="text-4xl font-bold leading-none my-1 relative z-10">
                             {format(eventDate, 'd')}
                           </div>
-                          <div className="text-xs uppercase tracking-wide opacity-90">
+                          <div className="text-xs uppercase tracking-wide opacity-90 relative z-10">
                             {format(eventDate, 'EEE')}
                           </div>
                         </div>
