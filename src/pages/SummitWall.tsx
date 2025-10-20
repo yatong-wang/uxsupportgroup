@@ -695,7 +695,8 @@ const SummitWall = () => {
   const handleShare = async () => {
     if (!selectedProfile) return;
     
-    const shareUrl = `${window.location.origin}/summit-profiles/${selectedProfile.slug || selectedProfile.id}`;
+    const base = import.meta.env.VITE_SUPABASE_URL;
+    const shareUrl = `${base}/functions/v1/profile-meta/${selectedProfile.slug || selectedProfile.id}`;
     
     try {
       // Check if profile has a card screenshot for better LinkedIn previews
@@ -707,7 +708,7 @@ const SummitWall = () => {
       
       await navigator.clipboard.writeText(shareUrl);
       toast.success(
-        "Link copied! Anyone can view this profile without logging in.",
+        "Link copied! This link shows a rich preview on social platforms and redirects to your profile.",
         { duration: 5000 }
       );
     } catch (err) {
