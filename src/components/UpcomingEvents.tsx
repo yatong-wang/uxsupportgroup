@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { format } from "date-fns";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Calendar, MapPin, Clock } from "lucide-react";
 
 const UpcomingEvents = () => {
   const { data: events, isLoading, error } = useQuery({
@@ -49,33 +50,70 @@ const UpcomingEvents = () => {
             </div>
           ) : events && events.length > 0 ? (
             <>
-              <div className="grid md:grid-cols-2 gap-6 mb-12">
-                {events.map((event) => (
-                  <Card key={event.id} className="p-6 hover:shadow-lg transition-shadow">
-                    <h3 className="text-xl font-bold mb-2">{event.title}</h3>
-                    <p className="text-muted-foreground mb-1">
-                      {format(new Date(event.date), 'EEEE, MMMM d, yyyy')}
-                    </p>
-                    {event.start_time && (
-                      <p className="text-sm text-muted-foreground mb-1">{event.start_time}</p>
-                    )}
-                    {event.location && (
-                      <p className="text-sm text-muted-foreground mb-3">{event.location}</p>
-                    )}
-                    {event.description && (
-                      <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
-                        {event.description}
-                      </p>
-                    )}
-                    {event.meetup_link && (
-                      <Button className="w-full" asChild>
-                        <a href={event.meetup_link} target="_blank" rel="noopener noreferrer">
-                          RSVP on Meetup.com
-                        </a>
-                      </Button>
-                    )}
-                  </Card>
-                ))}
+              <div className="space-y-4 mb-12">
+                {events.map((event) => {
+                  const eventDate = new Date(event.date);
+                  return (
+                    <Card key={event.id} className="overflow-hidden hover:shadow-lg transition-shadow">
+                      <div className="flex flex-col sm:flex-row items-stretch">
+                        {/* Date Section - Left */}
+                        <div className="bg-primary text-primary-foreground p-6 flex flex-col items-center justify-center min-w-[120px]">
+                          <div className="text-sm font-semibold uppercase tracking-wide">
+                            {format(eventDate, 'MMM')}
+                          </div>
+                          <div className="text-4xl font-bold leading-none my-1">
+                            {format(eventDate, 'd')}
+                          </div>
+                          <div className="text-xs uppercase tracking-wide opacity-90">
+                            {format(eventDate, 'EEE')}
+                          </div>
+                        </div>
+
+                        {/* Event Info - Middle */}
+                        <div className="flex-1 p-6">
+                          <div className="flex items-start gap-2 mb-3">
+                            <Calendar className="h-4 w-4 text-primary mt-1 flex-shrink-0" />
+                            <div>
+                              <h3 className="text-xl font-bold leading-tight mb-2">
+                                {event.title}
+                              </h3>
+                              <div className="flex flex-wrap gap-4 text-sm text-muted-foreground">
+                                {event.start_time && (
+                                  <div className="flex items-center gap-1">
+                                    <Clock className="h-3.5 w-3.5" />
+                                    <span>{event.start_time}</span>
+                                  </div>
+                                )}
+                                {event.location && (
+                                  <div className="flex items-center gap-1">
+                                    <MapPin className="h-3.5 w-3.5" />
+                                    <span>{event.location}</span>
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                          </div>
+                          {event.description && (
+                            <p className="text-sm text-muted-foreground line-clamp-2">
+                              {event.description}
+                            </p>
+                          )}
+                        </div>
+
+                        {/* CTA Button - Right */}
+                        <div className="flex items-center justify-center p-6 sm:border-l border-border bg-muted/30">
+                          {event.meetup_link && (
+                            <Button size="lg" className="whitespace-nowrap" asChild>
+                              <a href={event.meetup_link} target="_blank" rel="noopener noreferrer">
+                                RSVP Now
+                              </a>
+                            </Button>
+                          )}
+                        </div>
+                      </div>
+                    </Card>
+                  );
+                })}
               </div>
               
               <div className="text-center">
