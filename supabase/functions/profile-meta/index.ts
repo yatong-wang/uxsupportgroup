@@ -41,12 +41,24 @@ serve(async (req) => {
 
     console.log(`[PROFILE-META] Fetching profile with slug: ${slug}`);
 
-    // Fetch profile data
-    const { data: profile, error } = await supabase
+    // Fetch profile data - try by slug first, then by ID if slug doesn't work
+    let { data: profile, error } = await supabase
       .from('user_profiles')
       .select('*')
       .eq('slug', slug)
       .maybeSingle();
+
+    // If not found by slug and slug looks like a UUID, try by ID
+    if (!profile && !error && slug.match(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i)) {
+      console.log(`[PROFILE-META] Slug looks like UUID, trying ID lookup`);
+      const result = await supabase
+        .from('user_profiles')
+        .select('*')
+        .eq('id', slug)
+        .maybeSingle();
+      profile = result.data;
+      error = result.error;
+    }
 
     if (error) {
       console.error('[PROFILE-META] Database error:', error);
