@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -8,8 +8,9 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { Link, Upload, Pencil, Trash2 } from "lucide-react";
+import { Link, Upload, Pencil, Trash2, Camera } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import html2canvas from 'html2canvas';
 
 interface Enrichment {
   id: string;
@@ -22,6 +23,7 @@ interface Enrichment {
 
 const SummitEdit = () => {
   const navigate = useNavigate();
+  const cardRef = useRef<HTMLDivElement>(null);
   const [profile, setProfile] = useState<any>(null);
   const [formData, setFormData] = useState({
     name: '',
@@ -32,6 +34,7 @@ const SummitEdit = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [showAddLinkDialog, setShowAddLinkDialog] = useState(false);
   const [newLinkData, setNewLinkData] = useState({ url: '', title: '' });
+  const [isGeneratingScreenshot, setIsGeneratingScreenshot] = useState(false);
 
   useEffect(() => {
     loadProfile();
@@ -113,6 +116,69 @@ const SummitEdit = () => {
     } catch (error) {
       console.error(`Error updating ${field}:`, error);
       toast.error(`Failed to update ${field}`);
+    }
+  };
+
+  const generateScreenshot = async () => {
+    if (!cardRef.current || !profile) return;
+    
+    setIsGeneratingScreenshot(true);
+    toast.info("Generating LinkedIn preview image...");
+    
+    try {
+      // Capture the card element
+      const canvas = await html2canvas(cardRef.current, {
+        scale: 2, // High quality
+        backgroundColor: '#F9FAFB',
+        logging: false,
+        width: 1200,
+        height: 630,
+        windowWidth: 1200,
+        windowHeight: 630
+      });
+      
+      // Convert to blob
+      const blob = await new Promise<Blob>((resolve) => {
+        canvas.toBlob((blob) => resolve(blob!), 'image/png', 0.85);
+      });
+      
+      // Upload to Supabase Storage
+      const fileName = `${profile.id}-${Date.now()}.png`;
+      const { data: uploadData, error: uploadError } = await supabase.storage
+        .from('profile-screenshots')
+        .upload(fileName, blob, {
+          contentType: 'image/png',
+          upsert: true
+        });
+      
+      if (uploadError) throw uploadError;
+      
+      // Get public URL
+      const { data: { publicUrl } } = supabase.storage
+        .from('profile-screenshots')
+        .getPublicUrl(fileName);
+      
+      // Update profile with screenshot URL
+      const { error: updateError } = await supabase
+        .from('user_profiles')
+        .update({
+          card_screenshot_url: publicUrl,
+          screenshot_generated_at: new Date().toISOString()
+        })
+        .eq('id', profile.id);
+      
+      if (updateError) throw updateError;
+      
+      // Update local state
+      setProfile({ ...profile, card_screenshot_url: publicUrl });
+      
+      toast.success("LinkedIn preview image generated successfully!");
+      return publicUrl;
+    } catch (error) {
+      console.error('Screenshot generation error:', error);
+      toast.error("Failed to generate preview image. Please try again.");
+    } finally {
+      setIsGeneratingScreenshot(false);
     }
   };
 
@@ -209,66 +275,100 @@ const SummitEdit = () => {
           </Button>
         </div>
 
-        <Card className="mb-8">
-          <CardContent className="p-6">
-            <div className="flex items-start gap-6 mb-6">
-              <div className="flex flex-col items-center gap-2">
-                <div className="w-36 h-36 rounded-lg bg-[#E5E7EB] flex items-center justify-center overflow-hidden">
-                  {profile.profile_photo_url ? (
-                    <img src={profile.profile_photo_url} alt={profile.name} className="w-full h-full object-cover" />
-                  ) : (
-                    <span className="text-[#9CA3AF] text-sm">Profile Photo</span>
-                  )}
+        {/* Preview Card - This is what will be captured for LinkedIn */}
+        <div ref={cardRef}>
+          <Card className="mb-8">
+            <CardContent className="p-6">
+              <div className="flex items-start gap-6 mb-6">
+                <div className="flex flex-col items-center gap-2">
+                  <div className="w-36 h-36 rounded-lg bg-[#E5E7EB] flex items-center justify-center overflow-hidden">
+                    {profile.profile_photo_url ? (
+                      <img src={profile.profile_photo_url} alt={profile.name} className="w-full h-full object-cover" />
+                    ) : (
+                      <span className="text-[#9CA3AF] text-sm">Profile Photo</span>
+                    )}
+                  </div>
+                  <Button variant="outline" size="sm">
+                    Change Photo
+                  </Button>
                 </div>
-                <Button variant="outline" size="sm">
-                  Change Photo
-                </Button>
+
+                <div className="flex-1">
+                  <div className="space-y-4">
+                    <div>
+                      <Label htmlFor="name" className="text-sm font-medium text-[#1F2937] mb-2 block">
+                        Full Name *
+                      </Label>
+                      <Input
+                        id="name"
+                        value={formData.name}
+                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                        onBlur={() => handleFieldBlur('name')}
+                        className="border-[#E5E7EB] focus:border-[#8B5CF6]"
+                        placeholder="Sarah Chen"
+                      />
+                    </div>
+
+                    <div>
+                      <Label htmlFor="jobTitle" className="text-sm font-medium text-[#1F2937] mb-2 block">
+                        Job Title *
+                      </Label>
+                      <Input
+                        id="jobTitle"
+                        value={formData.jobTitle}
+                        onChange={(e) => setFormData({ ...formData, jobTitle: e.target.value })}
+                        onBlur={() => handleFieldBlur('jobTitle')}
+                        className="border-[#E5E7EB] focus:border-[#8B5CF6]"
+                        placeholder="Senior Product Designer"
+                      />
+                    </div>
+
+                    <div>
+                      <Label htmlFor="companyName" className="text-sm font-medium text-[#1F2937] mb-2 block">
+                        Company Name
+                      </Label>
+                      <Input
+                        id="companyName"
+                        value={formData.companyName}
+                        onChange={(e) => setFormData({ ...formData, companyName: e.target.value })}
+                        onBlur={() => handleFieldBlur('companyName')}
+                        className="border-[#E5E7EB] focus:border-[#8B5CF6]"
+                        placeholder="TechCorp"
+                      />
+                    </div>
+                  </div>
+                </div>
               </div>
+            </CardContent>
+          </Card>
+        </div>
 
+        {/* LinkedIn Preview Generation */}
+        <Card className="mb-8 bg-gradient-to-br from-[#F3E8FF] to-[#EDE9FE]">
+          <CardContent className="p-6">
+            <div className="flex items-start gap-4">
+              <Camera className="w-6 h-6 text-[#8B5CF6] mt-1" />
               <div className="flex-1">
-                <div className="space-y-4">
-                  <div>
-                    <Label htmlFor="name" className="text-sm font-medium text-[#1F2937] mb-2 block">
-                      Full Name *
-                    </Label>
-                    <Input
-                      id="name"
-                      value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      onBlur={() => handleFieldBlur('name')}
-                      className="border-[#E5E7EB] focus:border-[#8B5CF6]"
-                      placeholder="Sarah Chen"
-                    />
-                  </div>
-
-                  <div>
-                    <Label htmlFor="jobTitle" className="text-sm font-medium text-[#1F2937] mb-2 block">
-                      Job Title *
-                    </Label>
-                    <Input
-                      id="jobTitle"
-                      value={formData.jobTitle}
-                      onChange={(e) => setFormData({ ...formData, jobTitle: e.target.value })}
-                      onBlur={() => handleFieldBlur('jobTitle')}
-                      className="border-[#E5E7EB] focus:border-[#8B5CF6]"
-                      placeholder="Senior Product Designer"
-                    />
-                  </div>
-
-                  <div>
-                    <Label htmlFor="companyName" className="text-sm font-medium text-[#1F2937] mb-2 block">
-                      Company Name
-                    </Label>
-                    <Input
-                      id="companyName"
-                      value={formData.companyName}
-                      onChange={(e) => setFormData({ ...formData, companyName: e.target.value })}
-                      onBlur={() => handleFieldBlur('companyName')}
-                      className="border-[#E5E7EB] focus:border-[#8B5CF6]"
-                      placeholder="TechCorp"
-                    />
-                  </div>
-                </div>
+                <h3 className="text-lg font-semibold text-[#1F2937] mb-2">
+                  LinkedIn Preview Image
+                </h3>
+                <p className="text-sm text-[#6B7280] mb-4">
+                  Generate a preview image of your profile card for better sharing on LinkedIn and social media. 
+                  This will show your full profile card when shared.
+                </p>
+                {profile.card_screenshot_url && (
+                  <p className="text-xs text-[#10B981] mb-3">
+                    ✓ Preview image generated on {new Date(profile.screenshot_generated_at).toLocaleDateString()}
+                  </p>
+                )}
+                <Button
+                  onClick={generateScreenshot}
+                  disabled={isGeneratingScreenshot}
+                  className="bg-gradient-to-r from-[#8B5CF6] to-[#7C3AED] hover:opacity-90"
+                >
+                  <Camera className="w-4 h-4 mr-2" />
+                  {isGeneratingScreenshot ? 'Generating...' : profile.card_screenshot_url ? 'Regenerate Preview' : 'Generate Preview'}
+                </Button>
               </div>
             </div>
           </CardContent>

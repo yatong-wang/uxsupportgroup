@@ -117,6 +117,7 @@ export type Database = {
       user_profiles: {
         Row: {
           bio: string | null
+          card_screenshot_url: string | null
           company_name: string | null
           created_at: string
           email: string
@@ -125,6 +126,7 @@ export type Database = {
           linkedin_url: string | null
           name: string | null
           profile_photo_url: string | null
+          screenshot_generated_at: string | null
           slug: string | null
           updated_at: string
           wall_position_x: number | null
@@ -132,6 +134,7 @@ export type Database = {
         }
         Insert: {
           bio?: string | null
+          card_screenshot_url?: string | null
           company_name?: string | null
           created_at?: string
           email: string
@@ -140,6 +143,7 @@ export type Database = {
           linkedin_url?: string | null
           name?: string | null
           profile_photo_url?: string | null
+          screenshot_generated_at?: string | null
           slug?: string | null
           updated_at?: string
           wall_position_x?: number | null
@@ -147,6 +151,7 @@ export type Database = {
         }
         Update: {
           bio?: string | null
+          card_screenshot_url?: string | null
           company_name?: string | null
           created_at?: string
           email?: string
@@ -155,6 +160,7 @@ export type Database = {
           linkedin_url?: string | null
           name?: string | null
           profile_photo_url?: string | null
+          screenshot_generated_at?: string | null
           slug?: string | null
           updated_at?: string
           wall_position_x?: number | null

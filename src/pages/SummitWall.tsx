@@ -592,6 +592,13 @@ const SummitWall = () => {
     const shareUrl = `${window.location.origin}/summit-profiles/${selectedProfile.slug || selectedProfile.id}`;
     
     try {
+      // Check if profile has a card screenshot for better LinkedIn previews
+      if (!selectedProfile.card_screenshot_url) {
+        toast.info("Tip: Generate a preview image in Edit mode for better LinkedIn previews!", {
+          duration: 6000
+        });
+      }
+      
       await navigator.clipboard.writeText(shareUrl);
       toast.success(
         "Link copied! Anyone can view this profile without logging in.",
