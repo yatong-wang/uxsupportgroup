@@ -706,8 +706,7 @@ const SummitWall = () => {
   const handleShare = async () => {
     if (!selectedProfile) return;
     
-    const base = import.meta.env.VITE_SUPABASE_URL;
-    const shareUrl = `${base}/functions/v1/profile-meta/${selectedProfile.slug || selectedProfile.id}`;
+    const shareUrl = `https://uxsupportgroup.com/summit-profiles/${selectedProfile.slug || selectedProfile.id}`;
     
     try {
       // Check if profile has a card screenshot for better LinkedIn previews
