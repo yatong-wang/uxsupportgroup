@@ -20,28 +20,13 @@ const HomeHero = () => {
             Connect, learn, and grow with fellow UX practitioners through events, networking, and career support
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-4 mb-12">
+          <div className="flex flex-col sm:flex-row gap-4">
             <Button size="lg" className="text-lg px-8 py-6 bg-foreground text-background hover:bg-foreground/90">
               Become a Member
             </Button>
             <Button size="lg" variant="outline" className="text-lg px-8 py-6">
               Explore Events
             </Button>
-          </div>
-
-          <div className="grid grid-cols-3 gap-6 max-w-2xl mx-auto mt-12">
-            <div className="text-center">
-              <div className="text-3xl md:text-4xl font-bold text-muted-foreground mb-1">8,800+</div>
-              <p className="text-muted-foreground text-sm">Members</p>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl md:text-4xl font-bold text-muted-foreground mb-1">250+</div>
-              <p className="text-muted-foreground text-sm">Events Per Year</p>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl md:text-4xl font-bold text-muted-foreground mb-1">8+ Years</div>
-              <p className="text-muted-foreground text-sm">Strong</p>
-            </div>
           </div>
         </div>
       </div>
