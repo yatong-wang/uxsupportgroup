@@ -3,7 +3,7 @@ import heroBg from "@/assets/liquid-data-bust.png";
 
 const HomeHero = () => {
   return (
-    <section className="relative min-h-[80vh] flex items-center overflow-hidden">
+    <section className="relative min-h-[60vh] flex items-center overflow-hidden">
       <img src={heroBg} alt="Diverse group of UX professionals networking at community event" className="absolute inset-0 w-full h-full object-cover" />
       <div className="absolute inset-0 bg-gradient-to-br from-white/95 via-white/90 to-white/85" />
       
