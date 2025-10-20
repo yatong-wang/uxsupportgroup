@@ -19,15 +19,6 @@ const HomeHero = () => {
           <p className="text-2xl text-foreground/70 mb-10 max-w-2xl">
             Connect, learn, and grow with fellow UX practitioners through events, networking, and career support
           </p>
-          
-          <div className="flex flex-col sm:flex-row gap-4">
-            <Button size="lg" className="text-lg px-8 py-6 bg-foreground text-background hover:bg-foreground/90">
-              Become a Member
-            </Button>
-            <Button size="lg" variant="outline" className="text-lg px-8 py-6">
-              Explore Events
-            </Button>
-          </div>
         </div>
       </div>
     </section>
