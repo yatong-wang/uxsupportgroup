@@ -13,6 +13,7 @@ import FarahK from "@/assets/FarahK-2.jpeg";
 import YatongW from "@/assets/YatongW-2.jpeg";
 import CarissaS from "@/assets/CarissaS.jpeg";
 import CaitlynB from "@/assets/CaitlynB.jpeg";
+import SaraS from "@/assets/SaraS.jpeg";
 const SocialProof = () => {
   const facilitators = [{
     name: "Danny Setiawan",
@@ -61,14 +62,14 @@ const SocialProof = () => {
     title: "Director of UI/UX",
     company: "Alethium Health/BiTE interactive",
     bio: "A champion of blending design with software development's Behavior Driven Development and Jobs-to-be Done methodologies. Carissa has created websites and software platforms within the health sciences space for over 15 years.",
-    linkedin: "#",
+    linkedin: "https://www.linkedin.com/in/clyncreative/",
     image: CarissaS
   }, {
     name: "Caitlyn Brady",
     title: "Product Designer & Researcher",
     company: "Covalent",
     bio: "Product Designer specializing in B2B SaaS and workforce optimization tools. Previously at Americaneagle.com, she led major UX projects for clients like NYC Public Schools, conducted persona research and usability testing, and helped launch multi-million-dollar platform redesigns for education and finance organizations.",
-    linkedin: "#",
+    linkedin: "https://www.linkedin.com/in/caitlyn-brady-40487349/",
     image: CaitlynB
   }, {
     name: "Hayley Dahle",
@@ -98,6 +99,13 @@ const SocialProof = () => {
     bio: "UX design and research for scientific context and enterprise SaaS.",
     linkedin: "https://www.linkedin.com/in/yatong-wang/",
     image: YatongW
+  }, {
+    name: "Sara Semoune",
+    title: "UX Designer",
+    company: null,
+    bio: "A Columbia-trained UX/UI Designer with global experience in freelance digital projects and customer-focused roles at ZARA. She specializes in accessibility, inclusive design, and AI-driven solutions, always prioritizing empathy and human-centered results.",
+    linkedin: "https://www.linkedin.com/in/sara-semoune-uxdesigner/",
+    image: SaraS
   }];
   return <section className="py-24 bg-card">
       <div className="container mx-auto px-4">
