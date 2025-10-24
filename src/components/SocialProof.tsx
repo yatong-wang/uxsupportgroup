@@ -11,19 +11,21 @@ import HayleyD from "@/assets/HayleyD-new.jpg";
 import FarooqK from "@/assets/FarooqK-3.jpg";
 import FarahK from "@/assets/FarahK-2.jpeg";
 import YatongW from "@/assets/YatongW-2.jpeg";
+import CarissaS from "@/assets/CarissaS.jpeg";
+import CaitlynB from "@/assets/CaitlynB.jpeg";
 const SocialProof = () => {
   const facilitators = [{
     name: "Danny Setiawan",
-    title: "Founder, CoCreate | Ex-Yahoo!, The Economist",
-    company: null,
+    title: "Founder, Instructor",
+    company: "CoCreate",
     bio: "UX leader and AI educator with a track record delivering product innovation for global brands including Yahoo!, The Economist, Disney, Sony, and Men's Warehouse, as well as growing the community of UX professionals with over 8800 members from all over the world.",
     linkedin: "https://www.linkedin.com/in/dnystwn/",
     image: DannyS
   }, {
     name: "Suyen Stevenson",
-    title: "Facilitator, Details TBA",
-    company: null,
-    bio: "Specialist in UX design and conference moderation.",
+    title: "Facilitator| UX/UI Designer | AI Generalist | Storyteller",
+    company: "Yen Graphics",
+    bio: "Creative and analytical designer with a strong track record in UX design, digital product development, and product ops. Conference moderator skilled at engaging audiences and facilitating meaningful discussions. Brings over a decade of experience in visual design. Former: Revlon, LLNS, AFCEA Ace, First Responders Childrens Foundation, TASH",
     linkedin: "https://www.linkedin.com/in/suyenlyn/",
     image: SuyenL
   }, {
@@ -54,6 +56,20 @@ const SocialProof = () => {
     bio: "Recognized for innovation in design research and for bridging psychology, user experience, and AI to inspire more emotionally intelligent digital products.",
     linkedin: "https://www.linkedin.com/in/silviabalu/",
     image: SilviaB
+  }, {
+    name: "Carissa Sinclair",
+    title: "Director of UI/UX",
+    company: "Alethium Health/BiTE interactive",
+    bio: "A champion of blending design with software development's Behavior Driven Development and Jobs-to-be Done methodologies. Carissa has created websites and software platforms within the health sciences space for over 15 years.",
+    linkedin: "#",
+    image: CarissaS
+  }, {
+    name: "Caitlyn Brady",
+    title: "Product Designer & Researcher",
+    company: "Covalent",
+    bio: "Product Designer specializing in B2B SaaS and workforce optimization tools. Previously at Americaneagle.com, she led major UX projects for clients like NYC Public Schools, conducted persona research and usability testing, and helped launch multi-million-dollar platform redesigns for education and finance organizations.",
+    linkedin: "#",
+    image: CaitlynB
   }, {
     name: "Hayley Dahle",
     title: "Director, UX/CAD",
@@ -93,7 +109,7 @@ const SocialProof = () => {
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
-          {facilitators.slice(0, 6).map((facilitator, index) => <Card key={index} className="group hover:shadow-lg transition-shadow">
+          {facilitators.slice(0, 8).map((facilitator, index) => <Card key={index} className="group hover:shadow-lg transition-shadow">
               <CardContent className="p-6">
                 <div className="flex items-start gap-4 mb-4">
                   <Avatar className="w-20 h-20 flex-shrink-0">
@@ -132,7 +148,7 @@ const SocialProof = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
-          {facilitators.slice(6).map((facilitator, index) => <Card key={index + 6} className="group hover:shadow-lg transition-shadow">
+          {facilitators.slice(8).map((facilitator, index) => <Card key={index + 8} className="group hover:shadow-lg transition-shadow">
               <CardContent className="p-6">
                 <div className="flex items-start gap-4 mb-4">
                   <Avatar className="w-20 h-20 flex-shrink-0">
