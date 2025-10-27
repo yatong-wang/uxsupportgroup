@@ -34,23 +34,20 @@ const MembershipHero = () => {
             with hands-on training, expert coaching, and a community of ambitious professionals.
           </p>
 
-          {/* Benefits Box */}
-          <div className="bg-card border-2 border-border rounded-xl p-8 max-w-2xl mx-auto mb-8 shadow-lg">
-            <ul className="text-left space-y-4">
-              <li className="flex items-start gap-3 text-lg">
-                <Check className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
-                <span>50% off all paid events (260+ per year)</span>
-              </li>
-              <li className="flex items-start gap-3 text-lg">
-                <Check className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
-                <span>Unlimited access to workshop recordings</span>
-              </li>
-              <li className="flex items-start gap-3 text-lg">
-                <Check className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
-                <span>Members-only Slack channel</span>
-              </li>
-            </ul>
-          </div>
+          <ul className="text-left space-y-4 max-w-2xl mx-auto mb-8">
+            <li className="flex items-start gap-3 text-lg">
+              <Check className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
+              <span>50% off all paid events (260+ per year)</span>
+            </li>
+            <li className="flex items-start gap-3 text-lg">
+              <Check className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
+              <span>Unlimited access to workshop recordings</span>
+            </li>
+            <li className="flex items-start gap-3 text-lg">
+              <Check className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
+              <span>Members-only Slack channel</span>
+            </li>
+          </ul>
 
           <div className="mb-8">
             <div className="text-5xl font-bold text-foreground mb-2">$29<span className="text-2xl text-muted-foreground">/month</span></div>
