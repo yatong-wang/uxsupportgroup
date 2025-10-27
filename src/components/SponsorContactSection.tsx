@@ -4,8 +4,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue, SelectGroup, SelectLabel } from "@/components/ui/select";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Loader2 } from "lucide-react";
 import { useState, FormEvent } from "react";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "@/hooks/use-toast";
 
 const SponsorContactSection = () => {
   const [formData, setFormData] = useState({
@@ -15,26 +17,68 @@ const SponsorContactSection = () => {
     package: '',
     message: ''
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     
-    const emailBody = `
-Name: ${formData.name}
-Email: ${formData.email}
-Company: ${formData.company}
-Package Interest: ${formData.package}
+    // Basic client-side validation
+    if (formData.message.length < 10) {
+      toast({
+        title: "Message too short",
+        description: "Please provide more details about your goals (at least 10 characters)",
+        variant: "destructive",
+      });
+      return;
+    }
 
-Message:
-${formData.message}
-    `.trim();
-    
-    const subject = 'UXSG Sponsorship Inquiry - ' + formData.package;
-    const to = 'info@uxsupportgroup.com';
-    const cc = 'dnystwn@gmail.com';
-    const mailtoLink = `mailto:${to}?cc=${cc}&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
-    
-    window.location.href = mailtoLink;
+    if (formData.message.length > 2000) {
+      toast({
+        title: "Message too long",
+        description: "Please keep your message under 2000 characters",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const { data, error } = await supabase.functions.invoke('send-sponsorship-inquiry', {
+        body: {
+          name: formData.name,
+          email: formData.email,
+          company: formData.company,
+          package_interest: formData.package,
+          message: formData.message,
+        },
+      });
+
+      if (error) throw error;
+
+      toast({
+        title: "Inquiry Submitted!",
+        description: "Thank you! We've received your inquiry and will be in touch within 24 hours.",
+      });
+
+      // Clear form
+      setFormData({
+        name: '',
+        email: '',
+        company: '',
+        package: '',
+        message: ''
+      });
+    } catch (error: any) {
+      console.error('Submission error:', error);
+      toast({
+        title: "Submission Failed",
+        description: error.message || "Something went wrong. Please try again or email us directly at info@uxsupportgroup.com",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -154,10 +198,20 @@ ${formData.message}
             {/* Submit Button */}
             <Button
               type="submit"
-              className="w-full h-14 text-lg font-bold bg-foreground text-background hover:bg-foreground/90 shadow-lg hover:shadow-xl transition-all group uppercase"
+              disabled={isSubmitting}
+              className="w-full h-14 text-lg font-bold bg-foreground text-background hover:bg-foreground/90 shadow-lg hover:shadow-xl transition-all group uppercase disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Submit Inquiry
-              <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+              {isSubmitting ? (
+                <>
+                  <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                  Submitting...
+                </>
+              ) : (
+                <>
+                  Submit Inquiry
+                  <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+                </>
+              )}
             </Button>
           </form>
         </Card>

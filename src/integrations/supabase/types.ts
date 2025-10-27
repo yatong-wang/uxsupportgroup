@@ -150,6 +150,42 @@ export type Database = {
           },
         ]
       }
+      sponsorship_inquiries: {
+        Row: {
+          company: string
+          created_at: string
+          email: string
+          id: string
+          message: string
+          name: string
+          notes: string | null
+          package_interest: string
+          status: string
+        }
+        Insert: {
+          company: string
+          created_at?: string
+          email: string
+          id?: string
+          message: string
+          name: string
+          notes?: string | null
+          package_interest: string
+          status?: string
+        }
+        Update: {
+          company?: string
+          created_at?: string
+          email?: string
+          id?: string
+          message?: string
+          name?: string
+          notes?: string | null
+          package_interest?: string
+          status?: string
+        }
+        Relationships: []
+      }
       user_profiles: {
         Row: {
           bio: string | null
