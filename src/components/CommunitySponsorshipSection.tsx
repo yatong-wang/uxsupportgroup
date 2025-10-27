@@ -5,16 +5,18 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 
 const CommunitySponsorshipSection = () => {
   const scrollToContact = (packageName: string) => {
+    // Update URL with selected package
+    const url = new URL(window.location.href);
+    url.searchParams.set('package', packageName);
+    window.history.replaceState({}, '', url);
+    
+    // Scroll to contact form
     document.querySelector('#contact')?.scrollIntoView({
       behavior: 'smooth'
     });
     
-    setTimeout(() => {
-      const packageSelect = document.getElementById('package') as HTMLSelectElement;
-      if (packageSelect) {
-        packageSelect.value = packageName;
-      }
-    }, 500);
+    // Dispatch custom event to notify form component
+    window.dispatchEvent(new CustomEvent('packageSelected', { detail: packageName }));
   };
 
   const quarterlyFeatures = [

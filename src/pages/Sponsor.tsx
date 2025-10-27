@@ -4,7 +4,6 @@ import SponsorHero from "@/components/SponsorHero";
 import CommunitySponsorshipSection from "@/components/CommunitySponsorshipSection";
 import SummitSponsorshipSection from "@/components/SummitSponsorshipSection";
 import SponsorContactSection from "@/components/SponsorContactSection";
-import FloatingCTA from "@/components/FloatingCTA";
 
 const Sponsor = () => {
   return (
@@ -17,7 +16,6 @@ const Sponsor = () => {
         <SponsorContactSection />
       </main>
       <Footer />
-      <FloatingCTA />
     </div>
   );
 };

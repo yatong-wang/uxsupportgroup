@@ -5,7 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue, SelectGroup, SelectLabel } from "@/components/ui/select";
 import { ArrowRight, Loader2 } from "lucide-react";
-import { useState, FormEvent } from "react";
+import { useState, FormEvent, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 
@@ -18,6 +18,27 @@ const SponsorContactSection = () => {
     message: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Check URL params and listen for package selection
+  useEffect(() => {
+    // Check URL params on mount
+    const urlParams = new URLSearchParams(window.location.search);
+    const packageParam = urlParams.get('package');
+    if (packageParam) {
+      setFormData(prev => ({ ...prev, package: packageParam }));
+    }
+
+    // Listen for package selection events
+    const handlePackageSelected = (event: CustomEvent) => {
+      setFormData(prev => ({ ...prev, package: event.detail }));
+    };
+
+    window.addEventListener('packageSelected', handlePackageSelected as EventListener);
+    
+    return () => {
+      window.removeEventListener('packageSelected', handlePackageSelected as EventListener);
+    };
+  }, []);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
