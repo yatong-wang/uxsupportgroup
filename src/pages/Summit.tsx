@@ -6,6 +6,7 @@ import ConceptSection from "@/components/ConceptSection";
 import AgendaSection from "@/components/AgendaSection";
 import TicketingSection from "@/components/TicketingSection";
 import ProfileCallout from "@/components/ProfileCallout";
+import SummitSponsorshipInquiry from "@/components/SummitSponsorshipInquiry";
 import FAQSection from "@/components/FAQSection";
 import Footer from "@/components/Footer";
 const Summit = () => {
@@ -19,6 +20,7 @@ const Summit = () => {
       <AgendaSection />
       <TicketingSection />
       <ProfileCallout />
+      <SummitSponsorshipInquiry />
       <FAQSection />
       </main>
       <Footer />
