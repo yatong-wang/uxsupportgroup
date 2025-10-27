@@ -18,7 +18,7 @@ const MembershipPricing = () => {
   ];
 
   const annualExtraBenefits = [
-    "Quarterly 1-on-1 coaching with Danny (30-min each)"
+    "Quarterly 1-on-1 coaching with Danny (30-min each, value: $250/hr)"
   ];
 
   const handleJoin = (paymentLink: string) => {
