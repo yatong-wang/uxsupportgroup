@@ -12,6 +12,7 @@ import logo from "@/assets/uxsg-logo-dark-bg.png";
 import uxsgLogo from "@/assets/uxsg-logo.svg";
 import AuthModal from "@/components/AuthModal";
 import html2canvas from 'html2canvas';
+import EstherJImage from "@/assets/EstherJ.jpg";
 interface ProfileCard {
   id: string;
   name: string;
@@ -845,6 +846,19 @@ const SummitWall = () => {
       y: profile.wall_position_y || 0
     };
   };
+
+  // Helper to get profile photo URL (supports both storage URLs and local assets)
+  const getProfilePhotoUrl = (photoUrl: string | null) => {
+    if (!photoUrl) return null;
+    // If it's already a full URL, return as is
+    if (photoUrl.startsWith('http')) return photoUrl;
+    // Map local asset filenames to imported assets
+    const localAssets: Record<string, string> = {
+      'EstherJ.jpg': EstherJImage,
+    };
+    return localAssets[photoUrl] || photoUrl;
+  };
+  
   if (isLoading) {
     return <div className="h-screen flex items-center justify-center bg-[#E5E7EB]">
         <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-[#8B5CF6]"></div>
@@ -949,7 +963,7 @@ const SummitWall = () => {
           >
               <div className="card-content flex flex-col items-center gap-3" onClick={() => !isDragging && handleCardClick(profile)}>
                 <div className="w-16 h-16 rounded-full bg-[#E5E7EB] overflow-hidden flex-shrink-0">
-                  {profile.profile_photo_url ? <img src={profile.profile_photo_url} alt={profile.name} className="w-full h-full object-cover" /> : <div className="w-full h-full flex items-center justify-center text-[#9CA3AF] text-xs">
+                  {profile.profile_photo_url ? <img src={getProfilePhotoUrl(profile.profile_photo_url)} alt={profile.name} className="w-full h-full object-cover" /> : <div className="w-full h-full flex items-center justify-center text-[#9CA3AF] text-xs">
                       No photo
                     </div>}
                 </div>
@@ -1063,7 +1077,7 @@ const SummitWall = () => {
                   {/* Profile Photo */}
                   <div className="flex flex-col items-center gap-2 mb-4">
                     <div className="w-24 h-24 rounded-full bg-[#E5E7EB] overflow-hidden">
-                      {selectedProfile.profile_photo_url ? <img src={selectedProfile.profile_photo_url} alt={selectedProfile.name} className="w-full h-full object-cover" /> : <div className="w-full h-full flex items-center justify-center text-[#9CA3AF] text-xs">
+                      {selectedProfile.profile_photo_url ? <img src={getProfilePhotoUrl(selectedProfile.profile_photo_url)} alt={selectedProfile.name} className="w-full h-full object-cover" /> : <div className="w-full h-full flex items-center justify-center text-[#9CA3AF] text-xs">
                           No photo
                         </div>}
                     </div>
