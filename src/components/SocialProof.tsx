@@ -112,7 +112,7 @@ const SocialProof = () => {
     title: "Product Experience Designer & PM",
     company: "Studio Lama",
     bio: "Agile UX + design systems for B2B/SaaS. Expert in wireframes, usability testing, & team collaboration.",
-    linkedin: "#",
+    linkedin: "https://www.linkedin.com/in/esther-g-j/",
     image: EstherJ
   }];
   return <section className="py-24 bg-card">
