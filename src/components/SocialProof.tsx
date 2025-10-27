@@ -14,6 +14,7 @@ import YatongW from "@/assets/YatongW-2.jpeg";
 import CarissaS from "@/assets/CarissaS.jpeg";
 import CaitlynB from "@/assets/CaitlynB.jpeg";
 import SaraS from "@/assets/SaraS.jpeg";
+import EstherJ from "@/assets/EstherJ.jpg";
 const SocialProof = () => {
   const facilitators = [{
     name: "Danny Setiawan",
@@ -106,6 +107,13 @@ const SocialProof = () => {
     bio: "A Columbia-trained UX/UI Designer with global experience in freelance digital projects and customer-focused roles at ZARA. She specializes in accessibility, inclusive design, and AI-driven solutions, always prioritizing empathy and human-centered results.",
     linkedin: "https://www.linkedin.com/in/sara-semoune-uxdesigner/",
     image: SaraS
+  }, {
+    name: "Esther Greenfield Jakar",
+    title: "Product Experience Designer & PM",
+    company: "Studio Lama",
+    bio: "Agile UX + design systems for B2B/SaaS. Expert in wireframes, usability testing, & team collaboration.",
+    linkedin: "#",
+    image: EstherJ
   }];
   return <section className="py-24 bg-card">
       <div className="container mx-auto px-4">
