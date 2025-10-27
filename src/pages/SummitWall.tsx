@@ -785,7 +785,7 @@ const SummitWall = () => {
     }
   };
 
-  // Drag handlers
+  // Drag handlers - using document listeners for better responsiveness
   const handleMouseDown = (e: React.MouseEvent, profileId: string) => {
     // Prevent drag if clicking on the card content (allow modal to open)
     if ((e.target as HTMLElement).closest('.card-content')) return;
@@ -800,36 +800,43 @@ const SummitWall = () => {
     const currentY = tempPositions[profileId]?.y ?? profile.wall_position_y;
     
     setDraggedProfile(profileId);
-    setDragOffset({
+    const offset = {
       x: e.clientX / (zoom / 100) - currentX,
       y: e.clientY / (zoom / 100) - currentY
-    });
-  };
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!draggedProfile) return;
+    };
+    setDragOffset(offset);
     
-    const newX = e.clientX / (zoom / 100) - dragOffset.x;
-    const newY = e.clientY / (zoom / 100) - dragOffset.y;
-    
-    // Clamp within canvas bounds
-    const clampedX = Math.max(0, Math.min(1800, newX));
-    const clampedY = Math.max(0, Math.min(1250, newY));
-    
-    const newPositions = {
-      ...tempPositions,
-      [draggedProfile]: { x: clampedX, y: clampedY }
+    // Attach document-level listeners for better tracking
+    const handleMove = (moveEvent: MouseEvent) => {
+      const newX = moveEvent.clientX / (zoom / 100) - offset.x;
+      const newY = moveEvent.clientY / (zoom / 100) - offset.y;
+      
+      // Clamp within canvas bounds
+      const clampedX = Math.max(0, Math.min(1800, newX));
+      const clampedY = Math.max(0, Math.min(1250, newY));
+      
+      setTempPositions(prev => {
+        const newPositions = {
+          ...prev,
+          [profileId]: { x: clampedX, y: clampedY }
+        };
+        // Throttle sessionStorage updates
+        requestAnimationFrame(() => {
+          sessionStorage.setItem('summit_card_positions', JSON.stringify(newPositions));
+        });
+        return newPositions;
+      });
     };
     
-    setTempPositions(newPositions);
-    sessionStorage.setItem('summit_card_positions', JSON.stringify(newPositions));
-  };
-
-  const handleMouseUp = () => {
-    if (draggedProfile) {
+    const handleUp = () => {
+      document.removeEventListener('mousemove', handleMove);
+      document.removeEventListener('mouseup', handleUp);
       toast.success("Card position saved for this session");
       setDraggedProfile(null);
-    }
+    };
+    
+    document.addEventListener('mousemove', handleMove);
+    document.addEventListener('mouseup', handleUp);
   };
 
   const getCardPosition = (profile: ProfileCard) => {
@@ -898,9 +905,6 @@ const SummitWall = () => {
           cursor: draggedProfile ? 'grabbing' : 'grab',
           transform: `scale(${zoom / 100})`
         }}
-        onMouseMove={handleMouseMove}
-        onMouseUp={handleMouseUp}
-        onMouseLeave={handleMouseUp}
       >
         <div className="relative" style={{
         width: '2000px',
