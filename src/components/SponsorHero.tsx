@@ -1,16 +1,13 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import heroBg from "@/assets/liquid-data-bust.png";
-
 const SponsorHero = () => {
   const scrollToPackages = () => {
     document.querySelector('#community')?.scrollIntoView({
       behavior: 'smooth'
     });
   };
-
-  return (
-    <section className="relative min-h-[60vh] flex items-center overflow-hidden">
+  return <section className="relative min-h-[60vh] flex items-center overflow-hidden">
       {/* Background with gradient overlay */}
       <img src={heroBg} alt="" className="absolute inset-0 w-full h-full object-cover" />
       <div className="absolute inset-0 bg-gradient-to-br from-white/95 via-white/90 to-white/85" />
@@ -36,7 +33,7 @@ const SponsorHero = () => {
               <p className="text-foreground/70 text-sm uppercase tracking-wide">Members</p>
             </div>
             <div className="text-center p-6 rounded-2xl bg-white/60 backdrop-blur-sm border-2 border-foreground/10">
-              <div className="text-5xl font-bold text-foreground mb-2">50+</div>
+              <div className="text-5xl font-bold text-foreground mb-2">1000+</div>
               <p className="text-foreground/70 text-sm uppercase tracking-wide">Countries</p>
             </div>
             <div className="text-center p-6 rounded-2xl bg-white/60 backdrop-blur-sm border-2 border-foreground/10">
@@ -45,19 +42,12 @@ const SponsorHero = () => {
             </div>
           </div>
           
-          <Button 
-            size="lg" 
-            className="text-lg px-8 py-6 bg-foreground text-background hover:bg-foreground/90 shadow-lg hover:shadow-xl transition-all group"
-            onClick={scrollToPackages}
-          >
+          <Button size="lg" className="text-lg px-8 py-6 bg-foreground text-background hover:bg-foreground/90 shadow-lg hover:shadow-xl transition-all group" onClick={scrollToPackages}>
             View Packages
             <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
           </Button>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default SponsorHero;
-
