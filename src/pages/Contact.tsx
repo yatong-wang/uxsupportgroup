@@ -123,9 +123,7 @@ const Contact = () => {
                     ...formData,
                     message: e.target.value
                   })} className="border-2 resize-none" />
-                    <p className="text-xs text-muted-foreground">
-                      {formData.message.length}/2000 characters
-                    </p>
+                    
                   </div>
 
                   <Button type="submit" disabled={isSubmitting} className="w-full h-14 text-lg font-bold shadow-lg hover:shadow-xl transition-all group uppercase">
