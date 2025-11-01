@@ -148,17 +148,7 @@ const Contact = () => {
                 </div>
 
                 <div className="space-y-6">
-                  <div className="flex items-start gap-4">
-                    <div className="p-3 rounded-lg bg-primary/10">
-                      <Mail className="w-6 h-6 text-primary" />
-                    </div>
-                    <div>
-                      <h3 className="font-bold mb-1">Email</h3>
-                      <a href="mailto:info@uxsupportgroup.com" className="text-muted-foreground hover:text-primary transition-colors">
-                        info@uxsupportgroup.com
-                      </a>
-                    </div>
-                  </div>
+                  
 
                   
                 </div>
