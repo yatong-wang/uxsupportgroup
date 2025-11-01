@@ -142,9 +142,7 @@ const Contact = () => {
               <div className="space-y-8">
                 <div>
                   
-                  <p className="text-muted-foreground mb-8">
-                    We're here to help and answer any questions you might have. Reach out to us and we'll respond as soon as we can.
-                  </p>
+                  
                 </div>
 
                 <div className="space-y-6">
