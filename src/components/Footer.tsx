@@ -63,7 +63,7 @@ const Footer = () => {
               <li><a href="/sponsor" className="hover:text-primary transition-colors">Become a Sponsor</a></li>
               <li><a href="/partner" className="hover:text-primary transition-colors">Partner Inquiry</a></li>
               <li><a href="/media-kit" className="hover:text-primary transition-colors">Media Kit</a></li>
-              <li><a href="/partner" className="hover:text-primary transition-colors">Contact</a></li>
+              <li><a href="/contact" className="hover:text-primary transition-colors">Contact</a></li>
             </ul>
           </div>
           
