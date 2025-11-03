@@ -79,6 +79,7 @@ const SummitWall = () => {
     title: ''
   });
   const [isGeneratingScreenshot, setIsGeneratingScreenshot] = useState(false);
+  const [newCardIds, setNewCardIds] = useState<Set<string>>(new Set());
 
   // Generate deterministic animation properties based on profile ID
   const getFloatAnimation = (profileId: string) => {
@@ -153,6 +154,52 @@ const SummitWall = () => {
         setSearchParams({});
       }
     }
+  }, []);
+
+  // Real-time subscription for new profiles
+  useEffect(() => {
+    const channel = supabase
+      .channel('user_profiles_changes')
+      .on(
+        'postgres_changes',
+        {
+          event: 'INSERT',
+          schema: 'public',
+          table: 'user_profiles'
+        },
+        (payload) => {
+          const newProfile = payload.new as ProfileCard;
+          
+          // Only add if profile has a name (fully created)
+          if (!newProfile.name) return;
+          
+          // Add to profiles with collision detection
+          setProfiles(prev => {
+            // Check if profile already exists
+            if (prev.some(p => p.id === newProfile.id)) return prev;
+            
+            const updated = [...prev, newProfile];
+            return preventOverlapping(updated);
+          });
+          
+          // Mark as new for animation
+          setNewCardIds(prev => new Set(prev).add(newProfile.id));
+          
+          // Remove animation after completion
+          setTimeout(() => {
+            setNewCardIds(prev => {
+              const updated = new Set(prev);
+              updated.delete(newProfile.id);
+              return updated;
+            });
+          }, 600);
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
   }, []);
 
   // Handle direct profile link via slug
@@ -935,16 +982,34 @@ const SummitWall = () => {
 
           {/* Inject keyframes for all profiles */}
           <style>
-            {profiles.map(profile => {
-            const floatAnimation = getFloatAnimation(profile.id);
-            return createKeyframes(profile.id, floatAnimation.animationType);
-          }).join('\n')}
+            {`
+              @keyframes card-entrance {
+                0% {
+                  transform: scale(0);
+                  opacity: 0;
+                }
+                50% {
+                  transform: scale(1.1);
+                  opacity: 1;
+                }
+                100% {
+                  transform: scale(1);
+                  opacity: 1;
+                }
+              }
+              
+              ${profiles.map(profile => {
+                const floatAnimation = getFloatAnimation(profile.id);
+                return createKeyframes(profile.id, floatAnimation.animationType);
+              }).join('\n')}
+            `}
           </style>
 
           {profiles.map(profile => {
           const floatAnimation = getFloatAnimation(profile.id);
           const position = getCardPosition(profile);
           const isDragging = draggedProfile === profile.id;
+          const isNewCard = newCardIds.has(profile.id);
           
           return <div 
             key={profile.id} 
@@ -954,8 +1019,12 @@ const SummitWall = () => {
               top: `${position.y}px`,
               width: '200px',
               cursor: isDragging ? 'grabbing' : 'grab',
-              animation: isDragging ? 'none' : `${floatAnimation.animationName} ${floatAnimation.duration} ease-in-out infinite`,
-              animationDelay: floatAnimation.delay,
+              animation: isDragging 
+                ? 'none' 
+                : isNewCard
+                  ? 'card-entrance 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards'
+                  : `${floatAnimation.animationName} ${floatAnimation.duration} ease-in-out infinite`,
+              animationDelay: isNewCard ? '0s' : floatAnimation.delay,
               zIndex: isDragging ? 1000 : 1,
               userSelect: 'none'
             }} 
