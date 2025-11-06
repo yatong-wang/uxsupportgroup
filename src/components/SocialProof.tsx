@@ -19,7 +19,7 @@ const SocialProof = () => {
   const facilitators = [{
     name: "Danny Setiawan",
     title: "Founder, Instructor",
-    company: "CoCreate",
+    company: "UX Support Group",
     bio: "UX leader and AI educator with a track record delivering product innovation for global brands including Yahoo!, The Economist, Disney, Sony, and Men's Warehouse, as well as growing the community of UX professionals with over 8800 members from all over the world.",
     linkedin: "https://www.linkedin.com/in/dnystwn/",
     image: DannyS
