@@ -39,7 +39,7 @@ const SocialProof = () => {
     image: VolkanU
   }, {
     name: "Alexis Brochu",
-    title: "Principal, AI Product Strategist",
+    title: "AI Product Manager & Strategist",
     company: "Alexis Design",
     bio: "Human-first product leader specializing in AI-powered transformation across design, technology, and business domains. Expertise in UX-informed product strategy and developing business acumen in technical leaders. Former: California Governor's Office of Emergency Services, Rhode Island T.F. Green International Airport, WLNE-ABC6-TV, Brown University Health Systems, Mallinckrodt Pharmaceuticals.",
     linkedin: "https://www.linkedin.com/in/alexisbrochu/",
