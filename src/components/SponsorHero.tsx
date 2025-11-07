@@ -51,8 +51,8 @@ const SponsorHero = () => {
                 <p className="text-foreground/70 text-xs uppercase tracking-wide">EXPERIENCED PROFESSIONALS (2+ Years)</p>
               </div>
               <div className="text-center p-6">
-                <div className="text-4xl font-bold text-foreground mb-2">1,535</div>
-                <p className="text-foreground/70 text-xs uppercase tracking-wide">Highly Active (3+ Events)</p>
+                <div className="text-4xl font-bold text-foreground mb-2">1,600+</div>
+                <p className="text-foreground/70 text-xs uppercase tracking-wide">EVENT ATTENDANCE RATE</p>
               </div>
               <div className="text-center p-6">
                 <div className="text-4xl font-bold text-foreground mb-2">28%</div>
