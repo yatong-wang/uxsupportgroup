@@ -2,51 +2,57 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { ArrowRight, Check } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-
 const SummitSponsorshipSection = () => {
   const scrollToContact = (packageName: string) => {
     // Update URL with selected package
     const url = new URL(window.location.href);
     url.searchParams.set('package', packageName);
     window.history.replaceState({}, '', url);
-    
+
     // Scroll to contact form
     document.querySelector('#contact')?.scrollIntoView({
       behavior: 'smooth'
     });
-    
+
     // Dispatch custom event to notify form component
-    window.dispatchEvent(new CustomEvent('packageSelected', { detail: packageName }));
+    window.dispatchEvent(new CustomEvent('packageSelected', {
+      detail: packageName
+    }));
   };
-
-  const standardFeatures = [
-    "Give away up to 100 free credits to engaged AI/UX professionals",
-    "Sponsor logo on summit website",
-    "Logo on credits/offer landing page",
-    "Featured in post-event attendee emails",
-    "Basic claim metrics (redemptions & demographics)"
-  ];
-
-  const boothFeatures = [
-    "Everything in Standard (Free) tier",
-    "Dedicated 45-minute branded breakout room",
-    "Live demo, walkthrough, or AMA during lunch/networking block",
-    "Priority listing as 'Featured Sponsor' on summit site",
-    "Lead/attendee opt-ins from your session",
-    "Enhanced brand presence across all channels"
-  ];
-
-  const comparisonData = [
-    { feature: "Free Credit Giveaway", standard: "Up to 100", booth: "Up to 100", custom: "Custom" },
-    { feature: "Logo Placement", standard: "✓", booth: "✓ Featured", custom: "✓ Premium" },
-    { feature: "Virtual Booth/Breakout", standard: "—", booth: "45 min", custom: "Custom" },
-    { feature: "Priority Listing", standard: "—", booth: "✓", custom: "✓" },
-    { feature: "Lead Capture", standard: "Basic", booth: "Full", custom: "Enhanced" },
-    { feature: "Custom Activations", standard: "—", booth: "—", custom: "✓" }
-  ];
-
-  return (
-    <>
+  const standardFeatures = ["Give away up to 100 free credits to engaged AI/UX professionals", "Sponsor logo on summit website", "Logo on credits/offer landing page", "Featured in post-event attendee emails", "Basic claim metrics (redemptions & demographics)"];
+  const boothFeatures = ["Everything in Standard (Free) tier", "Dedicated 45-minute branded breakout room", "Live demo, walkthrough, or AMA during lunch/networking block", "Priority listing as 'Featured Sponsor' on summit site", "Lead/attendee opt-ins from your session", "Enhanced brand presence across all channels"];
+  const comparisonData = [{
+    feature: "Free Credit Giveaway",
+    standard: "Up to 100",
+    booth: "Up to 100",
+    custom: "Custom"
+  }, {
+    feature: "Logo Placement",
+    standard: "✓",
+    booth: "✓ Featured",
+    custom: "✓ Premium"
+  }, {
+    feature: "Virtual Booth/Breakout",
+    standard: "—",
+    booth: "45 min",
+    custom: "Custom"
+  }, {
+    feature: "Priority Listing",
+    standard: "—",
+    booth: "✓",
+    custom: "✓"
+  }, {
+    feature: "Lead Capture",
+    standard: "Basic",
+    booth: "Full",
+    custom: "Enhanced"
+  }, {
+    feature: "Custom Activations",
+    standard: "—",
+    booth: "—",
+    custom: "✓"
+  }];
+  return <>
       {/* Section Header */}
       <section id="summit" className="py-16 bg-background">
         <div className="container mx-auto px-4">
@@ -76,19 +82,13 @@ const SummitSponsorshipSection = () => {
               </div>
               
               <ul className="space-y-3 mb-8 min-h-[240px]">
-                {standardFeatures.map((feature, index) => (
-                  <li key={index} className="flex items-start gap-2 text-sm">
+                {standardFeatures.map((feature, index) => <li key={index} className="flex items-start gap-2 text-sm">
                     <Check className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
                     <span>{feature}</span>
-                  </li>
-                ))}
+                  </li>)}
               </ul>
               
-              <Button 
-                variant="outline"
-                className="w-full h-12 text-sm font-bold uppercase group border-2" 
-                onClick={() => scrollToContact('Standard (Free) Sponsor')}
-              >
+              <Button variant="outline" className="w-full h-12 text-sm font-bold uppercase group border-2" onClick={() => scrollToContact('Standard (Free) Sponsor')}>
                 Join as Free Sponsor
                 <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
               </Button>
@@ -109,12 +109,10 @@ const SummitSponsorshipSection = () => {
               </div>
               
               <ul className="space-y-3 mb-8 min-h-[240px]">
-                {boothFeatures.map((feature, index) => (
-                  <li key={index} className="flex items-start gap-2 text-sm">
+                {boothFeatures.map((feature, index) => <li key={index} className="flex items-start gap-2 text-sm">
                     <Check className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
                     <span className={index === 0 ? "font-bold" : ""}>{feature}</span>
-                  </li>
-                ))}
+                  </li>)}
               </ul>
               
               <div className="mb-4 p-3 bg-primary/10 rounded-lg border border-primary/20">
@@ -123,10 +121,7 @@ const SummitSponsorshipSection = () => {
                 </p>
               </div>
               
-              <Button 
-                className="w-full h-12 text-sm font-bold bg-foreground text-background hover:bg-foreground/90 shadow-lg hover:shadow-xl transition-all group uppercase" 
-                onClick={() => scrollToContact('Virtual Booth Add-On - $400')}
-              >
+              <Button className="w-full h-12 text-sm font-bold bg-foreground text-background hover:bg-foreground/90 shadow-lg hover:shadow-xl transition-all group uppercase" onClick={() => scrollToContact('Virtual Booth Add-On - $400')}>
                 Add Virtual Booth
                 <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
               </Button>
@@ -149,11 +144,12 @@ const SummitSponsorshipSection = () => {
                 <ul className="space-y-3">
                   <li className="flex items-start gap-2 text-sm">
                     <Check className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
-                    <span>Get your product integrated into a session</span>
+                    <span>Hackathon sponsorship</span>
                   </li>
                   <li className="flex items-start gap-2 text-sm">
                     <Check className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
-                    <span>Exclusive roundtable sessions</span>
+                    <span>Have your founder/expert involved
+                  </span>
                   </li>
                   <li className="flex items-start gap-2 text-sm">
                     <Check className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
@@ -169,11 +165,7 @@ const SummitSponsorshipSection = () => {
                 </p>
               </div>
               
-              <Button 
-                variant="outline"
-                className="w-full h-12 text-sm font-bold uppercase group border-2" 
-                onClick={() => scrollToContact('Custom Summit Partnership')}
-              >
+              <Button variant="outline" className="w-full h-12 text-sm font-bold uppercase group border-2" onClick={() => scrollToContact('Custom Summit Partnership')}>
                 Let's Talk
                 <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
               </Button>
@@ -199,14 +191,12 @@ const SummitSponsorshipSection = () => {
                         </tr>
                       </thead>
                       <tbody>
-                        {comparisonData.map((row, index) => (
-                          <tr key={index} className="hover:bg-muted/50">
+                        {comparisonData.map((row, index) => <tr key={index} className="hover:bg-muted/50">
                             <td className="border-2 border-border p-3 text-sm font-medium">{row.feature}</td>
                             <td className="border-2 border-border p-3 text-sm text-center">{row.standard}</td>
                             <td className="border-2 border-border p-3 text-sm text-center font-bold">{row.booth}</td>
                             <td className="border-2 border-border p-3 text-sm text-center">{row.custom}</td>
-                          </tr>
-                        ))}
+                          </tr>)}
                       </tbody>
                     </table>
                   </div>
@@ -216,9 +206,6 @@ const SummitSponsorshipSection = () => {
           </div>
         </div>
       </section>
-    </>
-  );
+    </>;
 };
-
 export default SummitSponsorshipSection;
-
