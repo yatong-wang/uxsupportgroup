@@ -27,18 +27,22 @@ const SponsorHero = () => {
           </h2>
           
           {/* Hero Stats */}
-          <div className="max-w-3xl mx-auto grid md:grid-cols-3 gap-8 my-12">
+          <div className="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6 my-12">
             <div className="text-center p-6 rounded-2xl bg-white/60 backdrop-blur-sm border-2 border-foreground/10">
-              <div className="text-5xl font-bold text-foreground mb-2">8,900+</div>
-              <p className="text-foreground/70 text-sm uppercase tracking-wide">Members</p>
+              <div className="text-4xl md:text-5xl font-bold text-foreground mb-2">30%+</div>
+              <p className="text-foreground/70 text-sm uppercase tracking-wide">YoY Growth</p>
             </div>
             <div className="text-center p-6 rounded-2xl bg-white/60 backdrop-blur-sm border-2 border-foreground/10">
-              <div className="text-5xl font-bold text-foreground mb-2">1000+</div>
-              <p className="text-foreground/70 text-sm uppercase tracking-wide">Events to date</p>
+              <div className="text-4xl md:text-5xl font-bold text-foreground mb-2">5,300+</div>
+              <p className="text-foreground/70 text-sm uppercase tracking-wide">With 2+ Years in UX</p>
             </div>
             <div className="text-center p-6 rounded-2xl bg-white/60 backdrop-blur-sm border-2 border-foreground/10">
-              <div className="text-5xl font-bold text-foreground mb-2">2017</div>
-              <p className="text-foreground/70 text-sm uppercase tracking-wide">YEAR WE STARTED</p>
+              <div className="text-4xl md:text-5xl font-bold text-foreground mb-2">64%</div>
+              <p className="text-foreground/70 text-sm uppercase tracking-wide">Attendance Rate</p>
+            </div>
+            <div className="text-center p-6 rounded-2xl bg-white/60 backdrop-blur-sm border-2 border-foreground/10">
+              <div className="text-4xl md:text-5xl font-bold text-foreground mb-2">79</div>
+              <p className="text-foreground/70 text-sm uppercase tracking-wide">Countries</p>
             </div>
           </div>
           
