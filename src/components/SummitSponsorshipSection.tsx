@@ -174,7 +174,7 @@ const SummitSponsorshipSection = () => {
                 className="w-full h-12 text-sm font-bold uppercase group border-2" 
                 onClick={() => scrollToContact('Custom Summit Partnership')}
               >
-                Contact for Custom Partnership
+                Let's Talk
                 <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
               </Button>
             </Card>
