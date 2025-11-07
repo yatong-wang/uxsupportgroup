@@ -30,15 +30,15 @@ const SponsorHero = () => {
           <div className="max-w-4xl mx-auto space-y-8 my-12">
             {/* First row of stats */}
             <div className="grid md:grid-cols-3 gap-8">
-              <div className="text-center p-6 rounded-2xl bg-white/60 backdrop-blur-sm border-2 border-foreground/10">
+              <div className="text-center p-6">
                 <div className="text-5xl font-bold text-foreground mb-2">8,900+</div>
                 <p className="text-foreground/70 text-sm uppercase tracking-wide">Members</p>
               </div>
-              <div className="text-center p-6 rounded-2xl bg-white/60 backdrop-blur-sm border-2 border-foreground/10">
+              <div className="text-center p-6">
                 <div className="text-5xl font-bold text-foreground mb-2">1000+</div>
                 <p className="text-foreground/70 text-sm uppercase tracking-wide">Events to date</p>
               </div>
-              <div className="text-center p-6 rounded-2xl bg-white/60 backdrop-blur-sm border-2 border-foreground/10">
+              <div className="text-center p-6">
                 <div className="text-5xl font-bold text-foreground mb-2">2017</div>
                 <p className="text-foreground/70 text-sm uppercase tracking-wide">YEAR WE STARTED</p>
               </div>
@@ -46,19 +46,19 @@ const SponsorHero = () => {
             
             {/* Second row of stats */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-              <div className="text-center p-6 rounded-2xl bg-white/60 backdrop-blur-sm border-2 border-foreground/10">
+              <div className="text-center p-6">
                 <div className="text-4xl font-bold text-foreground mb-2">5,300+</div>
                 <p className="text-foreground/70 text-xs uppercase tracking-wide">EXPERIENCED PROFESSIONALS (2+ Years)</p>
               </div>
-              <div className="text-center p-6 rounded-2xl bg-white/60 backdrop-blur-sm border-2 border-foreground/10">
+              <div className="text-center p-6">
                 <div className="text-4xl font-bold text-foreground mb-2">64%</div>
                 <p className="text-foreground/70 text-xs uppercase tracking-wide">EVENT ATTENDANCE RATE</p>
               </div>
-              <div className="text-center p-6 rounded-2xl bg-white/60 backdrop-blur-sm border-2 border-foreground/10">
+              <div className="text-center p-6">
                 <div className="text-4xl font-bold text-foreground mb-2">28%</div>
                 <p className="text-foreground/70 text-xs uppercase tracking-wide">YoY GROWTH</p>
               </div>
-              <div className="text-center p-6 rounded-2xl bg-white/60 backdrop-blur-sm border-2 border-foreground/10">
+              <div className="text-center p-6">
                 <div className="text-4xl font-bold text-foreground mb-2">79</div>
                 <p className="text-foreground/70 text-xs uppercase tracking-wide">COUNTRIES REPRESENTED</p>
               </div>
