@@ -20,7 +20,7 @@ const SummitSponsorshipInquiry = () => {
     <section className="py-24 relative overflow-hidden bg-muted">
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-5xl md:text-6xl font-bold mb-12 text-foreground text-center">
+          <h2 className="text-4xl md:text-5xl font-bold mb-12 text-foreground text-center">
             Sponsors
           </h2>
           <div className="grid md:grid-cols-[70%_30%] gap-8 items-center">
