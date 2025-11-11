@@ -20,10 +20,10 @@ const SummitSponsorshipInquiry = () => {
     <section className="py-24 relative overflow-hidden bg-muted">
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-4xl mx-auto text-center">
-          <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-6">
-            Current Sponsors
-          </h3>
-          <div className="flex items-center justify-center gap-12 mb-12">
+          <h2 className="text-5xl md:text-6xl font-bold mb-12 text-foreground">
+            Sponsors
+          </h2>
+          <div className="flex items-center justify-center gap-12 mb-16">
             <img 
               src={hubbleLogo} 
               alt="Hubble" 
@@ -36,15 +36,15 @@ const SummitSponsorshipInquiry = () => {
             />
           </div>
           
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">
-            Interested in <span className="text-gradient">Sponsoring?</span>
-          </h2>
-          <p className="text-xl text-foreground/70 mb-8 max-w-2xl mx-auto">
+          <h3 className="text-xl md:text-2xl font-semibold mb-4 text-foreground">
+            Interested in Sponsoring?
+          </h3>
+          <p className="text-base text-foreground/70 mb-6 max-w-2xl mx-auto">
             Connect with senior UX professionals and decision-makers at our virtual summit. Showcase your brand, products, and services to a highly engaged audience.
           </p>
           <Button
             onClick={handleBecomeASponsor}
-            className="h-14 px-8 text-lg font-bold shadow-lg hover:shadow-xl transition-all group uppercase"
+            className="h-12 px-6 text-base font-semibold shadow-lg hover:shadow-xl transition-all group"
           >
             Become a Sponsor
             <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
