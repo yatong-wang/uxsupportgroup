@@ -50,6 +50,9 @@ const SummitSponsorshipInquiry = () => {
             />
           </div>
 
+          {/* Divider */}
+          <div className="border-t border-border/20 mb-12"></div>
+
           {/* Interested in Sponsoring Section */}
           <div className="grid md:grid-cols-[70%_30%] gap-8 items-center">
             {/* Left - Heading and Copy */}
