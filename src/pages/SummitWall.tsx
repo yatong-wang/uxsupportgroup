@@ -379,6 +379,17 @@ const SummitWall = () => {
 
     return result;
   };
+
+  const handleZoomIn = () => {
+    setZoom(prev => Math.min(200, prev + 25));
+  };
+  const handleZoomOut = () => {
+    setZoom(prev => Math.max(50, prev - 25));
+  };
+  const handleFitAll = () => {
+    setZoom(100);
+  };
+
   // Drag handlers - using document listeners for better responsiveness
   const handleMouseDown = (e: React.MouseEvent, profileId: string) => {
     // Prevent drag if clicking on the card content (allow modal to open)
