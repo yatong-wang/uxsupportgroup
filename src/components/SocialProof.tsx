@@ -74,9 +74,9 @@ const SocialProof = () => {
     image: CaitlynB
   }, {
     name: "Hayley Dahle",
-    title: "Director, UX/CAD",
-    company: "FULLBEAUTY Brands",
-    bio: "Expert in digital transformation and consumer brand experience design.",
+    title: "Designer",
+    company: "Consulting on Digital Tools",
+    bio: "As a design leader with over 15 years of experience, I am grounded in systematic design thinking, specializing in translating complex user needs into intuitive products. My process is data-driven, utilizing diverse research methods to create a compelling visual foundation with an emphasis on brand compliance and design consistency. Recognizing this era of rapid technological growth, I actively work to integrate AI seamlessly into my design process. Outside of the office, I feel strongly about empowering people to confidently layer their existing skills with AI tools.",
     linkedin: "https://www.linkedin.com/in/hayley-dahle/",
     image: HayleyD
   }, {
