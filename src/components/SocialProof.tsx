@@ -30,11 +30,14 @@ interface Facilitator {
 const FacilitatorCard = ({ facilitator, index }: { facilitator: Facilitator; index: number }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [showToggle, setShowToggle] = useState(false);
-  const bioRef = useRef<HTMLDivElement>(null);
+  const bioRef = useRef<HTMLParagraphElement>(null);
 
   useEffect(() => {
     if (bioRef.current) {
-      const isOverflowing = bioRef.current.scrollHeight > bioRef.current.clientHeight;
+      // Check if content exceeds 4 lines by temporarily removing line-clamp
+      const lineHeight = parseFloat(getComputedStyle(bioRef.current).lineHeight);
+      const maxHeight = lineHeight * 4;
+      const isOverflowing = bioRef.current.scrollHeight > maxHeight;
       setShowToggle(isOverflowing);
     }
   }, [facilitator.bio]);
@@ -54,23 +57,23 @@ const FacilitatorCard = ({ facilitator, index }: { facilitator: Facilitator; ind
           </div>
         </div>
         <div className="mb-3">
-          <div
+          <p
             ref={bioRef}
             className={cn(
-              "text-sm text-muted-foreground leading-relaxed transition-all duration-300",
+              "text-sm text-muted-foreground leading-relaxed transition-all duration-300 inline",
               !isExpanded && "line-clamp-4"
             )}
           >
             {facilitator.bio}
-            {showToggle && (
-              <button 
-                onClick={() => setIsExpanded(!isExpanded)}
-                className="ml-1 text-sm text-primary hover:text-primary/80 transition-colors font-medium inline"
-              >
-                {isExpanded ? "Less" : "More"}
-              </button>
-            )}
-          </div>
+          </p>
+          {showToggle && (
+            <button 
+              onClick={() => setIsExpanded(!isExpanded)}
+              className="ml-1 text-sm text-primary hover:text-primary/80 transition-colors font-medium inline-block"
+            >
+              {isExpanded ? " Less" : " More"}
+            </button>
+          )}
         </div>
         {facilitator.linkedin !== "#" && (
           <a 
