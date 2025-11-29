@@ -2,22 +2,25 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 const FAQSection = () => {
   const faqs = [{
     question: "What's included with my ticket?",
-    answer: "All tickets include full-day access to workshops, community gallery, profile highlight, and digital resources."
+    answer: "All tickets include full-day virtual access to live workshops, interactive breakout sessions, community gallery, profile highlight, and digital resources. Plus, you'll get access to session recordings after the event."
   }, {
-    question: "Is there a refund policy?",
-    answer: "Yes, we offer full refunds up to 30 days before the event. Between 30-14 days, we offer 50% refunds. No refunds within 14 days of the event, but tickets are transferable to another attendee."
+    question: "What time zone is the event?",
+    answer: "All sessions are scheduled in Eastern Standard Time (EST/New York). The full schedule includes session times that you can easily convert to your local time zone."
   }, {
-    question: "What's the dress code?",
-    answer: "Smart casual. Come comfortable and ready to create! We're all about authentic connections and creative energy."
+    question: "What platform will the summit be on?",
+    answer: "The summit will be hosted on Zoom. You'll receive your unique Zoom link and a quick-start guide via email before the event."
+  }, {
+    question: "What do I need to participate?",
+    answer: "A computer or laptop, stable internet connection, and headphones (recommended for workshops). All workshop materials and resources will be provided digitally. Come with an open mind and ready to create!"
   }, {
     question: "What AI tools will we use?",
     answer: "We'll be working with a variety of AI tools including Suno, ChatGPT, Midjourney, and others. No prior AI experience required—our workshops are designed for all skill levels."
   }, {
-    question: "What should I bring?",
-    answer: "Just bring yourself, your laptop, and an open mind! We'll provide everything else including notebooks, charging stations, and workshop materials."
-  }, {
     question: "Will there be recordings?",
     answer: "Key sessions will be recorded and made available to attendees only. However, the real magic happens in live participation and networking!"
+  }, {
+    question: "Is there a refund policy?",
+    answer: "Yes, we offer full refunds up to 14 days before the event. Within 14 days, tickets are non-refundable but can be transferred to another person via email."
   }];
   return <section className="py-24 bg-gradient-accent">
       <div className="container mx-auto px-4">
