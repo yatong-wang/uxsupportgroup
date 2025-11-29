@@ -17,6 +17,7 @@ import AdminPanel from "./pages/AdminPanel";
 import NotFound from "./pages/NotFound";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
+import CodeOfConduct from "./pages/CodeOfConduct";
 
 const queryClient = new QueryClient();
 
@@ -41,6 +42,7 @@ const App = () => (
           <Route path="/admin" element={<AdminPanel />} />
           <Route path="/privacy" element={<PrivacyPolicy />} />
           <Route path="/terms" element={<TermsOfService />} />
+          <Route path="/code-of-conduct" element={<CodeOfConduct />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
