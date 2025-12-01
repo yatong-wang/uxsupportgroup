@@ -346,19 +346,27 @@ const SummitWall = () => {
     const cardWidth = 200;
     const cardHeight = 250;
     const padding = 100;
+    const cardsPerRow = 5;
+    const spacingX = 240;
+    const startX = 50;
+    
+    // Calculate minimum width to fit centered grid
+    const gridContentWidth = startX + ((cardsPerRow - 1) * spacingX) + cardWidth + startX;
     
     let maxX = 0;
     let maxY = 0;
     
     profiles.forEach(profile => {
-      const position = getCardPosition(profile);
-      maxX = Math.max(maxX, position.x + cardWidth);
-      maxY = Math.max(maxY, position.y + cardHeight);
+      // Use base positions without centering offset for canvas calculation
+      const baseX = profile.wall_position_x || 0;
+      const baseY = profile.wall_position_y || 0;
+      maxX = Math.max(maxX, baseX + cardWidth);
+      maxY = Math.max(maxY, baseY + cardHeight);
     });
     
-    // Add padding and ensure minimum size
+    // Ensure canvas is wide enough for centered grid
     return {
-      width: Math.max(2000, maxX + padding),
+      width: Math.max(2000, gridContentWidth, maxX + padding),
       height: Math.max(1500, maxY + padding)
     };
   };
@@ -384,7 +392,7 @@ const SummitWall = () => {
     const cardWidth = 200; // card width
     const cardHeight = 180; // approximate card height
     
-    // Calculate scroll position to center the card
+    // Calculate scroll position to center the card (position already includes offset)
     const scrollX = (position.x + cardWidth / 2) * (zoom / 100) - containerWidth / 2;
     const scrollY = (position.y + cardHeight / 2) * (zoom / 100) - containerHeight / 2;
     
@@ -402,16 +410,20 @@ const SummitWall = () => {
       return;
     }
     
+    const { offsetX } = getCenterOffset();
     const containerWidth = container.clientWidth;
     const containerHeight = container.clientHeight;
     const cardWidth = 200;
     const cardHeight = 250;
     
+    // Apply centering offset to the position
+    const centeredX = x + offsetX;
+    
     // Calculate scroll position to center on the given coordinates
-    const scrollX = (x + cardWidth / 2) * (zoom / 100) - containerWidth / 2;
+    const scrollX = (centeredX + cardWidth / 2) * (zoom / 100) - containerWidth / 2;
     const scrollY = (y + cardHeight / 2) * (zoom / 100) - containerHeight / 2;
     
-    console.log('[scrollToPosition] Scrolling to:', { x, y, scrollX, scrollY });
+    console.log('[scrollToPosition] Scrolling to:', { x, y, centeredX, scrollX, scrollY });
     
     container.scrollTo({
       left: Math.max(0, scrollX),
@@ -1079,10 +1091,34 @@ const SummitWall = () => {
     document.addEventListener('touchend', handleTouchEnd);
   };
 
+  // Calculate centering offset for horizontal alignment
+  const getCenterOffset = () => {
+    const cardsPerRow = 5;
+    const spacingX = 240;
+    const cardWidth = 200;
+    const startX = 50;
+    
+    // Calculate actual grid content width
+    const gridContentWidth = startX + ((cardsPerRow - 1) * spacingX) + cardWidth;
+    
+    const canvasWidth = getCanvasSize().width;
+    
+    // Calculate offset to center the grid
+    const offsetX = Math.max(0, (canvasWidth - gridContentWidth) / 2);
+    
+    return { offsetX };
+  };
+
   const getCardPosition = (profile: ProfileCard) => {
-    return tempPositions[profile.id] || {
+    const { offsetX } = getCenterOffset();
+    const basePosition = tempPositions[profile.id] || {
       x: profile.wall_position_x || 0,
       y: profile.wall_position_y || 0
+    };
+    
+    return {
+      x: basePosition.x + offsetX,
+      y: basePosition.y
     };
   };
 
