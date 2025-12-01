@@ -169,13 +169,12 @@ const SummitWall = () => {
           // Only add if profile has a name (fully created)
           if (!newProfile.name) return;
           
-          // Add to profiles with collision detection
+          // Trust server-calculated positions
           setProfiles(prev => {
             // Check if profile already exists
             if (prev.some(p => p.id === newProfile.id)) return prev;
             
-            const updated = [...prev, newProfile];
-            return preventOverlapping(updated);
+            return [...prev, newProfile];
           });
           
           // Mark as new for animation
@@ -568,29 +567,23 @@ const SummitWall = () => {
     }
     setIsProcessing(true);
     try {
-      // Create slug from name
-      const slug = formData.name.toLowerCase().replace(/\s+/g, '-') + '-' + Date.now();
+      // Call edge function for atomic position calculation + insert
+      const { data, error } = await supabase.functions.invoke('create-profile', {
+        body: {
+          email,
+          name: formData.name.trim(),
+          job_title: formData.jobTitle.trim(),
+          company_name: formData.companyName.trim() || null,
+          linkedin_url: formData.linkedinUrl.trim() || null
+        }
+      });
 
-      // Find an empty position for the new card
-      const emptyPosition = findEmptyPosition(profiles);
-      console.log('[handleFormSubmit] Empty position calculated:', emptyPosition);
-      console.log('[handleFormSubmit] Profiles count:', profiles.length);
+      // Handle both invocation errors and application errors
+      if (error) throw error;
+      if (data?.error) throw new Error(data.error);
 
-      // Create user profile with explicit position
-      const {
-        data: profile,
-        error: profileError
-      } = await supabase.from('user_profiles').insert({
-        email: email,
-        name: formData.name.trim(),
-        job_title: formData.jobTitle.trim(),
-        company_name: formData.companyName.trim() || null,
-        linkedin_url: formData.linkedinUrl.trim() || null,
-        slug,
-        wall_position_x: emptyPosition.x,
-        wall_position_y: emptyPosition.y
-      }).select().single();
-      if (profileError) throw profileError;
+      const { profile, position } = data;
+      console.log('[handleFormSubmit] Profile created at position:', position);
 
       // Store userId in sessionStorage
       sessionStorage.setItem('summit_user_id', profile.id);
@@ -635,9 +628,9 @@ const SummitWall = () => {
       await loadProfiles();
       
       // Scroll to the newly created card position directly (no lookup needed)
-      console.log('[handleFormSubmit] Scrolling to new card at:', emptyPosition);
+      console.log('[handleFormSubmit] Scrolling to new card at:', position);
       setTimeout(() => {
-        scrollToPosition(emptyPosition.x, emptyPosition.y);
+        scrollToPosition(position.x, position.y);
       }, 500);
     } catch (error) {
       console.error('Error creating profile:', error);
