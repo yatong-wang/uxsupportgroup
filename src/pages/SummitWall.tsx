@@ -37,6 +37,7 @@ interface Enrichment {
 const SummitWall = () => {
   const navigate = useNavigate();
   const profileCardRef = useRef<HTMLDivElement>(null);
+  const canvasContainerRef = useRef<HTMLDivElement>(null);
   const {
     slug
   } = useParams<{
@@ -379,6 +380,29 @@ const SummitWall = () => {
   const handleFitAll = () => {
     setZoom(100);
   };
+  const scrollToCard = (profileId: string) => {
+    const container = canvasContainerRef.current;
+    if (!container) return;
+    
+    const profile = profiles.find(p => p.id === profileId);
+    if (!profile) return;
+    
+    const position = getCardPosition(profile);
+    const containerWidth = container.clientWidth;
+    const containerHeight = container.clientHeight;
+    const cardWidth = 200; // card width
+    const cardHeight = 180; // approximate card height
+    
+    // Calculate scroll position to center the card
+    const scrollX = (position.x + cardWidth / 2) * (zoom / 100) - containerWidth / 2;
+    const scrollY = (position.y + cardHeight / 2) * (zoom / 100) - containerHeight / 2;
+    
+    container.scrollTo({
+      left: Math.max(0, scrollX),
+      top: Math.max(0, scrollY),
+      behavior: 'smooth'
+    });
+  };
   const handleCreateProfile = () => {
     const email = sessionStorage.getItem('summit_user_email');
     if (!email) {
@@ -522,7 +546,12 @@ const SummitWall = () => {
         }
       }, 100);
       setShowCreateModal(false);
-      loadProfiles();
+      await loadProfiles();
+      
+      // Scroll to the newly created card after a short delay to ensure DOM update
+      setTimeout(() => {
+        scrollToCard(profile.id);
+      }, 500);
     } catch (error) {
       console.error('Error creating profile:', error);
       toast.error("Failed to create profile. Please try again.");
@@ -1105,7 +1134,8 @@ const SummitWall = () => {
 
       {/* Canvas */}
       <div 
-        className="w-full h-full overflow-auto p-8" 
+        ref={canvasContainerRef}
+        className="w-full h-full overflow-auto p-8"
         style={{
           cursor: draggedProfile ? 'grabbing' : 'grab',
           transform: `scale(${zoom / 100})`
