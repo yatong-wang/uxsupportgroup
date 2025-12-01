@@ -173,8 +173,8 @@ const SocialProof = () => {
   }, {
     name: "Yatong Wang",
     title: "Product Designer",
-    company: "Spatial Front Inc.",
-    bio: "UX design and research for scientific context and enterprise SaaS.",
+    company: null,
+    bio: "Research-driven UX generalist for science and nonprofits. Previously led end-to-end B2B/B2C and enterprise SaaS projects for a USDA contract.",
     linkedin: "https://www.linkedin.com/in/yatong-wang/",
     image: YatongW
   }, {
