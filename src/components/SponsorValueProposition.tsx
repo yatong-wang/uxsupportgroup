@@ -13,6 +13,10 @@ const SponsorValueProposition = () => {
     metric: "Typical B2B ROI",
     uxsg: "3–8x",
     instagram: "4–5x (lower quality)"
+  }, {
+    metric: "Trust Signal",
+    uxsg: "Community endorsement from leaders",
+    instagram: "None"
   }];
   return <section className="py-16 bg-background">
       <div className="container mx-auto px-4">
@@ -78,7 +82,8 @@ const SponsorValueProposition = () => {
           <Card className="p-6 bg-primary/5 border-2 border-primary/20">
             <p className="text-center text-foreground">
               <span className="font-bold">Unlike paid social</span> where spend often hits low-intent audiences, 
-              workshop leads have already engaged with your product in context—driving{" "}
+              workshop leads have already engaged with your product in a{" "}
+              <span className="font-bold text-primary">trusted learning environment endorsed by community leaders</span>—driving{" "}
               <span className="font-bold text-primary">3x higher conversion rates</span> and{" "}
               <span className="font-bold text-primary">higher lifetime value</span>.
             </p>
