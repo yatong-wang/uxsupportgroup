@@ -208,7 +208,10 @@ const SponsorContactSection = () => {
             <Button 
               type="submit" 
               disabled={isSubmitting} 
-              className="w-full h-14 text-lg font-semibold bg-background text-foreground hover:bg-background/90 transition-all group disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full h-14 text-lg font-semibold bg-transparent text-background hover:bg-background/10 transition-all group disabled:opacity-50 disabled:cursor-not-allowed border-2 border-transparent"
+              style={{ 
+                borderImage: 'linear-gradient(135deg, hsl(25 95% 58%) 0%, hsl(265 85% 65%) 40%, hsl(220 90% 55%) 100%) 1'
+              }}
             >
               {isSubmitting ? (
                 <>
