@@ -193,13 +193,13 @@ const CommunitySponsorshipSection = () => {
                 <span className="text-muted-foreground">Est. Customers</span>
                 <span className="font-bold text-xl">~{calculations.customers}</span>
               </div>
-              <div className="flex justify-between items-center pt-3 border-t border-border">
-                <span className="text-muted-foreground">Projected Revenue</span>
-                <span className="font-bold text-primary text-xl">{formatCurrency(calculations.revenue)}</span>
-              </div>
               <div className="flex justify-between items-center">
+                <span className="text-muted-foreground">Projected Revenue</span>
+                <span className="font-bold text-foreground text-xl">{formatCurrency(calculations.revenue)}</span>
+              </div>
+              <div className="flex justify-between items-center pb-3 border-b border-border">
                 <span className="text-muted-foreground">Expected ROI</span>
-                <span className="font-bold text-primary text-3xl">{formatROI(calculations.roi)}</span>
+                <span className="font-bold text-foreground text-3xl">{formatROI(calculations.roi)}</span>
               </div>
             </div>
 
