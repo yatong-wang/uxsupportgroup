@@ -88,9 +88,7 @@ const SponsorValueProposition = () => {
 
           {/* Callout Box */}
           <Card className="p-6 bg-primary/5 border-2 border-primary/20">
-            <p className="text-center text-lg font-bold text-primary mb-3">
-              "We don't focus on $300 CAC. We focus on $10,000 LTV."
-            </p>
+            
             <p className="text-center text-foreground">
               <span className="font-bold">Unlike paid social</span> where spend often hits low-intent audiences, 
               workshop leads have already engaged with your product in a{" "}
