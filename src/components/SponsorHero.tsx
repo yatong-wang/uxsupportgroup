@@ -31,7 +31,7 @@ const SponsorHero = () => {
             {/* First row of stats */}
             <div className="grid md:grid-cols-3 gap-8">
               <div className="text-center p-6">
-                <div className="text-5xl font-bold text-foreground mb-2">8,900+</div>
+                <div className="text-5xl font-bold text-foreground mb-2">9000+</div>
                 <p className="text-foreground/70 text-sm uppercase tracking-wide">Members</p>
               </div>
               <div className="text-center p-6">
