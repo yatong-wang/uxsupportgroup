@@ -1,15 +1,20 @@
 import { Card } from "@/components/ui/card";
 import { TrendingUp, Users, Target } from "lucide-react";
-
 const SponsorValueProposition = () => {
-  const comparisonData = [
-    { metric: "Avg. Lead Conversion", uxsg: "~5%", instagram: "~1.5%" },
-    { metric: "Lead Quality", uxsg: "High-intent, product-educated", instagram: "Mixed intent" },
-    { metric: "Typical B2B ROI", uxsg: "3–8x", instagram: "4–5x (lower quality)" },
-  ];
-
-  return (
-    <section className="py-16 bg-background">
+  const comparisonData = [{
+    metric: "Avg. Lead Conversion",
+    uxsg: "~5%",
+    instagram: "~1.5%"
+  }, {
+    metric: "Lead Quality",
+    uxsg: "High-intent, product-educated",
+    instagram: "Mixed intent"
+  }, {
+    metric: "Typical B2B ROI",
+    uxsg: "3–8x",
+    instagram: "4–5x (lower quality)"
+  }];
+  return <section className="py-16 bg-background">
       <div className="container mx-auto px-4">
         <div className="max-w-5xl mx-auto">
           {/* Headline */}
@@ -19,10 +24,7 @@ const SponsorValueProposition = () => {
               <span className="text-gradient">Community Sponsorship</span>{" "}
               Over Paid Social
             </h2>
-            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-              Workshop leads convert at 3x the rate of paid social—because they've already 
-              experienced your product in context with guidance from peers they trust.
-            </p>
+            
           </div>
 
           {/* Stats Cards */}
@@ -62,13 +64,11 @@ const SponsorValueProposition = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {comparisonData.map((row, index) => (
-                    <tr key={index} className="border-t border-border hover:bg-muted/50">
+                  {comparisonData.map((row, index) => <tr key={index} className="border-t border-border hover:bg-muted/50">
                       <td className="p-4 text-sm font-medium">{row.metric}</td>
                       <td className="p-4 text-sm font-bold text-primary">{row.uxsg}</td>
                       <td className="p-4 text-sm text-muted-foreground">{row.instagram}</td>
-                    </tr>
-                  ))}
+                    </tr>)}
                 </tbody>
               </table>
             </div>
@@ -88,36 +88,19 @@ const SponsorValueProposition = () => {
           <div className="mt-6 text-center">
             <p className="text-xs text-muted-foreground">
               ROI benchmarks from B2B marketing industry reports.{" "}
-              <a 
-                href="https://www.data-mania.com/blog/b2b-marketing-roi-benchmarks-2025/" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="underline hover:text-primary"
-              >
+              <a href="https://www.data-mania.com/blog/b2b-marketing-roi-benchmarks-2025/" target="_blank" rel="noopener noreferrer" className="underline hover:text-primary">
                 [1]
               </a>{" "}
-              <a 
-                href="https://martal.ca/b2b-digital-marketing-benchmarks-lb/" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="underline hover:text-primary"
-              >
+              <a href="https://martal.ca/b2b-digital-marketing-benchmarks-lb/" target="_blank" rel="noopener noreferrer" className="underline hover:text-primary">
                 [2]
               </a>{" "}
-              <a 
-                href="https://www.lomitpatel.com/articles/saas-event-sponsorship-roi/" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="underline hover:text-primary"
-              >
+              <a href="https://www.lomitpatel.com/articles/saas-event-sponsorship-roi/" target="_blank" rel="noopener noreferrer" className="underline hover:text-primary">
                 [3]
               </a>
             </p>
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default SponsorValueProposition;
