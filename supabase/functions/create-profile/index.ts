@@ -14,9 +14,9 @@ const findEmptyPosition = (existingProfiles: any[]) => {
   const goldenAngle = 137.507764 * (Math.PI / 180); // Golden angle in radians
   const spacingFactor = 190; // Controls spiral tightness (ensures no overlap with 200x250 cards)
   
-  // New center after position normalization (shifted from 1849, 1874)
-  const centerX = 769;
-  const centerY = 769;
+  // Spiral center at origin - rendering offset applied on frontend
+  const centerX = 0;
+  const centerY = 0;
   
   // Generate spiral position for index n (returns card center)
   const generateSpiralPosition = (n: number) => {

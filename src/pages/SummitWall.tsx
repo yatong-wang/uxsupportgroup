@@ -155,7 +155,7 @@ const SummitWall = () => {
   // Calculate the center of the actual card cluster for centering the view
   const calculateCardClusterCenter = (profileList: ProfileCard[]) => {
     if (profileList.length === 0) {
-      return { x: 769, y: 769 }; // Fallback to new spiral center
+      return { x: 0, y: 0 }; // Spiral center is at origin
     }
     
     const cardWidth = 200;
@@ -345,9 +345,9 @@ const SummitWall = () => {
     const goldenAngle = 137.507764 * (Math.PI / 180); // Golden angle in radians
     const spacingFactor = 190; // Controls spiral tightness (ensures no overlap with 200x250 cards)
     
-    // New center after position normalization (shifted from 1849, 1874)
-    const centerX = 769;
-    const centerY = 769;
+    // Spiral center at origin - rendering offset applied via canvas/2
+    const centerX = 0;
+    const centerY = 0;
     
     // Generate spiral position for index n (returns card center)
     const generateSpiralPosition = (n: number) => {
@@ -399,31 +399,15 @@ const SummitWall = () => {
     return fallbackPos;
   };
 
-  // Calculate dynamic canvas size based on spiral positions
+  // Calculate canvas size based on max spiral radius for 80 cards
   const getCanvasSize = () => {
-    if (profiles.length === 0) {
-      return { width: 2000, height: 2000 }; // Default for new spiral center
-    }
-    
-    const cardWidth = 200;
-    const cardHeight = 250;
-    const padding = 200; // Extra padding for organic layout
-    
-    let minX = Infinity, maxX = 0, minY = Infinity, maxY = 0;
-    
-    profiles.forEach(profile => {
-      const x = profile.wall_position_x || 0;
-      const y = profile.wall_position_y || 0;
-      minX = Math.min(minX, x);
-      maxX = Math.max(maxX, x + cardWidth);
-      minY = Math.min(minY, y);
-      maxY = Math.max(maxY, y + cardHeight);
-    });
-    
-    return {
-      width: Math.max(2500, maxX + padding),
-      height: Math.max(2600, maxY + padding)
-    };
+    // For 80 cards: maxRadius = 190 * sqrt(80) ≈ 1699
+    // Canvas = (maxRadius * 2) + padding for cards + edge padding
+    const maxRadius = 190 * Math.sqrt(80); // ≈ 1699
+    const cardPadding = 250; // Account for card dimensions
+    const edgePadding = 200;
+    const size = Math.ceil(maxRadius * 2) + cardPadding + edgePadding; // ≈ 3850
+    return { width: size, height: size };
   };
   const handleZoomIn = () => {
     setZoom(prev => Math.min(200, prev + 25));
@@ -1146,16 +1130,18 @@ const SummitWall = () => {
     document.addEventListener('touchend', handleTouchEnd);
   };
 
-  // Get card position directly from database (no offset needed after normalization)
+  // Get card position with canvas/2 offset to center the spiral cluster
   const getCardPosition = (profile: ProfileCard) => {
+    const canvasSize = getCanvasSize();
     const basePosition = tempPositions[profile.id] || {
       x: profile.wall_position_x || 0,
       y: profile.wall_position_y || 0
     };
     
+    // Add canvas/2 to center the spiral (which is at origin) on the canvas
     return {
-      x: basePosition.x,
-      y: basePosition.y
+      x: basePosition.x + (canvasSize.width / 2),
+      y: basePosition.y + (canvasSize.height / 2)
     };
   };
 
