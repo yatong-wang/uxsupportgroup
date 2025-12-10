@@ -328,6 +328,19 @@ export type Database = {
         }
         Returns: boolean
       }
+      update_user_profile: {
+        Args: {
+          profile_card_screenshot_url?: string
+          profile_company_name?: string
+          profile_id: string
+          profile_job_title?: string
+          profile_linkedin_url?: string
+          profile_name?: string
+          profile_photo_url?: string
+          profile_screenshot_generated_at?: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
       app_role: "admin" | "moderator" | "user"

@@ -660,15 +660,15 @@ const SummitWall = () => {
     if (!selectedProfile) return;
     setIsSaving(true);
     try {
-      const {
-        error
-      } = await supabase.from('user_profiles').update({
-        name: editFormData.name.trim() || null,
-        job_title: editFormData.jobTitle.trim() || null,
-        company_name: editFormData.companyName.trim() || null,
-        linkedin_url: editFormData.linkedinUrl.trim() || null
-      }).eq('id', selectedProfile.id);
+      const { data: updated, error } = await supabase.rpc('update_user_profile', {
+        profile_id: selectedProfile.id,
+        profile_name: editFormData.name.trim() || null,
+        profile_job_title: editFormData.jobTitle.trim() || null,
+        profile_company_name: editFormData.companyName.trim() || null,
+        profile_linkedin_url: editFormData.linkedinUrl.trim() || null
+      });
       if (error) throw error;
+      if (!updated) throw new Error('Profile not found or update failed');
 
       // Update selected profile to show new data
       const updatedProfile = {
@@ -760,13 +760,13 @@ const SummitWall = () => {
       } = supabase.storage.from('profile-screenshots').getPublicUrl(fileName);
 
       // Update profile with screenshot URL
-      const {
-        error: updateError
-      } = await supabase.from('user_profiles').update({
-        card_screenshot_url: publicUrl,
-        screenshot_generated_at: new Date().toISOString()
-      }).eq('id', profileId);
+      const { data: updated, error: updateError } = await supabase.rpc('update_user_profile', {
+        profile_id: profileId,
+        profile_card_screenshot_url: publicUrl,
+        profile_screenshot_generated_at: new Date().toISOString()
+      });
       if (updateError) throw updateError;
+      if (!updated) throw new Error('Profile not found or screenshot update failed');
 
       // Update local state
       if (selectedProfile?.id === profileId) {
@@ -890,12 +890,12 @@ const SummitWall = () => {
         } = supabase.storage.from('profile-photos').getPublicUrl(filePath);
 
         // Update profile with new photo URL
-        const {
-          error: updateError
-        } = await supabase.from('user_profiles').update({
+        const { data: updated, error: updateError } = await supabase.rpc('update_user_profile', {
+          profile_id: selectedProfile.id,
           profile_photo_url: publicUrl
-        }).eq('id', selectedProfile.id);
+        });
         if (updateError) throw updateError;
+        if (!updated) throw new Error('Profile not found or photo update failed');
 
         // Update local state
         setSelectedProfile({
