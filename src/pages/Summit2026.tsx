@@ -26,17 +26,27 @@ const Summit2026 = () => {
     setIsSubmitting(true);
 
     // Brevo API configuration
-    // TODO: Replace with actual Brevo API key from environment variables
-    const BREVO_API_KEY = process.env.NEXT_PUBLIC_BREVO_API_KEY || "YOUR_BREVO_API_KEY";
+    const BREVO_API_KEY = import.meta.env.VITE_BREVO_API_KEY;
     const BREVO_LIST_ID = 8;
     const BREVO_API_URL = "https://api.brevo.com/v3/contacts";
+
+    // Validate API key
+    if (!BREVO_API_KEY || BREVO_API_KEY === "your-brevo-api-key-here") {
+      toast({
+        title: "Configuration Error",
+        description: "Brevo API is not configured. Please contact the administrator.",
+        variant: "destructive"
+      });
+      setIsSubmitting(false);
+      return;
+    }
 
     try {
       const response = await fetch(BREVO_API_URL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Api-Key": BREVO_API_KEY
+          "api-key": BREVO_API_KEY
         },
         body: JSON.stringify({
           email: email,
@@ -60,7 +70,7 @@ const Summit2026 = () => {
           setEmail("");
           toast({
             title: "You're on the list!",
-            description: "This email is already on our waitlist. We'll notify you when registration opens."
+            description: "This email is already registered. We'll notify you when registration opens."
           });
         } else {
           throw new Error(errorData.message || "Failed to join waitlist");
