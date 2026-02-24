@@ -5,11 +5,11 @@
 ---
 
 ## Event Details
-- **Dates:** June 18-19, 2026
+- **Dates:** June 18-19, 2026 (tentative)
 - **Format:** 2 half-days, 4-5 hrs each, fully virtual via Zoom
 - **Pricing:** $199 early bird / $299 regular (early bird closes June 4-5)
 - **Target attendance:** 200
-- **Speakers:** 6-8 total, 3-4 returning from previous summit
+- **Speakers:** 6-8 total, 3-4 returning from previous summit?
 - **No speaker honorarium**
 - **Speaker perks:** 3 comp invites + personal discount code for their community
 
@@ -20,6 +20,7 @@
 - **Sylvia B** - Marketing Assets
 - **Yatong W** - ?
 - **Esther J G** - ?
+- **Jerry** - Tech. support and video production
 - **Tim Bot(OpenClaw)** — Execution & technical support
 
 ## Decisions
