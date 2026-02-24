@@ -7,7 +7,7 @@ const Hero = () => {
   const navigate = useNavigate();
 
   const handleViewSummitWall = () => {
-    navigate('/summit-wall');
+    navigate('/summit-profiles');
   };
 
   return (
