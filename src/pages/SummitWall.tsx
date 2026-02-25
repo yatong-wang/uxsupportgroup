@@ -1235,7 +1235,7 @@ const SummitWall = () => {
             <img src={uxsgLogo} alt="UXSG" className="h-33 w-auto -mr-[45px]" />
             <div className="w-px h-36 bg-gray-200" />
             <h2 className="text-[5.625rem] font-semibold text-black ml-[30px] whitespace-nowrap">
-              AI<span className="text-gradient">x</span>UX Summit 2025
+              AI<span className="text-gradient">x</span>UX Summit 2026
             </h2>
           </div>
 
@@ -1395,7 +1395,7 @@ const SummitWall = () => {
                   <img src={uxsgLogo} alt="UXSG" className="h-[31px] w-auto -mr-[11px]" />
                   <div className="w-px h-[34px] bg-gray-200" />
                   <h3 className="text-[21px] font-semibold text-black ml-[7px]">
-                    AI<span className="text-gradient">x</span>UX Summit 2025
+                    AI<span className="text-gradient">x</span>UX Summit 2026
                   </h3>
                 </div>
                 <DialogTitle className="sr-only">
@@ -1462,7 +1462,7 @@ const SummitWall = () => {
                         <h2 className="text-6xl font-bold text-gray-900 mb-4">{editFormData.name}</h2>
                         <p className="text-3xl text-gray-700 mb-2">{editFormData.jobTitle}</p>
                         {editFormData.companyName && <p className="text-2xl text-gray-600">{editFormData.companyName}</p>}
-                        <div className="mt-8 text-xl text-gray-500">AIxUX Summit 2025</div>
+                        <div className="mt-8 text-xl text-gray-500">AIxUX Summit 2026</div>
                       </div>
                     </div>
                   </div>
