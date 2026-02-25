@@ -9,7 +9,7 @@ const Header = () => {
         </Link>
         
         <nav className="hidden md:flex items-center gap-8">
-          <Link to="/summit-2025" className="text-sm font-medium text-foreground/70 hover:text-foreground transition-colors">
+          <Link to="/summit" className="text-sm font-medium text-foreground/70 hover:text-foreground transition-colors">
             AI Summit 2026
           </Link>
           

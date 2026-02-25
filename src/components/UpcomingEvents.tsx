@@ -74,9 +74,9 @@ const UpcomingEvents = () => {
                   <Card key={event.id} className={`relative overflow-hidden hover:shadow-lg transition-shadow border-t-4 ${borderColors[index % 3]}`}>
                     <div className="p-6">
                       <div className={`text-sm font-bold uppercase mb-3 ${timeColors[index % 3]}`}>
-                        {format(eventDate, 'EEEE')}
+                        {format(eventDate, 'EEE MMM d')}
                         {event.start_time && (
-                          <> · {event.start_time}</>
+                          <> · {format(new Date(`2000-01-01T${event.start_time}:00`), 'h:mm a')} EST</>
                         )}
                       </div>
                       
@@ -90,15 +90,12 @@ const UpcomingEvents = () => {
                         </p>
                       )}
                       
-                      <div className="flex flex-wrap gap-2 mt-auto">
-                        {event.location && event.location.toLowerCase().includes('virtual') && (
-                          <span className="text-xs font-semibold px-2 py-1 rounded bg-muted text-muted-foreground uppercase">
-                            Virtual
-                          </span>
-                        )}
-                        <span className="text-xs font-semibold px-2 py-1 rounded bg-muted text-muted-foreground uppercase">
-                          Open to All
-                        </span>
+                      <div className="mt-auto">
+                        <Button asChild className="w-full">
+                          <a href={event.meetup_link || `https://www.meetup.com/ux-support-group/`} target="_blank" rel="noopener noreferrer">
+                            RSVP →
+                          </a>
+                        </Button>
                       </div>
                     </div>
                   </Card>

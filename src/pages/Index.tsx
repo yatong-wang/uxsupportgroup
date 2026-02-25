@@ -2,6 +2,7 @@ import Header from "@/components/Header";
 import HomeHero from "@/components/HomeHero";
 import TwoPathsSection from "@/components/TwoPathsSection";
 import PhilosophySection from "@/components/PhilosophySection";
+import UpcomingEvents from "@/components/UpcomingEvents";
 import Footer from "@/components/Footer";
 
 const Index = () => {
@@ -12,6 +13,7 @@ const Index = () => {
         <HomeHero />
         <TwoPathsSection />
         <PhilosophySection />
+        <UpcomingEvents />
       </main>
       <Footer />
     </div>
