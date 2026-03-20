@@ -23,6 +23,29 @@
 - **Jerry** - Tech. support and video production
 - **Tim Bot(OpenClaw)** — Execution & technical support
 
+## Agenda
+
+**Theme: Becoming AI Designer**
+
+### DAY 1 — "The Shift"
+- 9:00 AM — Welcome
+- 9:15 AM — Keynote: Designer's New Mandate
+- 10:00 AM — Create Your Summit Agent (build a simple agent you'll use/refine throughout the summit)
+- 10:45 AM — Break
+- 11:00 AM — Trust, Transparency & Control
+- 12:00 PM — Multimodal Futures
+- 12:45 PM — Close & Day 2 preview
+
+### DAY 2 — "The Practice"
+- 9:00 AM — Welcome back
+- 9:15 AM — Orchestrating Complexity
+- 10:15 AM — Break
+- 10:30 AM — Building Your Process
+- 11:30 AM — Your Path Forward
+- 12:15 PM — Break
+- 12:30 PM — Design Your AI Networking Agent (teams refine + collaborate with other agents)
+- 1:35 PM — Close
+
 ## Decisions
 
 | Date | Decision | Notes |
@@ -31,4 +54,4 @@
 | Feb 24, 2026 | MEMORY.md + DECISIONS.md created in repo | MEMORY for Claude+Tim ops, DECISIONS for team |
 
 ---
-*Last updated: Feb 24, 2026*
+*Last updated: Mar 20, 2026*
