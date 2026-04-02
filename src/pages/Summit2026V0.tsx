@@ -7,7 +7,7 @@ import heroBg from "@/assets/liquid-data-bust.png";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 
-const Summit2026 = () => {
+const Summit2026V0 = () => {
   const [formData, setFormData] = useState({ name: "", email: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -47,9 +47,11 @@ const Summit2026 = () => {
 
       if (error || !data?.success) {
         console.error("[WAITLIST] Error response", error || data);
-        throw new Error(
-          (data && (data as any).error) || "Failed to join waitlist. Please try again."
-        );
+        const apiError =
+          data && typeof data === "object" && "error" in data
+            ? String((data as { error: unknown }).error)
+            : "";
+        throw new Error(apiError || "Failed to join waitlist. Please try again.");
       }
 
       toast({
@@ -59,12 +61,15 @@ const Summit2026 = () => {
       });
 
       setFormData({ name: "", email: "" });
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error("[WAITLIST] Submission error", err);
+      const message =
+        err instanceof Error
+          ? err.message
+          : "Something went wrong. Please try again or email us directly.";
       toast({
         title: "Submission failed",
-        description:
-          err?.message || "Something went wrong. Please try again or email us directly.",
+        description: message,
         variant: "destructive",
       });
     } finally {
@@ -176,4 +181,4 @@ const Summit2026 = () => {
   );
 };
 
-export default Summit2026;
+export default Summit2026V0;

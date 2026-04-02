@@ -12,7 +12,7 @@ import IndexV4 from "./pages/IndexV4";
 import IndexV5 from "./pages/IndexV5";
 import IndexV6 from "./pages/IndexV6";
 import IndexV7 from "./pages/IndexV7";
-import Summit2026 from "./pages/Summit2026";
+import Summit2026V1 from "./pages/Summit2026V1";
 import Summit from "./pages/Summit";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
@@ -46,7 +46,7 @@ const App = () => (
             <Route path="/index-v4" element={<IndexV4 />} />
             <Route path="/index-v5" element={<IndexV5 />} />
             <Route path="/index-v6" element={<IndexV6 />} />
-            <Route path="/summit" element={<Summit2026 />} />
+            <Route path="/summit" element={<Summit2026V1 />} />
             <Route path="/summit-2025" element={<Summit />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
