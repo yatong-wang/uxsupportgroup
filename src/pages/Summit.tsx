@@ -6,16 +6,17 @@ import ProfileCallout from "@/components/ProfileCallout";
 import SummitSponsorshipInquiry from "@/components/SummitSponsorshipInquiry";
 import FAQSection from "@/components/FAQSection";
 
+/** Inside SketchyLayout for global chrome; `.summit-2025-legacy` restores Space Grotesk in main. */
 const Summit = () => (
-  <main>
-        <Hero />
-        <ConceptSection />
-        <SocialProof />
-        <AgendaSection />
-        <ProfileCallout />
-        <SummitSponsorshipInquiry />
-        <FAQSection />
-      </main>
+  <main id="main" className="summit-2025-legacy">
+    <Hero />
+    <ConceptSection />
+    <SocialProof />
+    <AgendaSection />
+    <ProfileCallout />
+    <SummitSponsorshipInquiry />
+    <FAQSection />
+  </main>
 );
 
 export default Summit;
