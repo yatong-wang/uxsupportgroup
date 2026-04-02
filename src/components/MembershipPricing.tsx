@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { ArrowRight, Check } from "lucide-react";
+import { MembershipSectionTitle } from "@/components/MembershipSectionTitle";
 
 const MembershipPricing = () => {
   const MONTHLY_PAYMENT_LINK = "https://buy.stripe.com/fZu7sL9R7gaC1ddf9Mes005";
@@ -31,9 +32,9 @@ const MembershipPricing = () => {
       
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">
+          <MembershipSectionTitle>
             Join <span className="text-gradient">Now</span>
-          </h2>
+          </MembershipSectionTitle>
           <p className="text-xl text-background/70 max-w-2xl mx-auto">
             Choose the plan that works best for you
           </p>

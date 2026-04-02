@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Check } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import heroBg from "@/assets/liquid-data-bust.png";
+import { MembershipChecklistRow } from "@/components/MembershipChecklistRow";
 
 const MembershipHero = () => {
   const scrollToPricing = () => {
@@ -35,18 +36,9 @@ const MembershipHero = () => {
           </p>
 
           <ul className="text-left space-y-4 max-w-2xl mx-auto mb-8">
-            <li className="flex items-start gap-3 text-lg">
-              <Check className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
-              <span>50% off all paid events (260+ per year)</span>
-            </li>
-            <li className="flex items-start gap-3 text-lg">
-              <Check className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
-              <span>Unlimited access to workshop recordings</span>
-            </li>
-            <li className="flex items-start gap-3 text-lg">
-              <Check className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
-              <span>Members-only Slack channel</span>
-            </li>
+            <MembershipChecklistRow>50% off all paid events (260+ per year)</MembershipChecklistRow>
+            <MembershipChecklistRow>Unlimited access to workshop recordings</MembershipChecklistRow>
+            <MembershipChecklistRow>Members-only Slack channel</MembershipChecklistRow>
           </ul>
 
           <div className="mb-8">
@@ -68,4 +60,3 @@ const MembershipHero = () => {
 };
 
 export default MembershipHero;
-
