@@ -22,3 +22,11 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+.cursor/
+pencil/
+to-dos.md
+sandbox/
+
+# Environment variables
+.env

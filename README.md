@@ -12,6 +12,7 @@ Website for UX Support Group Community.
 ## How to Edit
 
 **Option 1: Local Development**
+
 ```sh
 # Clone the repo
 git clone https://github.com/danny-cocreate/uxsupportgroup.git
@@ -27,10 +28,12 @@ npm run dev
 ```
 
 **Option 2: GitHub**
+
 - Edit files directly in GitHub and commit changes
 - Pushes trigger automatic Netlify deploys
 
 **Option 3: Cursor**
+
 - Open the cloned repo in Cursor
 - Make changes locally and push to GitHub
 
@@ -38,10 +41,11 @@ npm run dev
 
 The site auto-deploys to Netlify on every push to `main`.
 
-**Live URL**: https://uxsupportgroup.netlify.app
+**Live URL**: [https://uxsupportgroup.netlify.app](https://uxsupportgroup.netlify.app)
 
 ## Supabase
 
 Data is managed via a self-hosted Supabase instance. Configure credentials in `.env`:
+
 - `VITE_SUPABASE_URL`
 - `VITE_SUPABASE_ANON_KEY`
