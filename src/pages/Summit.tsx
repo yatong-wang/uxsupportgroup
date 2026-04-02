@@ -10,7 +10,7 @@ import Footer from "@/components/Footer";
 
 /** Summit 2025 archival page: classic Header/Footer, not SketchyLayout (see App route). */
 const Summit = () => (
-  <div className="min-h-screen">
+  <div className="min-h-screen summit-2025-legacy">
     <Header />
     <main>
       <Hero />
