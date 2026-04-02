@@ -37,8 +37,6 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
-          {/* Summit 2025 uses legacy Header/Footer; all other pages use SketchyLayout */}
-          <Route path="/summit-2025" element={<Summit />} />
           <Route element={<SketchyLayout />}>
             <Route path="/" element={<Index />} />
             <Route path="/index-v7" element={<IndexV7 />} />
@@ -49,6 +47,7 @@ const App = () => (
             <Route path="/index-v5" element={<IndexV5 />} />
             <Route path="/index-v6" element={<IndexV6 />} />
             <Route path="/summit" element={<Summit2026 />} />
+            <Route path="/summit-2025" element={<Summit />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/membership" element={<Membership />} />
