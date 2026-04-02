@@ -45,6 +45,8 @@
   --uxsg-font-headline: 'Cabin Sketch', sans-serif;
   --uxsg-font-body: 'Sora', sans-serif;
   --uxsg-font-handwritten: 'Patrick Hand', 'Architects Daughter', cursive;
+  /* Pre-sketchy Summit 2025 page (Space Grotesk site-wide before design system) */
+  --uxsg-font-legacy-summit: 'Space Grotesk', system-ui, sans-serif;
 }
 
 /* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
@@ -211,6 +213,19 @@ All colors MUST be HSL for shadcn/ui compatibility; UXSG sketchy tokens are in :
   /* Design system utility classes */
   .font-headline { font-family: var(--uxsg-font-headline); }
   .font-body { font-family: var(--uxsg-font-body); }
+
+  /* /summit-2025: override global Cabin Sketch headings + Sora body */
+  .summit-2025-legacy {
+    font-family: var(--uxsg-font-legacy-summit);
+  }
+  .summit-2025-legacy h1,
+  .summit-2025-legacy h2,
+  .summit-2025-legacy h3,
+  .summit-2025-legacy h4,
+  .summit-2025-legacy h5,
+  .summit-2025-legacy h6 {
+    font-family: var(--uxsg-font-legacy-summit);
+  }
   .text-uxsg-ink { color: var(--uxsg-ink); }
   .bg-uxsg-paper { background-color: var(--uxsg-paper); }
   .bg-uxsg-yellow { background-color: var(--uxsg-yellow); }

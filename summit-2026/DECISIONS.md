@@ -15,11 +15,11 @@
 
 ## Team
 - **Danny S** — Agenda, Sponsorship, Partnership, Email Marketing, Speaker Recruitment, Web Site(s), Ticketing
-- **Suye Sn** — Main producer, technical Implementation
+- **Suye S** — Main producer, technical Implementation
 - **Hayley D** - Audience Engagement
 - **Sylvia B** - Marketing Assets
 - **Yatong W** - Audience Engagement
-- **Esther J G** - ?
+- **Esther J G** - Sponsorship & Partnership
 - **Jerry** - Tech. support and video production
 - **Tim Bot(OpenClaw)** — Execution & technical support
 
