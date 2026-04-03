@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AIxUX Summit 2026 | The Living Sketchbook</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cabin+Sketch:wght@400;700&amp;family=Sora:wght@300;400;600;800&amp;family=Patrick+Hand&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "tertiary-container": "#c4ab00",
+              "primary": "#944a00",
+              "tertiary-fixed": "#ffe24a",
+              "surface-variant": "#e3e2e0",
+              "error-container": "#ffdad6",
+              "on-primary-container": "#502600",
+              "on-tertiary-container": "#4a3f00",
+              "secondary": "#006877",
+              "on-secondary-container": "#006978",
+              "surface-container-high": "#e9e8e5",
+              "inverse-primary": "#ffb783",
+              "error": "#ba1a1a",
+              "on-surface-variant": "#564337",
+              "on-error-container": "#93000a",
+              "on-secondary": "#ffffff",
+              "on-tertiary": "#ffffff",
+              "surface": "#faf9f6",
+              "on-background": "#1a1c1a",
+              "primary-fixed-dim": "#ffb783",
+              "inverse-on-surface": "#f2f1ee",
+              "inverse-surface": "#2f312f",
+              "on-tertiary-fixed": "#211b00",
+              "surface-container-lowest": "#ffffff",
+              "secondary-container": "#87e8fd",
+              "surface-container": "#efeeeb",
+              "on-tertiary-fixed-variant": "#524600",
+              "surface-container-low": "#f4f3f1",
+              "surface-tint": "#944a00",
+              "outline": "#897365",
+              "on-error": "#ffffff",
+              "secondary-fixed": "#a3eeff",
+              "on-surface": "#1a1c1a",
+              "on-secondary-fixed": "#001f25",
+              "background": "#faf9f6",
+              "primary-container": "#e67e22",
+              "outline-variant": "#dcc1b1",
+              "on-primary-fixed-variant": "#713700",
+              "tertiary": "#6d5e00",
+              "surface-dim": "#dbdad7",
+              "on-secondary-fixed-variant": "#004e5a",
+              "tertiary-fixed-dim": "#e3c600",
+              "primary-fixed": "#ffdcc5",
+              "surface-container-highest": "#e3e2e0",
+              "on-primary": "#ffffff",
+              "on-primary-fixed": "#301400",
+              "surface-bright": "#faf9f6",
+              "secondary-fixed-dim": "#72d4e9"
+            },
+            fontFamily: {
+              "headline": ["Cabin Sketch", "cursive"],
+              "body": ["Sora", "sans-serif"],
+              "label": ["Sora", "sans-serif"],
+              "hand": ["Patrick Hand", "cursive"]
+            },
+            borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style type="text/tailwindcss">
+        body {
+            background-color: #faf9f6;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+            font-family: "Sora", sans-serif;
+            color: #1a1c1a;
+        }
+        .wobbly-border {
+            border: 2px solid #1a1c1a;
+            mask-image: url("data:image/svg+xml,%3Csvg width='100%25' height='100%25' viewBox='0 0 100 100' preserveAspectRatio='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0,5 Q5,0 10,5 T20,5 T30,5 T40,5 T50,5 T60,5 T70,5 T80,5 T90,5 T100,5 L100,95 Q95,100 90,95 T80,95 T70,95 T60,95 T50,95 T40,95 T30,95 T20,95 T10,95 T0,95 Z' fill='black'/%3E%3C/svg%3E");
+        }
+        .wobbly-line::after {
+            content: "";
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='4' viewBox='0 0 100 4' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 2C10 0 20 4 30 2C40 0 50 4 60 2C70 0 80 4 90 2C100 0 110 4' stroke='%231a1c1a' stroke-width='2'/%3E%3C/svg%3E");
+        }
+        .tape-corner {
+            position: absolute;
+            width: 60px;
+            height: 25px;
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(2px);
+            transform: rotate(-35deg);
+            top: -10px;
+            left: -20px;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            z-index: 10;
+        }
+        .section-divider-lines {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            gap: 1rem;
+        }
+        .tick-line {
+            flex-grow: 1;
+            height: 2px;
+            background-image: repeating-linear-gradient(90deg, #1a1c1a, #1a1c1a 2px, transparent 2px, transparent 8px);
+        }
+        .sticky-note {
+            box-shadow: 4px 4px 0px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-secondary-container">
+<header class="fixed top-0 z-50 w-full bg-[#faf9f6]/80 backdrop-blur-md border-b-2 border-[#090907]/10">
+<div class="flex justify-between items-center w-full px-6 py-4 max-w-7xl mx-auto">
+<div class="text-2xl font-black text-[#090907] tracking-tight font-headline" style="">
+                AIxUX Summit 2026
+            </div>
+<nav class="hidden md:flex items-center gap-8 font-body text-sm font-semibold">
+<a class="text-[#090907] hover:text-[#e67e22] hover:scale-105 transition-all" href="#" style="">Agenda</a>
+<a class="text-[#090907] hover:text-[#e67e22] hover:scale-105 transition-all" href="#" style="">Pricing</a>
+<a class="text-[#090907] hover:text-[#e67e22] hover:scale-105 transition-all" href="#" style="">FAQ</a>
+<a class="bg-primary-container text-on-primary-container px-6 py-2 rounded-full font-bold hover:scale-105 active:scale-95 transition-all" href="#" style="">Join Waitlist</a>
+</nav>
+<button class="md:hidden p-2" style="">
+<span class="material-symbols-outlined" style="">menu</span>
+</button>
+</div>
+</header>
+<main class="pt-24 space-y-32">
+<section class="max-w-7xl mx-auto px-6 py-12 lg:py-24">
+<div class="grid lg:grid-cols-12 gap-12 items-start">
+<div class="lg:col-span-7 space-y-8 text-left">
+<h1 class="font-headline text-5xl md:text-7xl lg:text-8xl leading-none text-[#090907]" style="">
+                        Two days. <div>Real tools. <div>You leave as an 
+                        <span class="relative inline-block" style="">
+                            AI Designer.<svg class="absolute -bottom-3 left-0 w-full" fill="none" viewbox="0 0 200 12" xmlns="http://www.w3.org/2000/svg">
+<path d="M2 10C30 4 70 14 100 6C130 -2 170 10 198 4" stroke="#FCDD2A" stroke-linecap="round" stroke-width="8"></path>
+</svg>
+</span> </div></div></h1>
+<p class="font-body text-xl md:text-2xl text-on-surface-variant max-w-2xl leading-relaxed" style="">
+                        AIxUX Summit 2026 is a hands-on, online summit for UX and product designers navigating the AI shift. No theory. No hype. Just tools you'll actually use.
+                    </p>
+<div class="flex items-center gap-4 pt-4">
+<div class="font-hand text-2xl text-on-surface-variant/80 flex items-center gap-2" style="">
+<span class="text-3xl" style="">✨</span> 30 designers joined us last year.
+                        </div>
+</div>
+</div>
+<div class="lg:col-span-5 relative">
+<div class="bg-surface-container/30 border-2 border-dashed border-on-surface/20 rounded-3xl p-8 lg:p-10 flex flex-col gap-6 relative overflow-hidden">
+<div class="sticky-note bg-white p-6 border-2 border-on-surface -rotate-2 relative z-10 transition-transform hover:rotate-0 hover:scale-105 duration-300">
+<div class="flex flex-col">
+<span class="font-hand text-[#e67e22] text-sm uppercase font-bold tracking-tighter" style="">When</span>
+<span class="font-headline text-3xl md:text-5xl text-[#090907]" style="">June 18–19, 2026</span>
+</div>
+<span class="material-symbols-outlined absolute top-4 right-4 text-on-surface/20 text-4xl" style="">calendar_today</span>
+</div>
+<div class="sticky-note bg-secondary-fixed p-6 border-2 border-on-surface rotate-1 relative z-10 transition-transform hover:rotate-0 hover:scale-105 duration-300">
+<div class="flex flex-col">
+<span class="font-hand text-[#006877] text-sm uppercase font-bold tracking-tighter" style="">Where</span>
+<span class="font-headline text-3xl md:text-5xl text-[#090907]" style="">Online</span>
+</div>
+<span class="material-symbols-outlined absolute top-4 right-4 text-on-surface/20 text-4xl" style="">public</span>
+</div>
+<div class="sticky-note bg-tertiary-fixed p-6 border-2 border-on-surface -rotate-1 relative z-10 transition-transform hover:rotate-0 hover:scale-105 duration-300">
+<div class="flex flex-col">
+<span class="font-hand text-[#6d5e00] text-sm uppercase font-bold tracking-tighter" style="">Duration</span>
+<div class="flex items-baseline gap-4">
+<span class="font-headline text-3xl md:text-5xl text-[#090907]" style="">2 Days</span>
+<span class="font-body text-xs font-bold bg-white/40 px-2 py-0.5 rounded-full border border-black/10" style="">Limited seats</span>
+</div>
+</div>
+<span class="material-symbols-outlined absolute top-4 right-4 text-on-surface/20 text-4xl" style="">schedule</span>
+</div>
+<div class="mt-4 space-y-4 pt-4 border-t-2 border-dashed border-on-surface/10">
+<button class="w-full bg-primary-container text-on-primary-container px-10 py-5 rounded-full font-bold text-xl hover:scale-[1.02] active:scale-95 transition-all shadow-xl flex items-center justify-center gap-3" style="">
+                                Join the Waitlist
+                                <span class="material-symbols-outlined font-bold" style="">arrow_forward</span>
+</button>
+<button class="w-full font-body font-bold border-2 border-on-surface bg-white/50 px-10 py-5 text-lg hover:bg-white transition-all" style="">
+                                See Early Bird Pricing ↓
+                            </button>
+</div>
+<div class="absolute -bottom-8 -left-8 pointer-events-none opacity-50 hidden md:block">
+<svg fill="none" height="120" viewbox="0 0 100 100" width="120" xmlns="http://www.w3.org/2000/svg">
+<path d="M10 20C40 10 70 30 85 55M85 55L75 45M85 55L95 50" stroke="#61C4D8" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"></path>
+<text fill="#61C4D8" font-family="Patrick Hand" font-size="18" x="10" y="85">Limited space!</text>
+</svg>
+</div>
+</div>
+</div>
+</div>
+</section>
+<div class="max-w-7xl mx-auto px-6">
+<div class="section-divider-lines">
+<div class="tick-line"></div>
+<div class="text-center px-4">
+<h2 class="font-headline text-3xl md:text-4xl" style="">Laptops open. Tools in hand.</h2>
+<div 0="" 100="" 100\"="" 110="" 20="" 2c10="" 2c100="" 2c40="" 2c70="" 30="" 4="" 4\"="" 50="" 60="" 80="" 90="" class="w-full h-1 mt-2 bg-repeat-x bg-[url('data:image/svg+xml,%3Csvg width=\" d='\"M0' fill='\"none\"' height='\"4\"' stroke='\"%231a1c1a\"' stroke-width="\&quot;2\&quot;/%3E%3C/svg%3E')]&quot;" viewbox='\"0' xmlns='\"http://www.w3.org/2000/svg\"%3E%3Cpath'></div>
+</div>
+<div class="tick-line"></div>
+</div>
+</div>
+<section class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
+<div>
+<img alt="Designer's desk with laptop and sketches" class="w-full h-[400px] object-cover border-2 border-on-surface shadow-2xl -rotate-1" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAH-nbaD4vmo7ZomJxp5HMu8fW5zm7VikBFje5LjN8qywQm__JwNIt4O1SvtrH-8mPZ4roeoevCqv_J4z303fsl2_ajQnLVj6Fc7A2R-_e1Ath48QadCYCeWX9qDvnwxRigr52LK7pxp22_yqbK9fQEEn-zXJORge-KpCap-n2S2Vsr0lKx-JXFej_YcgTaqZB8a8zvZNwE83p4ZeJVnTLvCQiDaNwZwyFmyqxNg9ekHe0GADYCwTZO77J3Hoh5SHuHHYRct531s2I" style=""/>
+</div>
+<div class="space-y-8">
+<h3 class="font-headline text-4xl" style="">Same DNA as the inaugural summit — but bigger, deeper, and more hands-on.</h3>
+<ul class="space-y-6 font-body text-lg">
+<li class="flex gap-4" style="">
+<span class="material-symbols-outlined text-primary font-bold" style="">draw</span>
+<span class="" style="">Hands-on labs where you build real AI x UX artifacts.</span>
+</li>
+<li class="flex gap-4" style="">
+<span class="material-symbols-outlined text-primary font-bold" style="">diversity_3</span>
+<span class="" style="">Opportunities to make great connections with peers and experts.</span>
+</li>
+<li class="flex gap-4" style="">
+<span class="material-symbols-outlined text-primary font-bold" style="">forum</span>
+<span class="" style="">Facilitated sessions led by experienced practitioners.</span>
+</li>
+<li class="flex gap-4" style="">
+<span class="material-symbols-outlined text-primary font-bold" style="">star</span>
+<span class="" style="">A curated group of designers, product builders, and leaders.</span>
+</li>
+<li class="flex gap-4" style="">
+<span class="material-symbols-outlined text-primary font-bold" style="">psychology</span>
+<span class="" style="">Space to reflect on ethics, craft, and long-term impact.</span>
+</li>
+</ul>
+</div>
+</section>
+<section class="max-w-7xl mx-auto px-6">
+<div class="section-divider-lines mb-16">
+<div class="tick-line"></div>
+<div class="text-center">
+<div class="inline-block mb-2 px-3 py-0.5 border-2 border-on-surface text-[10px] font-bold uppercase tracking-widest bg-surface" style="">Tentative</div>
+<h2 class="font-headline text-4xl" style="">The Agenda</h2>
+<div 0="" 100="" 100\"="" 110="" 20="" 2c10="" 2c100="" 2c40="" 2c70="" 30="" 4="" 4\"="" 50="" 60="" 80="" 90="" class="w-full h-1 mt-1 bg-repeat-x bg-[url('data:image/svg+xml,%3Csvg width=\" d='\"M0' fill='\"none\"' height='\"4\"' stroke='\"%231a1c1a\"' stroke-width="\&quot;2\&quot;/%3E%3C/svg%3E')]&quot;" viewbox='\"0' xmlns='\"http://www.w3.org/2000/svg\"%3E%3Cpath'></div>
+</div>
+<div class="tick-line"></div>
+</div>
+<div class="grid md:grid-cols-2 gap-12">
+<div class="bg-surface-container-low p-8 border-2 border-on-surface relative">
+<h3 class="font-headline text-3xl mb-2" style="">Day 1 (June 18)</h3>
+<p class="font-body text-primary font-bold mb-8 italic" style="">Theme: The Shift</p>
+<div class="space-y-6">
+<div class="flex justify-between border-b border-on-surface/10 pb-4">
+<span class="font-bold" style="">09:00 AM</span>
+<span class="font-body" style="">Opening Keynote: Designing in the Age of Agency</span>
+</div>
+<div class="flex justify-between border-b border-on-surface/10 pb-4">
+<span class="font-bold" style="">11:00 AM</span>
+<span class="font-body" style="">Lab 1: Prompting as a Core Design Skill</span>
+</div>
+<div class="flex justify-between border-b border-on-surface/10 pb-4">
+<span class="font-bold" style="">02:00 PM</span>
+<span class="font-body" style="">Ethics Clinic: Bias, Dark Patterns &amp; AI</span>
+</div>
+<div class="flex justify-between border-b border-on-surface/10 pb-4">
+<span class="font-bold" style="">04:00 PM</span>
+<span class="font-body" style="">Roundtable: How the Job is Changing</span>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-low p-8 border-2 border-on-surface relative">
+<h3 class="font-headline text-3xl mb-2" style="">Day 2 (June 19)</h3>
+<p class="font-body text-primary font-bold mb-8 italic" style="">Theme: The Practice</p>
+<div class="space-y-6">
+<div class="flex justify-between border-b border-on-surface/10 pb-4">
+<span class="font-bold" style="">09:00 AM</span>
+<span class="font-body" style="">Case Study: Automating User Research Synthesis</span>
+</div>
+<div class="flex justify-between border-b border-on-surface/10 pb-4">
+<span class="font-bold" style="">11:00 AM</span>
+<span class="font-body" style="">Lab 2: Prototyping with Custom GPTs</span>
+</div>
+<div class="flex justify-between border-b border-on-surface/10 pb-4">
+<span class="font-bold" style="">02:00 PM</span>
+<span class="font-body" style="">Workshop: Multi-modal Interface Design</span>
+</div>
+<div class="flex justify-between border-b border-on-surface/10 pb-4">
+<span class="font-bold" style="">04:00 PM</span>
+<span class="font-body" style="">Demo Day &amp; Closing Ceremony</span>
+</div>
+</div>
+</div>
+</div>
+<p class="mt-8 text-center font-hand text-xl text-on-surface-variant" style="">Note: All sessions include recordings for registered attendees.</p>
+</section>
+<section class="max-w-3xl mx-auto px-6 py-20 flex justify-center">
+<div class="bg-tertiary-fixed p-12 shadow-2xl rotate-2 relative max-w-lg">
+<div class="absolute -top-4 -left-4">
+<svg height="40" viewbox="0 0 40 40" width="40">
+<path d="M5 5L35 35M35 5L5 35" opacity="0.2" stroke="#1a1c1a" stroke-width="2"></path>
+</svg>
+</div>
+<span class="material-symbols-outlined text-4xl mb-6 opacity-30" style="">format_quote</span>
+<p class="font-hand text-2xl md:text-3xl leading-relaxed mb-8" style="">
+                    "AIxUX 2025 was the first time I actually felt ahead of the AI curve. I built two functional prototypes in just two days."
+                </p>
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 bg-on-surface rounded-full overflow-hidden grayscale">
+<img alt="Sarah Jenkins Headshot" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCgjsVfnVIoryXhYzziFcX3IMH2IVFgNVy8oFcM1gvDqLACar7A_hJfBts4OLj8o2EXpzgcNMSSXpH39jOKXzRuLOIys4am9KstRRacXUyNl4iJ3dDfLabiXvEu3sSNi48jt4hRjdGmNaOygtk-0rf07j4Ge3xbX6LxGWQ-6xFY_srTFTkhZ5cEok0gkYHPf0_eFpu88H4z2syxhZY5aoyqDiiStw8xb1JfAtz5qQfEG2Mtm7onX8LbEmx9QK3R-h2DsVHxSacP1oQ" style=""/>
+</div>
+<div class="font-body">
+<p class="font-bold" style="">Sarah Jenkins</p>
+<p class="text-sm opacity-70" style="">Senior UX Designer</p>
+</div>
+</div>
+</div>
+</section>
+<section class="max-w-7xl mx-auto px-6">
+<div class="section-divider-lines mb-16">
+<div class="tick-line"></div>
+<div class="text-center">
+<div class="inline-block mb-4 p-4 bg-tertiary-fixed border-2 border-on-surface -rotate-1 font-hand text-lg" style="">
+                        ⚡ Early Bird closes ~June 4–5. Price goes up after.
+                    </div>
+<h2 class="font-headline text-4xl" style="">Get Your Ticket</h2>
+<div 0="" 100="" 100\"="" 110="" 20="" 2c10="" 2c100="" 2c40="" 2c70="" 30="" 4="" 4\"="" 50="" 60="" 80="" 90="" class="w-full h-1 mt-1 bg-repeat-x bg-[url('data:image/svg+xml,%3Csvg width=\" d='\"M0' fill='\"none\"' height='\"4\"' stroke='\"%231a1c1a\"' stroke-width="\&quot;2\&quot;/%3E%3C/svg%3E')]&quot;" viewbox='\"0' xmlns='\"http://www.w3.org/2000/svg\"%3E%3Cpath'></div>
+</div>
+<div class="tick-line"></div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<div class="bg-tertiary-fixed border-2 border-on-surface p-8 relative flex flex-col justify-between">
+<div class="tape-corner"></div>
+<div class="absolute -top-3 right-4 bg-on-surface text-surface text-[10px] px-3 py-1 font-bold uppercase tracking-widest" style="">Best Value</div>
+<div>
+<h3 class="font-headline text-2xl mb-4" style="">Early Bird</h3>
+<div class="text-4xl font-black mb-2" style="">$199</div>
+<p class="font-body text-sm mb-8 opacity-80" style="">Full access for the early starters.</p>
+</div>
+<button class="w-full bg-primary-container text-on-primary-container py-3 rounded-full font-bold hover:scale-105 transition-all" style="">Get Ticket</button>
+</div>
+<div class="bg-surface-container-lowest border-2 border-on-surface p-8 relative flex flex-col justify-between">
+<div>
+<h3 class="font-headline text-2xl mb-4" style="">Regular</h3>
+<div class="text-4xl font-black mb-2" style="">$299</div>
+<p class="font-body text-sm mb-8 opacity-80" style="">Standard access for practitioners.</p>
+</div>
+<button class="w-full bg-primary-container text-on-primary-container py-3 rounded-full font-bold hover:scale-105 transition-all" style="">Get Ticket</button>
+</div>
+<div class="bg-surface-container-lowest border-2 border-on-surface p-8 relative flex flex-col justify-between">
+<div>
+<h3 class="font-headline text-2xl mb-4" style="">Student</h3>
+<div class="text-4xl font-black mb-2" style="">$29</div>
+<p class="font-body text-sm mb-8 opacity-80" style="">Supporting the next generation.</p>
+</div>
+<button class="w-full bg-primary-container text-on-primary-container py-3 rounded-full font-bold hover:scale-105 transition-all" style="">Get Ticket</button>
+</div>
+<div class="bg-surface-container-lowest border-2 border-on-surface p-8 relative flex flex-col justify-between">
+<div>
+<h3 class="font-headline text-2xl mb-4" style="">Skool Members</h3>
+<div class="text-4xl font-black mb-2" style="">Free</div>
+<p class="font-body text-sm mb-8 opacity-80" style="">Included in your annual membership.</p>
+</div>
+<button class="w-full bg-on-surface text-surface py-3 rounded-full font-bold hover:scale-105 transition-all" style="">Join Free</button>
+</div>
+</div>
+</section>
+<section class="max-w-7xl mx-auto px-6 py-20 bg-surface-container rounded-3xl">
+<h2 class="font-headline text-5xl mb-16" style="">Is This For You?</h2>
+<div class="grid md:grid-cols-2 gap-16">
+<div>
+<h3 class="font-headline text-3xl mb-8 flex items-center gap-3" style="">
+<span class="material-symbols-outlined text-secondary text-4xl" style="">check_circle</span>
+                        This is for you if...
+                    </h3>
+<ul class="space-y-6 font-body text-lg">
+<li class="" style="">You're a UX/Product designer looking to evolve your craft.</li>
+<li class="" style="">You learn best by doing, not just watching presentations.</li>
+<li class="" style="">You're actively figuring out your role in an AI-driven future.</li>
+<li class="" style="">You value meaningful connections over mass networking.</li>
+</ul>
+</div>
+<div>
+<h3 class="font-headline text-3xl mb-8 flex items-center gap-3" style="">
+<span class="material-symbols-outlined text-error text-4xl" style="">cancel</span>
+                        This is NOT for you if...
+                    </h3>
+<ul class="space-y-6 font-body text-lg opacity-60">
+<li class="" style="">You're looking for a "What is AI?" 101 basic introduction.</li>
+<li class="" style="">You prefer a passive, "watch and listen" webinar format.</li>
+<li class="" style="">You're only here for high-profile celebrity keynotes.</li>
+<li class="" style="">You want purely theoretical academic discussions.</li>
+</ul>
+</div>
+</div>
+</section>
+<section class="max-w-4xl mx-auto px-6">
+<div class="section-divider-lines mb-16">
+<div class="tick-line"></div>
+<div class="text-center">
+<h2 class="font-headline text-4xl" style="">Questions?</h2>
+<div 0="" 100="" 100\"="" 110="" 20="" 2c10="" 2c100="" 2c40="" 2c70="" 30="" 4="" 4\"="" 50="" 60="" 80="" 90="" class="w-full h-1 mt-1 bg-repeat-x bg-[url('data:image/svg+xml,%3Csvg width=\" d='\"M0' fill='\"none\"' height='\"4\"' stroke='\"%231a1c1a\"' stroke-width="\&quot;2\&quot;/%3E%3C/svg%3E')]&quot;" viewbox='\"0' xmlns='\"http://www.w3.org/2000/svg\"%3E%3Cpath'></div>
+</div>
+<div class="tick-line"></div>
+</div>
+<div class="space-y-4">
+<div class="border-2 border-on-surface p-6 font-body">
+<h4 class="font-bold text-lg mb-2" style="">Will the sessions be recorded?</h4>
+<p class="opacity-70" style="">Yes! Every ticket holder gets full access to the high-quality recordings for 12 months.</p>
+</div>
+<div class="border-2 border-on-surface p-6 font-body rotate-1">
+<h4 class="font-bold text-lg mb-2" style="">Which platform will be used?</h4>
+<p class="opacity-70" style="">TBD, but it will be a high-interaction spatial or collaborative platform optimized for design labs.</p>
+</div>
+<div class="border-2 border-on-surface p-6 font-body">
+<h4 class="font-bold text-lg mb-2" style="">Who are the speakers?</h4>
+<p class="opacity-70" style="">We focus on 6-8 practitioners who are actually shipping AI products, not professional keynote speakers.</p>
+</div>
+<div class="border-2 border-on-surface p-6 font-body -rotate-1">
+<h4 class="font-bold text-lg mb-2" style="">What is the refund policy?</h4>
+<p class="opacity-70" style="">Details TBD, but we typically offer a 100% refund up to 14 days before the event.</p>
+</div>
+</div>
+</section>
+<section class="max-w-7xl mx-auto px-6 py-20 bg-primary-container/10 rounded-3xl border-2 border-dashed border-on-surface/20 text-center relative overflow-hidden">
+<h2 class="font-headline text-5xl mb-4" style="">Still deciding? Join the waitlist.</h2>
+<p class="font-body text-xl mb-12 opacity-80" style="">Be first to hear about speakers, early access, and updates.</p>
+<form class="max-w-lg mx-auto flex flex-col md:flex-row gap-4 relative">
+<input class="flex-1 bg-surface border-0 border-b-2 border-on-surface p-4 focus:ring-0 font-body outline-none" placeholder="Name" type="text"/>
+<input class="flex-1 bg-surface border-0 border-b-2 border-on-surface p-4 focus:ring-0 font-body outline-none" placeholder="Email" type="email"/>
+<button class="bg-primary-container text-on-primary-container px-8 py-4 rounded-full font-bold shadow-lg hover:scale-105 transition-all" style="">Join the Waitlist</button>
+<div class="hidden lg:block absolute -left-20 top-0">
+<svg height="60" viewbox="0 0 60 60" width="60">
+<path d="M50 10L10 50M10 50H30M10 50V30" stroke="#FCDD2A" stroke-linecap="round" stroke-width="4"></path>
+</svg>
+</div>
+</form>
+<div class="absolute bottom-4 right-10 rotate-12 opacity-20 pointer-events-none">
+<span class="material-symbols-outlined text-9xl" style="">gesture</span>
+</div>
+</section>
+</main>
+<footer class="bg-[#f4f3f1] border-t-2 border-dashed border-[#090907]/20 py-12 px-6 mt-20">
+<div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 items-center text-center md:text-left">
+<div>
+<div class="text-lg font-bold text-[#090907] font-headline" style="">AIxUX Summit</div>
+<p class="font-body text-sm mt-2 opacity-70" style="">Hand-drawn for the future of design.</p>
+</div>
+<div class="flex justify-center gap-6 font-body text-sm">
+<a class="text-[#090907]/70 hover:text-[#e67e22] transition-colors" href="#" style="">Privacy Policy</a>
+<a class="text-[#090907]/70 hover:text-[#e67e22] transition-colors" href="#" style="">Terms of Service</a>
+<a class="text-[#090907]/70 hover:text-[#e67e22] transition-colors" href="#" style="">Contact Support</a>
+</div>
+<div class="text-xs font-body opacity-50 md:text-right" style="">
+                © 2026 AIxUX Summit. All rights reserved.
+            </div>
+</div>
+</footer>
+</body></html>

@@ -1,4 +1,6 @@
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Accordion, AccordionContent } from "@/components/ui/accordion";
+import { MembershipAccordionItem, MembershipAccordionTrigger } from "@/components/MembershipAccordion";
+import { MembershipSectionTitle } from "@/components/MembershipSectionTitle";
 
 const MembershipFAQ = () => {
   const faqs = [
@@ -33,25 +35,24 @@ const MembershipFAQ = () => {
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+            <MembershipSectionTitle>
               Frequently Asked <span className="text-gradient">Questions</span>
-            </h2>
+            </MembershipSectionTitle>
           </div>
           
           <Accordion type="single" collapsible className="space-y-4">
             {faqs.map((faq, index) => (
-              <AccordionItem 
-                key={index} 
-                value={`faq-${index}`} 
-                className="bg-background border border-border rounded-xl overflow-hidden hover:border-primary/50 transition-colors"
+              <MembershipAccordionItem
+                key={index}
+                value={`faq-${index}`}
               >
-                <AccordionTrigger className="px-6 py-4 hover:no-underline text-left">
+                <MembershipAccordionTrigger>
                   <span className="font-bold text-lg">{faq.question}</span>
-                </AccordionTrigger>
+                </MembershipAccordionTrigger>
                 <AccordionContent className="px-6 pb-4">
                   <p className="text-muted-foreground">{faq.answer}</p>
                 </AccordionContent>
-              </AccordionItem>
+              </MembershipAccordionItem>
             ))}
           </Accordion>
         </div>
@@ -61,4 +62,3 @@ const MembershipFAQ = () => {
 };
 
 export default MembershipFAQ;
-

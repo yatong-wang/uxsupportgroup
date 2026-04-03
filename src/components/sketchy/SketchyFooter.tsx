@@ -6,9 +6,9 @@ import { supabase } from "@/integrations/supabase/client";
 import { useState } from "react";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { toast } from "@/hooks/use-toast";
-import { Input } from "@/components/ui/input";
 import { Mail } from "lucide-react";
-import { HandDrawnRect } from "./HandDrawnRect";
+import { SketchyHandDrawnInput } from "./SketchyHandDrawnInput";
+import { SketchyIconButton } from "./SketchyIconButton";
 
 const emailSchema = z.object({ email: z.string().email("Please enter a valid email address") });
 
@@ -56,20 +56,17 @@ export const SketchyFooter = () => {
             <form onSubmit={handleSubmit(onSubmit)} className="flex gap-2">
               <div className="flex-1 relative">
                 <label htmlFor="sketchy-footer-email" className="sr-only">Your email</label>
-                <HandDrawnRect fill="white" strokeWidth={1.5} />
-                <Input
+                <SketchyHandDrawnInput
                   id="sketchy-footer-email"
                   type="email"
                   placeholder="Your email"
                   {...register("email")}
-                  className="relative z-10 bg-transparent border-0 text-uxsg-ink placeholder:text-uxsg-ink/50 h-9 shadow-none focus-visible:ring-0"
                 />
                 {!!errors.email && <p className="text-red-500 text-xs mt-1">{errors.email.message as string}</p>}
               </div>
-              <button type="submit" className="relative shrink-0 w-10 h-9 flex items-center justify-center" aria-label="Subscribe">
-                <HandDrawnRect fill="var(--uxsg-ink)" stroke="var(--uxsg-ink)" strokeWidth={1.5} />
+              <SketchyIconButton type="submit" aria-label="Subscribe">
                 <Mail className="w-4 h-4 text-white relative z-10" />
-              </button>
+              </SketchyIconButton>
             </form>
           </div>
         </div>
