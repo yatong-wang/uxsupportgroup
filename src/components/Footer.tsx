@@ -1,5 +1,6 @@
 // @ts-nocheck
 import { Link } from "react-router-dom";
+import { PlaceholderPageLink } from "@/components/PlaceholderPageLink";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Mail } from "lucide-react";
@@ -61,10 +62,10 @@ const Footer = ({ variant }: { variant?: 'default' | 'sketchy' }) => {
             
             <ul className="space-y-2 text-background/80">
               <li><Link to="/summit-2025" className="hover:text-primary transition-colors">AIxUX Summit 2025</Link></li>
-              <li><Link to="/about" className="hover:text-primary transition-colors">About</Link></li>
+              <li><PlaceholderPageLink to="/about" className="hover:text-primary transition-colors">About</PlaceholderPageLink></li>
               <li><Link to="/sponsor" className="hover:text-primary transition-colors">Become a Sponsor</Link></li>
-              <li><Link to="/partner" className="hover:text-primary transition-colors">Partner Inquiry</Link></li>
-              <li><Link to="/media-kit" className="hover:text-primary transition-colors">Media Kit</Link></li>
+              <li><PlaceholderPageLink to="/partner" className="hover:text-primary transition-colors">Partner Inquiry</PlaceholderPageLink></li>
+              <li><PlaceholderPageLink to="/media-kit" className="hover:text-primary transition-colors">Media Kit</PlaceholderPageLink></li>
               <li><Link to="/contact" className="hover:text-primary transition-colors">Contact</Link></li>
             </ul>
           </div>

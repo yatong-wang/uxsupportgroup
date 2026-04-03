@@ -1,4 +1,6 @@
+import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
+import { PlaceholderPageLink } from "@/components/PlaceholderPageLink";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -6,11 +8,27 @@ import { supabase } from "@/integrations/supabase/client";
 import { useState } from "react";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { toast } from "@/hooks/use-toast";
-import { Mail } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { SketchyHandDrawnInput } from "./SketchyHandDrawnInput";
 import { SketchyIconButton } from "./SketchyIconButton";
 
 const emailSchema = z.object({ email: z.string().email("Please enter a valid email address") });
+
+const FOOTER_NAV_LINK_CLASS =
+  "font-body text-uxsg-ink underline-offset-4 decoration-uxsg-ink/30 transition-colors duration-200 hover:underline hover:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-uxsg-ink/30 focus-visible:rounded-sm active:opacity-80";
+
+const FOOTER_LEGAL_LINK_CLASS =
+  "font-body text-muted-foreground underline-offset-4 decoration-uxsg-ink/30 transition-colors duration-200 hover:underline hover:text-uxsg-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-uxsg-ink/30 focus-visible:rounded-sm active:opacity-80";
+
+function FooterColumnHeading({ children, id }: { children: ReactNode; id: string }) {
+  return (
+    <div className="mb-4 text-center md:text-left">
+      <h3 id={id} className="font-headline text-md text-uxsg-ink">
+        {children}
+      </h3>
+    </div>
+  );
+}
 
 export const SketchyFooter = () => {
   const [showConfirmation, setShowConfirmation] = useState(false);
@@ -34,40 +52,117 @@ export const SketchyFooter = () => {
   return (
     <footer className="paper-bg border-t border-uxsg-ink/15 py-10 font-body">
       <div className="container mx-auto px-4">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
-          <div className="text-sm text-uxsg-ink/60">
-            <p className="mb-2">UXSG | &copy; 2025 UX Support Group. All rights reserved.</p>
-            <div className="flex flex-wrap gap-x-6 gap-y-1">
-              <Link to="/about" className="hover:text-uxsg-ink transition-colors">About</Link>
-              <Link to="/contact" className="hover:text-uxsg-ink transition-colors">Contact</Link>
-              <Link to="/membership" className="hover:text-uxsg-ink transition-colors">Membership</Link>
-              <Link to="/sponsor" className="hover:text-uxsg-ink transition-colors">Sponsor</Link>
-              <Link to="/partner" className="hover:text-uxsg-ink transition-colors">Partner</Link>
-              <Link to="/media-kit" className="hover:text-uxsg-ink transition-colors">Media Kit</Link>
-              <Link to="/summit" className="hover:text-uxsg-ink transition-colors">Summit 2026</Link>
-              <Link to="/summit-2025" className="hover:text-uxsg-ink transition-colors">Summit 2025</Link>
-              <Link to="/privacy" className="hover:text-uxsg-ink transition-colors">Privacy Policy</Link>
-              <Link to="/terms" className="hover:text-uxsg-ink transition-colors">Terms of Service</Link>
-              <Link to="/code-of-conduct" className="hover:text-uxsg-ink transition-colors">Code of Conduct</Link>
-            </div>
-          </div>
-          <div className="w-full md:w-auto md:min-w-[340px]">
-            <p className="text-sm font-bold text-uxsg-ink mb-2">Stay Updated! Join the resistance.</p>
-            <form onSubmit={handleSubmit(onSubmit)} className="flex gap-2">
-              <div className="flex-1 relative">
-                <label htmlFor="sketchy-footer-email" className="sr-only">Your email</label>
+        <div
+          className="grid grid-cols-1 gap-10 justify-items-center text-center md:justify-items-stretch md:text-left md:grid-cols-2 md:gap-x-8 md:gap-y-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(18rem,1.25fr)] lg:gap-x-10 lg:gap-y-0"
+        >
+          <nav className="min-w-0 w-full max-w-xs md:max-w-none" aria-labelledby="footer-about-heading">
+            <FooterColumnHeading id="footer-about-heading">About</FooterColumnHeading>
+            <ul className="flex flex-col gap-2 items-center md:items-start">
+              <li>
+                <PlaceholderPageLink to="/about" className={FOOTER_NAV_LINK_CLASS}>
+                  About
+                </PlaceholderPageLink>
+              </li>
+              <li>
+                <Link to="/contact" className={FOOTER_NAV_LINK_CLASS}>
+                  Contact
+                </Link>
+              </li>
+              <li>
+                <PlaceholderPageLink to="/media-kit" className={FOOTER_NAV_LINK_CLASS}>
+                  Media Kit
+                </PlaceholderPageLink>
+              </li>
+            </ul>
+          </nav>
+
+          <nav className="min-w-0 w-full max-w-xs md:max-w-none" aria-labelledby="footer-join-heading">
+            <FooterColumnHeading id="footer-join-heading">Join</FooterColumnHeading>
+            <ul className="flex flex-col gap-2 items-center md:items-start">
+              <li>
+                <Link to="/membership" className={FOOTER_NAV_LINK_CLASS}>
+                  Membership
+                </Link>
+              </li>
+              <li>
+                <PlaceholderPageLink to="/partner" className={FOOTER_NAV_LINK_CLASS}>
+                  Partner
+                </PlaceholderPageLink>
+              </li>
+              <li>
+                <Link to="/sponsor" className={FOOTER_NAV_LINK_CLASS}>
+                  Sponsor
+                </Link>
+              </li>
+            </ul>
+          </nav>
+
+          <nav className="min-w-0 w-full max-w-xs md:max-w-none" aria-labelledby="footer-summit-heading">
+            <FooterColumnHeading id="footer-summit-heading">AIxUX Summit</FooterColumnHeading>
+            <ul className="flex flex-col gap-2 items-center md:items-start">
+              <li>
+                <Link to="/summit" className={FOOTER_NAV_LINK_CLASS}>
+                  Summit 2026
+                </Link>
+              </li>
+              <li>
+                <Link to="/summit-2025" className={FOOTER_NAV_LINK_CLASS}>
+                  Summit 2025
+                </Link>
+              </li>
+            </ul>
+          </nav>
+
+          <div className="min-w-0 w-full max-w-md md:max-w-4xl lg:col-span-1 lg:col-start-4 lg:row-start-1">
+            <p id="footer-stay-heading" className="mb-1 font-hand text-md text-uxsg-ink/70">
+              Stay updated! Join the resistance.
+            </p>
+            <form
+              onSubmit={handleSubmit(onSubmit)}
+              className="mx-auto flex w-full max-w-md gap-2 md:mx-0 md:max-w-none"
+              aria-labelledby="footer-stay-heading"
+            >
+              <div className="relative min-w-0 flex-1">
+                <label htmlFor="sketchy-footer-email" className="sr-only">
+                  Your email
+                </label>
                 <SketchyHandDrawnInput
                   id="sketchy-footer-email"
                   type="email"
                   placeholder="Your email"
                   {...register("email")}
                 />
-                {!!errors.email && <p className="text-red-500 text-xs mt-1">{errors.email.message as string}</p>}
+                {!!errors.email && (
+                  <p className="mt-1 text-xs text-red-500">{errors.email.message as string}</p>
+                )}
               </div>
               <SketchyIconButton type="submit" aria-label="Subscribe">
-                <Mail className="w-4 h-4 text-white relative z-10" />
+                <ArrowRight className="h-4 w-4" aria-hidden />
               </SketchyIconButton>
             </form>
+          </div>
+        </div>
+
+        <div className="mt-10 flex flex-col items-center gap-3 border-t border-uxsg-ink/15 pt-8 text-center text-xs text-muted-foreground sm:flex-row sm:items-start sm:justify-between sm:text-left sm:text-sm">
+          <p className="font-body max-w-prose">
+            UXSG · &copy; 2025–2026 UX Support Group. All rights reserved.
+          </p>
+          <div className="flex flex-wrap justify-center gap-x-4 gap-y-1 sm:justify-end sm:text-right">
+            <Link to="/privacy" className={FOOTER_LEGAL_LINK_CLASS}>
+              Privacy Policy
+            </Link>
+            <span className="text-muted-foreground/50" aria-hidden>
+              ·
+            </span>
+            <Link to="/terms" className={FOOTER_LEGAL_LINK_CLASS}>
+              Terms of Service
+            </Link>
+            <span className="text-muted-foreground/50" aria-hidden>
+              ·
+            </span>
+            <Link to="/code-of-conduct" className={FOOTER_LEGAL_LINK_CLASS}>
+              Code of Conduct
+            </Link>
           </div>
         </div>
       </div>

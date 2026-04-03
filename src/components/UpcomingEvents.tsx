@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { format } from "date-fns";
 import { Skeleton } from "@/components/ui/skeleton";
+import { SketchyCTA } from "@/components/sketchy/SketchyCTA";
 import { SketchySectionTitle } from "@/components/sketchy/SketchySectionTitle";
 import { SketchyTallCard } from "@/components/sketchy/SketchyTallCard";
 
@@ -58,9 +59,22 @@ const UpcomingEvents = ({ variant }: { variant?: 'default' | 'sketchy' }) => {
           ) : error ? (
             <div className="text-center">
               <p className="text-destructive mb-4">Failed to load events</p>
-              <Button size="lg" asChild>
-                <a href="https://www.meetup.com/ux-support-group/" target="_blank" rel="noopener noreferrer">View All Events on Meetup.com →</a>
-              </Button>
+              {variant === "sketchy" ? (
+                <SketchyCTA
+                  href="https://www.meetup.com/ux-support-group/"
+                  variant="dark-bg"
+                  fullWidth
+                  className="max-w-md mx-auto"
+                >
+                  View All Events on Meetup.com →
+                </SketchyCTA>
+              ) : (
+                <Button size="lg" asChild>
+                  <a href="https://www.meetup.com/ux-support-group/" target="_blank" rel="noopener noreferrer">
+                    View All Events on Meetup.com →
+                  </a>
+                </Button>
+              )}
             </div>
           ) : events && events.length > 0 ? (
             <div className="grid md:grid-cols-3 gap-5">
@@ -115,9 +129,22 @@ const UpcomingEvents = ({ variant }: { variant?: 'default' | 'sketchy' }) => {
           ) : (
             <div className="text-center">
               <p className="text-xl text-muted-foreground mb-8">No upcoming events scheduled at the moment. Check back soon!</p>
-              <Button size="lg" asChild>
-                <a href="https://www.meetup.com/ux-support-group/" target="_blank" rel="noopener noreferrer">View All Events on Meetup.com →</a>
-              </Button>
+              {variant === "sketchy" ? (
+                <SketchyCTA
+                  href="https://www.meetup.com/ux-support-group/"
+                  variant="dark-bg"
+                  fullWidth
+                  className="max-w-md mx-auto"
+                >
+                  View All Events on Meetup.com →
+                </SketchyCTA>
+              ) : (
+                <Button size="lg" asChild>
+                  <a href="https://www.meetup.com/ux-support-group/" target="_blank" rel="noopener noreferrer">
+                    View All Events on Meetup.com →
+                  </a>
+                </Button>
+              )}
             </div>
           )}
         </div>
