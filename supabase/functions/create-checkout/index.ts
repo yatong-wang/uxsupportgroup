@@ -1,43 +1,21 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import Stripe from "https://esm.sh/stripe@18.5.0";
-
-const EARLY_BIRD_PRICE_ID = "price_1TIEduEt4aAP5ylPU5RJtO6s";
-const REGULAR_PRICE_ID = "price_1TIEdyEt4aAP5ylPN6ffwF5U";
-const EARLY_BIRD_CAPACITY = 20;
+import {
+  countPaidEarlyBirdSales,
+  EARLY_BIRD_CAPACITY,
+  EARLY_BIRD_PRICE_ID,
+  REGULAR_PRICE_ID,
+} from "../_shared/summitEarlyBird.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
-const logStep = (step: string, details?: any) => {
-  const detailsStr = details ? ` - ${JSON.stringify(details)}` : '';
+const logStep = (step: string, details?: Record<string, unknown>) => {
+  const detailsStr = details ? ` - ${JSON.stringify(details)}` : "";
   console.log(`[CREATE-CHECKOUT] ${step}${detailsStr}`);
 };
-
-async function countEarlyBirdSold(stripe: Stripe): Promise<number> {
-  const sessions = await stripe.checkout.sessions.list({ limit: 100 });
-  let earlyBirdSold = 0;
-  for (const s of sessions.data) {
-    if (s.payment_status !== "paid") continue;
-    try {
-      const full = await stripe.checkout.sessions.retrieve(s.id, {
-        expand: ["line_items"],
-      });
-      const hasEarly = full.line_items?.data?.some(
-        (item: { price?: { id?: string } }) =>
-          item.price?.id === EARLY_BIRD_PRICE_ID
-      );
-      if (hasEarly) earlyBirdSold++;
-    } catch (e) {
-      logStep("Early bird count skip session", {
-        sessionId: s.id,
-        error: e instanceof Error ? e.message : String(e),
-      });
-    }
-  }
-  return earlyBirdSold;
-}
 
 function checkoutBaseUrl(req: Request): string {
   const origin = req.headers.get("origin");
@@ -78,7 +56,13 @@ serve(async (req) => {
 
     const stripe = new Stripe(stripeKey, { apiVersion: "2025-08-27.basil" });
 
-    const earlyBirdSold = await countEarlyBirdSold(stripe);
+    const { earlyBirdSold, truncated } = await countPaidEarlyBirdSales(stripe, (step, d) =>
+      logStep(step, d)
+    );
+
+    if (truncated) {
+      logStep("WARNING early bird count may be incomplete", { earlyBirdSold });
+    }
 
     if (priceId === EARLY_BIRD_PRICE_ID) {
       if (earlyBirdSold >= EARLY_BIRD_CAPACITY) {
