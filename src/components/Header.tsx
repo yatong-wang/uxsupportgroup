@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { PlaceholderPageLink } from "@/components/PlaceholderPageLink";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -22,13 +23,13 @@ const Header = () => {
 
         <nav className="hidden md:flex items-center gap-8" aria-label="Main">
           {navLinks.map(({ to, label }) => (
-            <Link
+            <PlaceholderPageLink
               key={to}
               to={to}
               className="text-sm font-medium text-foreground/70 hover:text-foreground transition-colors"
             >
               {label}
-            </Link>
+            </PlaceholderPageLink>
           ))}
         </nav>
 
@@ -48,14 +49,14 @@ const Header = () => {
             <SheetContent side="right" className="w-[280px]">
               <nav className="flex flex-col gap-4 pt-6" aria-label="Main">
                 {navLinks.map(({ to, label }) => (
-                  <Link
+                  <PlaceholderPageLink
                     key={to}
                     to={to}
                     className="text-base font-medium text-foreground hover:text-foreground/80 transition-colors py-2"
                     onClick={() => setMobileOpen(false)}
                   >
                     {label}
-                  </Link>
+                  </PlaceholderPageLink>
                 ))}
                 <Link
                   to="/membership"
