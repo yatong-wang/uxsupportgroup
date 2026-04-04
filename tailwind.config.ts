@@ -111,6 +111,19 @@ export default {
           "33%": { transform: "translate(9px, 11px)" },
           "66%": { transform: "translate(-11px, -7px)" },
         },
+        /** Sketchy nav underline: draw + release loop; pair with --rough-len (path length in px). */
+        "rough-underline-a": {
+          "0%, 100%": { strokeDashoffset: "var(--rough-len)" },
+          "38%": { strokeDashoffset: "0" },
+          "52%": { strokeDashoffset: "0" },
+          "94%": { strokeDashoffset: "var(--rough-len)" },
+        },
+        "rough-underline-b": {
+          "0%, 100%": { strokeDashoffset: "var(--rough-len)" },
+          "42%": { strokeDashoffset: "0" },
+          "48%": { strokeDashoffset: "0" },
+          "91%": { strokeDashoffset: "var(--rough-len)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -118,6 +131,10 @@ export default {
         "float-1": "float-1 var(--duration, 15s) ease-in-out infinite",
         "float-2": "float-2 var(--duration, 18s) ease-in-out infinite",
         "float-3": "float-3 var(--duration, 20s) ease-in-out infinite",
+        "rough-underline-a":
+          "rough-underline-a 3.45s cubic-bezier(0.45, 0.05, 0.25, 1) infinite",
+        "rough-underline-b":
+          "rough-underline-b 2.78s cubic-bezier(0.4, 0.15, 0.35, 1) infinite",
       },
     },
   },

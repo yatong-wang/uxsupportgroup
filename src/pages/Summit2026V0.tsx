@@ -47,10 +47,13 @@ const Summit2026V0 = () => {
 
       if (error || !data?.success) {
         console.error("[WAITLIST] Error response", error || data);
-        const apiError =
-          data && typeof data === "object" && "error" in data
-            ? String((data as { error: unknown }).error)
-            : "";
+        let apiError = "";
+        if (data && typeof data === "object" && "error" in data) {
+          const raw = (data as { error: unknown }).error;
+          if (raw != null && raw !== "") {
+            apiError = typeof raw === "string" ? raw.trim() : String(raw);
+          }
+        }
         throw new Error(apiError || "Failed to join waitlist. Please try again.");
       }
 
@@ -63,10 +66,10 @@ const Summit2026V0 = () => {
       setFormData({ name: "", email: "" });
     } catch (err: unknown) {
       console.error("[WAITLIST] Submission error", err);
+      const fallback =
+        "Something went wrong. Please try again or email us directly.";
       const message =
-        err instanceof Error
-          ? err.message
-          : "Something went wrong. Please try again or email us directly.";
+        err instanceof Error ? err.message.trim() || fallback : fallback;
       toast({
         title: "Submission failed",
         description: message,

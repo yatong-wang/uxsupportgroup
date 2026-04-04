@@ -1,7 +1,6 @@
 import UpcomingEvents from "@/components/UpcomingEvents";
 import { Check, Zap, Lock, Ticket } from "lucide-react";
 import miroBoard from "@/assets/miro-collaboration.png";
-import { HandDrawnRect } from "@/components/sketchy/HandDrawnRect";
 import { SketchyBadge } from "@/components/sketchy/SketchyBadge";
 import { RoughWavyUnderline } from "@/components/sketchy/RoughWavyUnderline";
 import { SketchyCTA } from "@/components/sketchy/SketchyCTA";
@@ -148,11 +147,13 @@ export function IndexV7Content() {
                       <><strong>Pay Per Event:</strong> A small ticket price ensures everyone is present and engaged.</>
                     </SketchyIconListItem>
                   </ul>
-                  <a href="https://www.meetup.com/ux-support-group/" target="_blank" rel="noopener noreferrer"
-                    className="relative flex items-center justify-center w-full py-3 text-base font-body">
-                    <HandDrawnRect fill="white" stroke="#090907" strokeWidth={2} />
-                    <span className="relative z-10 text-uxsg-ink">Browse Events</span>
-                  </a>
+                  <SketchyCTA
+                    href="https://www.meetup.com/ux-support-group/"
+                    variant="light-bg"
+                    fullWidth
+                  >
+                    Browse Events
+                  </SketchyCTA>
               </SketchyTallCard>
               {/* ── Accelerator ── */}
               <SketchyTallCard
@@ -182,11 +183,13 @@ export function IndexV7Content() {
                       <><strong>Membership Commitment:</strong> For professionals with skin in the game.</>
                     </SketchyIconListItem>
                   </ul>
-                  <a href="https://www.skool.com/ux-support-group-6932/about" target="_blank" rel="noopener noreferrer"
-                    className="relative flex items-center justify-center w-full py-3 text-base font-body">
-                    <HandDrawnRect fill="white" stroke="white" strokeWidth={2} />
-                    <span className="relative z-10 text-uxsg-ink">Join Accelerator</span>
-                  </a>
+                  <SketchyCTA
+                    href="https://www.skool.com/ux-support-group-6932/about"
+                    variant="light-on-dark"
+                    fullWidth
+                  >
+                    Join Accelerator
+                  </SketchyCTA>
               </SketchyTallCard>
             </div>
           </div>
