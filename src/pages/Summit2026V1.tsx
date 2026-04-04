@@ -16,20 +16,7 @@ import FarooqK from "@/assets/FarooqK-3.jpg";
 import JolieC from "@/assets/JolieC.png";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
-import {
-  ArrowRight,
-  Calendar,
-  CheckCircle2,
-
-  HandHeart,
-  Loader2,
-  MessagesSquare,
-  Pencil,
-  PencilLine,
-  Star,
-  Users,
-  XCircle,
-} from "lucide-react";
+import { CheckCircle2, HandHeart, MessagesSquare, PencilLine, Star, Users, XCircle } from "lucide-react";
 
 const EARLY_BIRD_PRICE_ID = "price_1TIEduEt4aAP5ylPU5RJtO6s";
 const REGULAR_PRICE_ID = "price_1TIEdyEt4aAP5ylPN6ffwF5U";
@@ -94,7 +81,7 @@ const AGENDA_DAY2 = [
   { time: "01:35 PM", title: "Close" },
 ];
 
-const FEATURE_ROWS: { icon: typeof Pencil; text: string }[] = [
+const FEATURE_ROWS: { icon: typeof PencilLine; text: string }[] = [
   { icon: PencilLine, text: "Hands-on labs where you build real AI x UX artifacts." },
   { icon: Users, text: "Opportunities to make great connections with peers and experts." },
   { icon: MessagesSquare, text: "Facilitated sessions led by experienced practitioners." },
