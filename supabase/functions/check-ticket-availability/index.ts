@@ -6,8 +6,7 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
-const EARLY_BIRD_PRICE_ID = "price_1SGlggEt4aAP5ylPfhAvGpJW";
-const EARLY_BIRD_CUTOFF_DATE = new Date("2025-12-01T00:00:00Z");
+const EARLY_BIRD_PRICE_ID = "price_1TIEduEt4aAP5ylPU5RJtO6s";
 const EARLY_BIRD_CAPACITY = 20;
 
 const logStep = (step: string, details?: any) => {
@@ -27,11 +26,6 @@ serve(async (req) => {
     if (!stripeKey) throw new Error("STRIPE_SECRET_KEY is not set");
 
     const stripe = new Stripe(stripeKey, { apiVersion: "2025-08-27.basil" });
-
-    // Check if we're past the cutoff date
-    const now = new Date();
-    const isPastCutoff = now >= EARLY_BIRD_CUTOFF_DATE;
-    logStep("Date check", { now: now.toISOString(), cutoff: EARLY_BIRD_CUTOFF_DATE.toISOString(), isPastCutoff });
 
     // Count successful early bird payments by retrieving completed sessions
     // List all completed checkout sessions (limited to last 100)
@@ -71,14 +65,13 @@ serve(async (req) => {
 
     logStep("Early bird tickets sold", { count: earlyBirdSold });
 
-    const isEarlyBirdAvailable = !isPastCutoff && earlyBirdSold < EARLY_BIRD_CAPACITY;
+    const isEarlyBirdAvailable = earlyBirdSold < EARLY_BIRD_CAPACITY;
     const earlyBirdRemaining = Math.max(0, EARLY_BIRD_CAPACITY - earlyBirdSold);
 
     return new Response(JSON.stringify({
       isEarlyBird: isEarlyBirdAvailable,
       earlyBirdSold,
       earlyBirdRemaining,
-      isPastCutoff,
     }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
       status: 200,
