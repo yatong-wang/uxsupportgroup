@@ -2,17 +2,23 @@ export const EARLY_BIRD_PRICE_ID = "price_1TIEduEt4aAP5ylPU5RJtO6s";
 export const REGULAR_PRICE_ID = "price_1TIEdyEt4aAP5ylPN6ffwF5U";
 export const EARLY_BIRD_CAPACITY = 20;
 
-type StripeClient = {
+type SessionListItem = {
+  id: string;
+  payment_status: string;
+  metadata?: Record<string, string> | null;
+};
+
+type StripeForEarlyBird = {
   checkout: {
     sessions: {
       list: (params: Record<string, unknown>) => Promise<{
-        data: Array<{ id: string; payment_status: string }>;
+        data: SessionListItem[];
         has_more: boolean;
       }>;
-      retrieve: (
-        id: string,
-        opts: { expand?: string[] }
-      ) => Promise<{ line_items?: { data?: Array<{ price?: unknown }> } }>;
+      listLineItems: (
+        sessionId: string,
+        params: { limit?: number }
+      ) => Promise<{ data: Array<{ price?: unknown }> }>;
     };
   };
 };
@@ -28,6 +34,30 @@ export function lineItemPriceId(item: { price?: unknown }): string | undefined {
   return undefined;
 }
 
+function isEarlyBirdFromMetadata(meta: Record<string, string> | null | undefined): boolean {
+  if (!meta) return false;
+  if (meta.ticket_type === "early_bird") return true;
+  if (meta.price_id === EARLY_BIRD_PRICE_ID) return true;
+  return false;
+}
+
+async function sessionHasEarlyBirdPrice(
+  stripe: StripeForEarlyBird,
+  sessionId: string,
+  log?: (step: string, details?: Record<string, unknown>) => void
+): Promise<boolean> {
+  try {
+    const lines = await stripe.checkout.sessions.listLineItems(sessionId, { limit: 24 });
+    return lines.data.some((item) => lineItemPriceId(item) === EARLY_BIRD_PRICE_ID);
+  } catch (e) {
+    log?.("listLineItems failed", {
+      sessionId,
+      error: e instanceof Error ? e.message : String(e),
+    });
+    return false;
+  }
+}
+
 export type EarlyBirdCountResult = {
   earlyBirdSold: number;
   truncated: boolean;
@@ -35,11 +65,11 @@ export type EarlyBirdCountResult = {
 };
 
 /**
- * Count paid Checkout sessions that include the early-bird price.
- * Paginates past the default 100-session cap so counts stay correct for busy Stripe accounts.
+ * Count paid Checkout sessions for early-bird tickets.
+ * Prefer session metadata (set by create-checkout); fall back to listLineItems (reliable vs expand).
  */
 export async function countPaidEarlyBirdSales(
-  stripe: StripeClient,
+  stripe: StripeForEarlyBird,
   log?: (step: string, details?: Record<string, unknown>) => void
 ): Promise<EarlyBirdCountResult> {
   const createdGteRaw = Deno.env.get("SUMMIT_CHECKOUT_CREATED_GTE_UNIX");
@@ -73,26 +103,22 @@ export async function countPaidEarlyBirdSales(
       sessionsExamined++;
       if (session.payment_status !== "paid") continue;
 
-      try {
-        const full = await stripe.checkout.sessions.retrieve(session.id, {
-          expand: ["line_items"],
-        });
-        const hasEarly = (full.line_items?.data ?? []).some(
-          (item) => lineItemPriceId(item) === EARLY_BIRD_PRICE_ID
-        );
-        if (hasEarly) {
-          earlyBirdSold++;
-          log?.("Early bird session counted", { sessionId: session.id });
-          if (earlyBirdSold >= EARLY_BIRD_CAPACITY) {
-            done = true;
-            break;
-          }
-        }
-      } catch (e) {
-        log?.("Skip session retrieve", {
+      let isEarly = isEarlyBirdFromMetadata(session.metadata ?? undefined);
+
+      if (!isEarly) {
+        isEarly = await sessionHasEarlyBirdPrice(stripe, session.id, log);
+      }
+
+      if (isEarly) {
+        earlyBirdSold++;
+        log?.("Early bird sale counted", {
           sessionId: session.id,
-          error: e instanceof Error ? e.message : String(e),
+          source: isEarlyBirdFromMetadata(session.metadata ?? undefined) ? "metadata" : "line_items",
         });
+        if (earlyBirdSold >= EARLY_BIRD_CAPACITY) {
+          done = true;
+          break;
+        }
       }
     }
 
