@@ -24,7 +24,7 @@ const TermsOfService = () => (
               <h2 className="font-headline text-2xl font-bold text-uxsg-ink mb-4">3. Refund Policy</h2>
               <p className="mb-4"><strong>3.1 Full Refunds:</strong> Available up to 14 days before the Event date.</p>
               <p className="mb-4"><strong>3.2 Within 14 Days:</strong> Tickets are non-refundable but can be transferred to another person via email.</p>
-              <p><strong>3.3 Refund Process:</strong> Refund requests must be submitted via email to support@uxsg.co. Refunds will be processed within 5-7 business days.</p>
+              <p><strong>3.3 Refund Process:</strong> Refund requests must be submitted via email to info@uxsupportgroup.com. Refunds will be processed within 5-7 business days.</p>
             </section>
 
             <section>
@@ -121,7 +121,7 @@ const TermsOfService = () => (
                 For questions about these Terms of Service, please contact us at:
               </p>
               <p className="mt-4">
-                Email: support@uxsg.co<br />
+                Email: info@uxsupportgroup.com<br />
                 Organization: UX Singapore
               </p>
             </section>

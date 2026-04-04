@@ -1,9 +1,8 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { Progress } from "@/components/ui/progress";
 import { Accordion, AccordionContent } from "@/components/ui/accordion";
+import Summit2026HeroGraphic from "@/components/Summit2026HeroGraphic";
 import { MembershipAccordionItem, MembershipAccordionTrigger } from "@/components/MembershipAccordion";
 import { HandDrawnHighlight } from "@/components/sketchy/HandDrawnHighlight";
 import { HandDrawnRect } from "@/components/sketchy/HandDrawnRect";
@@ -32,8 +31,10 @@ import {
   XCircle,
 } from "lucide-react";
 
-const DESK_IMAGE =
-  "https://lh3.googleusercontent.com/aida-public/AB6AXuAH-nbaD4vmo7ZomJxp5HMu8fW5zm7VikBFje5LjN8qywQm__JwNIt4O1SvtrH-8mPZ4roeoevCqv_J4z303fsl2_ajQnLVj6Fc7A2R-_e1Ath48QadCYCeWX9qDvnwxRigr52LK7pxp22_yqbK9fQEEn-zXJORge-KpCap-n2S2Vsr0lKx-JXFej_YcgTaqZB8a8zvZNwE83p4ZeJVnTLvCQiDaNwZwyFmyqxNg9ekHe0GADYCwTZO77J3Hoh5SHuHHYRct531s2I";
+const EARLY_BIRD_PRICE_ID = "price_1TIEduEt4aAP5ylPU5RJtO6s";
+const REGULAR_PRICE_ID = "price_1TIEdyEt4aAP5ylPN6ffwF5U";
+const EARLY_BIRD_SEATS = 20;
+
 const SUMMIT_TESTIMONIALS = [
   {
     quote:
@@ -133,6 +134,92 @@ const FAQ_ITEMS: { q: string; a: string }[] = [
 const Summit2026V1 = () => {
   const [formData, setFormData] = useState({ name: "", email: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isEarlyBird, setIsEarlyBird] = useState(true);
+  const [earlyBirdRemaining, setEarlyBirdRemaining] = useState(EARLY_BIRD_SEATS);
+  const [isCheckingAvailability, setIsCheckingAvailability] = useState(true);
+  const [checkoutLoading, setCheckoutLoading] = useState<"early" | "regular" | null>(null);
+
+  const fetchAvailability = useCallback(async () => {
+    try {
+      const { data, error } = await supabase.functions.invoke("check-ticket-availability");
+      if (error || !data) {
+        console.error("[TICKETS] Availability error", error, data);
+        setIsEarlyBird(true);
+        setEarlyBirdRemaining(EARLY_BIRD_SEATS);
+        return;
+      }
+      setIsEarlyBird(Boolean(data.isEarlyBird));
+      setEarlyBirdRemaining(
+        typeof data.earlyBirdRemaining === "number"
+          ? data.earlyBirdRemaining
+          : EARLY_BIRD_SEATS
+      );
+    } catch (e) {
+      console.error("[TICKETS] Availability fetch failed", e);
+      setIsEarlyBird(true);
+      setEarlyBirdRemaining(EARLY_BIRD_SEATS);
+    } finally {
+      setIsCheckingAvailability(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchAvailability();
+    const id = window.setInterval(fetchAvailability, 30_000);
+    return () => window.clearInterval(id);
+  }, [fetchAvailability]);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const checkout = params.get("checkout");
+    if (checkout === "success") {
+      toast({
+        title: "You're in!",
+        description: "Thanks for your purchase. Check your email for your Stripe receipt and event details.",
+      });
+      window.history.replaceState({}, "", "/summit");
+      fetchAvailability();
+    } else if (checkout === "canceled") {
+      toast({
+        title: "Checkout canceled",
+        description: "No payment was completed. You can try again whenever you're ready.",
+      });
+      window.history.replaceState({}, "", "/summit");
+    }
+  }, [fetchAvailability]);
+
+  const startCheckout = async (priceId: string, slot: "early" | "regular") => {
+    setCheckoutLoading(slot);
+    try {
+      const { data, error } = await supabase.functions.invoke("create-checkout", {
+        body: { priceId },
+      });
+      if (error) {
+        console.error("[TICKETS] create-checkout invoke error", error);
+        throw new Error(error.message || "Could not start checkout.");
+      }
+      const url = data && typeof data === "object" && "url" in data ? (data as { url?: string }).url : undefined;
+      const errMsg =
+        data && typeof data === "object" && "error" in data
+          ? String((data as { error?: string }).error)
+          : undefined;
+      if (errMsg || !url) {
+        throw new Error(errMsg || "Checkout is unavailable. Please try again.");
+      }
+      window.location.href = url;
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : "Something went wrong.";
+      toast({
+        title: "Checkout failed",
+        description: message,
+        variant: "destructive",
+      });
+      setCheckoutLoading(null);
+      if (priceId === EARLY_BIRD_PRICE_ID) {
+        fetchAvailability();
+      }
+    }
+  };
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -195,47 +282,65 @@ const Summit2026V1 = () => {
     }
   };
 
-  const ticketSoon = () => {
-    toast({
-      title: "Tickets coming soon",
-      description: "Checkout will open closer to the event. Join the waitlist to get early access.",
-    });
-  };
+  const earlyBirdProgressPct = (earlyBirdRemaining / EARLY_BIRD_SEATS) * 100;
 
   return (
     <main id="main" className="space-y-24 md:space-y-32 pb-20">
-      {/* Hero */}
+      {/* Hero — cyber summit graphic + sketchy body */}
       <section className="max-w-7xl mx-auto px-6 pt-6 sm:pt-8 md:pt-10 py-6 lg:py-8">
         <div className="flex flex-col items-center gap-10 lg:gap-12">
-          <div className="space-y-8 text-center w-full max-w-3xl mx-auto pt-4 md:pt-6">
-            <div className="inline-flex items-center gap-4 px-6 py-2 bg-uxsg-yellow border-b-2 border-uxsg-ink/5 font-body text-xs tracking-widest uppercase">
-              June 18-19, 2026
-              <span className="w-1 h-1 bg-uxsg-ink rounded-full"></span>
-              Online / Global
-            </div>
-            <h1 className="font-bold text-foreground leading-tight">
-              <span className="block text-6xl md:text-7xl">
-                AI<span className="text-gradient">x</span>UX Summit 2026
-              </span>
-              <span className="relative text-gradient inline-block">
-                  Becoming AI Designer
-                  <span className="absolute -bottom-0.5 md:-bottom-1 left-0 right-0 block w-full text-[var(--uxsg-yellow)] pointer-events-none">
-                    <RoughWavyUnderline className="w-full h-3 md:h-4" strokeW={7} expandToBounds />
+          <div className="w-full max-w-5xl mx-auto">
+            <div className="relative w-full overflow-hidden rounded-2xl border-2 border-uxsg-ink/30 bg-black shadow-[4px_4px_0_0_var(--uxsg-ink)] min-h-[min(52vh,420px)] md:min-h-[min(48vh,480px)]">
+              <Summit2026HeroGraphic className="absolute inset-0 w-full h-full object-cover opacity-95" />
+              <div
+                className="absolute inset-0 bg-gradient-to-t from-black via-black/55 to-black/20 pointer-events-none"
+                aria-hidden
+              />
+              <div className="relative z-10 flex flex-col items-center justify-center text-center px-5 sm:px-8 py-14 md:py-20 lg:py-24 min-h-[min(52vh,420px)] md:min-h-[min(48vh,480px)]">
+                <div className="inline-flex items-center gap-3 px-4 py-1.5 mb-8 bg-white/10 backdrop-blur-sm border border-white/20 font-body text-[10px] sm:text-xs tracking-[0.2em] uppercase text-white/90">
+                  June 18-19, 2026
+                  <span className="w-1 h-1 bg-amber-400 rounded-full shrink-0" />
+                  Online / Global
+                </div>
+                <h1 className="font-black font-heading text-white leading-[0.95] tracking-tight">
+                  <span className="block text-4xl sm:text-5xl md:text-6xl lg:text-7xl">
+                    AI
+                    <span className="relative inline-block mx-0.5 sm:mx-1 text-amber-400 drop-shadow-[0_0_28px_rgba(251,191,36,0.95)]">
+                      X
+                      <span
+                        className="absolute inset-0 -z-10 blur-md bg-amber-400/60 rounded-full scale-150"
+                        aria-hidden
+                      />
+                    </span>
+                    UX SUMMIT{" "}
+                    <span className="text-transparent [-webkit-text-stroke:2px_rgb(255_255_255)] sm:[-webkit-text-stroke-width:2.5px] md:[-webkit-text-stroke-width:3px]">
+                      2026
+                    </span>
                   </span>
-              </span>
-            </h1>
+                </h1>
+                <p className="mt-6 font-headline text-2xl sm:text-3xl md:text-4xl text-amber-100/95 relative inline-block">
+                  Becoming AI Designer
+                  <span className="absolute -bottom-1 left-0 right-0 block w-full text-amber-400/90 pointer-events-none">
+                    <RoughWavyUnderline className="w-full h-2.5 sm:h-3 md:h-3.5" strokeW={6} expandToBounds />
+                  </span>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="space-y-8 text-center w-full max-w-3xl mx-auto">
             <p className="font-body text-xl md:text-2xl text-foreground/90 max-w-2xl mx-auto leading-relaxed">
               A virtual, 2-day, deeply hands-on learning experience for UX and product designers navigating the
-              AI shift. <br />No hype. No fluff.
+              AI shift. <br />
+              No hype. No fluff.
             </p>
             <p className="font-body text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              Get{" "}
-              <HandDrawnHighlight>real practice</HandDrawnHighlight> facilitated by a{" "}
+              Get <HandDrawnHighlight>real practice</HandDrawnHighlight> facilitated by a{" "}
               <HandDrawnHighlight>community</HandDrawnHighlight> of builders who care about both{" "}
               <HandDrawnHighlight>AI</HandDrawnHighlight> and{" "}
               <HandDrawnHighlight>human experience</HandDrawnHighlight>.
             </p>
-            <div className="flex flex-col items-center gap-4 pt-4">
+            <div className="flex flex-col items-center gap-4 pt-2">
               <div className="relative inline-flex shrink-0">
                 <button
                   type="button"
@@ -270,7 +375,6 @@ const Summit2026V1 = () => {
               </div>
             </div>
           </div>
-
         </div>
       </section>
 
@@ -372,7 +476,11 @@ const Summit2026V1 = () => {
         <SketchySectionTitle className="mb-6">Get Your Ticket</SketchySectionTitle>
         <div className="flex justify-center mb-10">
           <div className="inline-block p-4 bg-[#ffe24a] border-2 border-uxsg-ink -rotate-1 font-hand text-lg max-w-md text-center">
-            ⚡ Early Bird closes ~June 4–5. Price goes up after.
+            {isCheckingAvailability
+              ? "⚡ Checking early bird availability…"
+              : isEarlyBird
+                ? `⚡ Early bird: only ${earlyBirdRemaining} of ${EARLY_BIRD_SEATS} left at $2.90 — then $29.`
+                : "⚡ Early bird is sold out — regular tickets are $29."}
           </div>
         </div>
 
@@ -392,15 +500,35 @@ const Summit2026V1 = () => {
             <div>
               <h3 className="font-headline text-2xl mb-4 text-uxsg-ink">Early Bird</h3>
               <div className="text-4xl font-black mb-2 text-uxsg-ink">$2.90</div>
-              <p className="font-body text-sm mb-8 opacity-80">Yeah, you read that right. Cheaper than your morning coffee.<br /> <br />Sale closes ~June 4–5.</p>
+              <p className="font-body text-sm mb-4 opacity-80">
+                Yeah, you read that right. Cheaper than your morning coffee.
+              </p>
+              {isEarlyBird && (
+                <div className="mb-6 space-y-2">
+                  <div className="flex justify-between text-xs font-body opacity-90">
+                    <span>Early bird left</span>
+                    <span className="font-bold">
+                      {earlyBirdRemaining}/{EARLY_BIRD_SEATS}
+                    </span>
+                  </div>
+                  <Progress value={earlyBirdProgressPct} className="h-2" />
+                </div>
+              )}
             </div>
             <button
               type="button"
-              onClick={ticketSoon}
-              className="relative flex items-center justify-center w-full py-3 text-base font-body"
+              disabled={!isEarlyBird || isCheckingAvailability || checkoutLoading !== null}
+              onClick={() => startCheckout(EARLY_BIRD_PRICE_ID, "early")}
+              className="relative flex items-center justify-center w-full py-3 text-base font-body disabled:opacity-50 disabled:pointer-events-none"
             >
               <HandDrawnRect fill="#090907" stroke="#090907" strokeWidth={2} />
-              <span className="relative z-10 text-white">Get Ticket</span>
+              <span className="relative z-10 text-white">
+                {checkoutLoading === "early"
+                  ? "Opening checkout…"
+                  : isEarlyBird
+                    ? "Get Early Bird"
+                    : "Sold Out"}
+              </span>
             </button>
           </SketchyTallCard>
           <SketchyTallCard
@@ -418,15 +546,24 @@ const Summit2026V1 = () => {
             <div>
               <h3 className="font-headline text-2xl mb-4 text-uxsg-ink">Regular</h3>
               <div className="text-4xl font-black mb-2 text-uxsg-ink">$29</div>
-              <p className="font-body text-sm mb-8 opacity-80">Standard access after June 4–5.</p>
+              <p className="font-body text-sm mb-8 opacity-80">
+                Standard access once early bird ({EARLY_BIRD_SEATS} tickets) is gone.
+              </p>
             </div>
             <button
               type="button"
-              onClick={ticketSoon}
-              className="relative flex items-center justify-center w-full py-3 text-base font-body"
+              disabled={isCheckingAvailability || checkoutLoading !== null || (isEarlyBird && earlyBirdRemaining > 0)}
+              onClick={() => startCheckout(REGULAR_PRICE_ID, "regular")}
+              className="relative flex items-center justify-center w-full py-3 text-base font-body disabled:opacity-50 disabled:pointer-events-none"
             >
               <HandDrawnRect fill="#090907" stroke="#090907" strokeWidth={2} />
-              <span className="relative z-10 text-white">Sales Not Open Yet</span>
+              <span className="relative z-10 text-white">
+                {checkoutLoading === "regular"
+                  ? "Opening checkout…"
+                  : isEarlyBird && earlyBirdRemaining > 0
+                    ? "Available after early bird"
+                    : "Get Regular Ticket"}
+              </span>
             </button>
           </SketchyTallCard>
           <SketchyTallCard
@@ -446,14 +583,15 @@ const Summit2026V1 = () => {
               <div className="text-4xl font-black mb-2 text-uxsg-ink">Free</div>
               <p className="font-body text-sm mb-8 opacity-80">Included in your Skool membership.</p>
             </div>
-            <button
-              type="button"
-              onClick={ticketSoon}
+            <a
+              href="https://www.skool.com/ux-support-group-5388/about"
+              target="_blank"
+              rel="noopener noreferrer"
               className="relative flex items-center justify-center w-full py-3 text-base font-body"
             >
               <HandDrawnRect fill="#090907" stroke="#090907" strokeWidth={2} />
-              <span className="relative z-10 text-white">Redeem Free Ticket</span>
-            </button>
+              <span className="relative z-10 text-white">Redeem via Skool</span>
+            </a>
           </SketchyTallCard>
         </div>
         </div>

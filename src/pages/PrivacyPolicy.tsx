@@ -117,7 +117,7 @@ const PrivacyPolicy = () => (
             <section>
               <h2 className="font-headline text-2xl font-bold text-uxsg-ink mb-4">11. Contact Us</h2>
               <p>
-                If you have questions about this privacy policy or how we handle your information, please contact us at privacy@uxsg.co
+                If you have questions about this privacy policy or how we handle your information, please contact us at info@uxsupportgroup.com
               </p>
             </section>
       </div>

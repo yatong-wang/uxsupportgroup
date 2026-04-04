@@ -81,7 +81,7 @@ const CodeOfConduct = () => (
               </p>
               <ul className="list-disc pl-6 space-y-2">
                 <li><strong>During the event:</strong> Use the "Report" feature in Zoom or contact an organizer directly</li>
-                <li><strong>Email:</strong> conduct@uxsg.co</li>
+                <li><strong>Email:</strong> info@uxsupportgroup.com</li>
                 <li><strong>What to include:</strong> Date, time, description of incident, any screenshots or evidence, and names of individuals involved (if comfortable sharing)</li>
               </ul>
               <p className="mt-4">
@@ -149,7 +149,7 @@ const CodeOfConduct = () => (
             <section>
               <h2 className="font-headline text-2xl font-bold text-uxsg-ink mb-4">Questions</h2>
               <p>
-                If you have questions about this Code of Conduct or need clarification on any points, please contact us at conduct@uxsg.co
+                If you have questions about this Code of Conduct or need clarification on any points, please contact us at info@uxsupportgroup.com
               </p>
             </section>
 
