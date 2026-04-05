@@ -5,7 +5,6 @@ import { Accordion, AccordionContent } from "@/components/ui/accordion";
 import Summit2026HeroGraphic from "@/components/Summit2026HeroGraphic";
 import { MembershipAccordionItem, MembershipAccordionTrigger } from "@/components/MembershipAccordion";
 import { HandDrawnHighlight } from "@/components/sketchy/HandDrawnHighlight";
-import { HandDrawnRect } from "@/components/sketchy/HandDrawnRect";
 import { SketchyHandDrawnInput } from "@/components/sketchy/SketchyHandDrawnInput";
 import { SketchyRectButton } from "@/components/sketchy/SketchyCTA";
 import { SketchyIconButton } from "@/components/sketchy/SketchyIconButton";
@@ -34,6 +33,16 @@ function scrollPricingBelowStickyHeader() {
   const y =
     el.getBoundingClientRect().top + window.scrollY - SUMMIT_STICKY_HEADER_OFFSET_PX;
   window.scrollTo({ top: Math.max(0, y), behavior: "smooth" });
+}
+
+function describeInvokeError(err: unknown): string {
+  if (!err || typeof err !== "object") return "Something went wrong.";
+  const e = err as { name?: string; message?: string };
+  const msg = e.message ?? "";
+  if (e.name === "FunctionsFetchError" || msg.includes("Failed to send a request to the Edge Function")) {
+    return "Checkout could not reach the server. If this keeps happening, email info@uxsupportgroup.com.";
+  }
+  return msg.trim() || "Something went wrong.";
 }
 
 const SUMMIT_TESTIMONIALS = [
@@ -255,7 +264,7 @@ const Summit2026V1 = () => {
       });
       if (error) {
         console.error("[TICKETS] create-checkout invoke error", error);
-        throw new Error(error.message || "Could not start checkout.");
+        throw new Error(describeInvokeError(error));
       }
       const url =
         data && typeof data === "object" && "url" in data
@@ -353,55 +362,58 @@ const Summit2026V1 = () => {
   const earlyBirdProgressPct = (earlyBirdRemaining / EARLY_BIRD_SEATS) * 100;
 
   return (
-    <main id="main" className="space-y-24 md:space-y-32 pb-20">
-      {/* Hero — cyber summit graphic + sketchy body */}
-      <section className="max-w-7xl mx-auto px-6 pt-6 sm:pt-8 md:pt-10 py-6 lg:py-8">
-        <div className="flex flex-col items-center gap-10 lg:gap-12">
-          <div className="w-full max-w-5xl mx-auto">
-            <div className="relative w-full overflow-hidden rounded-2xl border-2 border-uxsg-ink/30 bg-black shadow-[4px_4px_0_0_var(--uxsg-ink)] min-h-[min(52vh,420px)] md:min-h-[min(48vh,480px)]">
-              <Summit2026HeroGraphic className="absolute inset-0 w-full h-full object-cover opacity-95" />
-              <div
-                className="absolute inset-0 bg-gradient-to-t from-black via-black/55 to-black/20 pointer-events-none"
-                aria-hidden
-              />
-              <div className="relative z-10 flex flex-col items-center justify-center text-center px-5 sm:px-8 py-14 md:py-20 lg:py-24 min-h-[min(52vh,420px)] md:min-h-[min(48vh,480px)]">
-                <div className="inline-flex items-center gap-3 px-4 py-1.5 mb-8 bg-white/10 backdrop-blur-sm border border-white/20 font-body text-[10px] sm:text-xs tracking-[0.2em] uppercase text-white/90">
-                  June 18-19, 2026 (EDT)
-                  <span className="w-1 h-1 bg-amber-400 rounded-full shrink-0" />
-                  Online / Global
-                </div>
-                <h1 className="font-black font-heading text-white leading-[0.95] tracking-tight">
-                  <span className="block text-4xl sm:text-5xl md:text-6xl lg:text-7xl">
-                    AI
-                    <span className="relative inline-block mx-0.5 sm:mx-1 text-amber-400 drop-shadow-[0_0_28px_rgba(251,191,36,0.95)]">
-                      X
-                      <span
-                        className="absolute inset-0 -z-10 blur-md bg-amber-400/60 rounded-full scale-150"
-                        aria-hidden
-                      />
-                    </span>
-                    UX SUMMIT{" "}
-                    <span className="text-transparent [-webkit-text-stroke:2px_rgb(255_255_255)] sm:[-webkit-text-stroke-width:2.5px] md:[-webkit-text-stroke-width:3px]">
-                      2026
-                    </span>
-                  </span>
-                </h1>
-                <p className="mt-6 font-headline text-2xl sm:text-3xl md:text-4xl text-amber-100/95 relative inline-block">
-                  Becoming AI Designer
-                  <span className="absolute -bottom-1 left-0 right-0 block w-full text-amber-400/90 pointer-events-none">
-                    <RoughWavyUnderline className="w-full h-2.5 sm:h-3 md:h-3.5" strokeW={6} expandToBounds />
-                  </span>
-                </p>
-              </div>
+    <main id="main" className="pb-20">
+      {/* Full-viewport-width hero. Swap <Summit2026HeroGraphic /> for <img src="/your-banner.webp" className="absolute inset-0 h-full w-full object-cover" alt="..." /> to use a static file in public/. */}
+      <section
+        className="relative w-screen max-w-[100vw] left-1/2 -translate-x-1/2 pt-6 sm:pt-8 md:pt-10"
+        aria-label="AIxUX Summit 2026"
+      >
+        <div className="relative w-full overflow-hidden bg-black border-y border-uxsg-ink/25 shadow-[0_4px_0_0_var(--uxsg-ink)] min-h-[min(42vw,240px)] sm:min-h-[min(36vw,320px)] md:min-h-[min(32vw,400px)] lg:min-h-[min(28vw,480px)]">
+          <Summit2026HeroGraphic className="absolute inset-0 h-full w-full min-h-full" />
+          <div
+            className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/45 to-black/15 pointer-events-none"
+            aria-hidden
+          />
+          <div className="relative z-10 flex min-h-[inherit] flex-col items-center justify-center px-4 py-12 sm:px-8 sm:py-16 md:py-20 text-center">
+            <div className="mb-6 inline-flex items-center gap-3 border border-white/20 bg-white/10 px-4 py-1.5 font-body text-[10px] uppercase tracking-[0.2em] text-white/90 backdrop-blur-sm sm:text-xs">
+              June 18-19, 2026 (EDT)
+              <span className="h-1 w-1 shrink-0 rounded-full bg-[#facc15]" />
+              Online / Global
             </div>
+            <h1 className="font-heading font-black leading-[0.95] tracking-tight text-white">
+              <span className="block text-[clamp(1.75rem,6vw,4.5rem)]">
+                <span className="text-white">AI</span>
+                <span className="relative mx-0.5 inline-block text-[#facc15] drop-shadow-[0_0_24px_rgba(250,204,21,0.9)] sm:mx-1">
+                  X
+                  <span
+                    className="absolute inset-0 -z-10 scale-150 rounded-full bg-[#facc15]/55 blur-md"
+                    aria-hidden
+                  />
+                </span>
+                <span className="text-white">UX SUMMIT </span>
+                <span className="text-transparent [-webkit-text-stroke:2px_rgb(255_255_255)] sm:[-webkit-text-stroke-width:2.5px] md:[-webkit-text-stroke-width:3px]">
+                  2026
+                </span>
+              </span>
+            </h1>
+            <p className="font-headline relative mt-5 inline-block text-xl text-amber-100/95 sm:text-2xl md:text-3xl lg:text-4xl">
+              Becoming AI Designer
+              <span className="pointer-events-none absolute -bottom-1 left-0 right-0 block w-full text-amber-400/90">
+                <RoughWavyUnderline className="h-2.5 w-full sm:h-3 md:h-3.5" strokeW={6} expandToBounds />
+              </span>
+            </p>
           </div>
+        </div>
+      </section>
 
-          <div className="space-y-8 text-center w-full max-w-3xl mx-auto">
-            <p className="font-body text-xl md:text-2xl text-foreground/90 max-w-2xl mx-auto leading-relaxed">
+      <div className="space-y-24 md:space-y-32">
+      <section className="px-6 py-8 text-center lg:py-10">
+        <div className="mx-auto max-w-3xl space-y-8">
+            <p className="font-body text-xl leading-relaxed text-foreground/90 md:text-2xl">
               2 half days. Real builds. <br />
               For future-forward designers navigating the AI shift.
             </p>
-            <p className="font-body text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+            <p className="font-body text-lg leading-relaxed text-muted-foreground md:text-xl">
               Get <HandDrawnHighlight>real practice</HandDrawnHighlight> facilitated by a{" "}
               <HandDrawnHighlight>community</HandDrawnHighlight> of builders who care about both{" "}
               <HandDrawnHighlight>AI</HandDrawnHighlight> and{" "}
@@ -413,7 +425,7 @@ const Summit2026V1 = () => {
                   type="button"
                   onClick={scrollPricingBelowStickyHeader}
                   aria-describedby="hero-limited-seats-badge"
-                  className="inline-flex items-center justify-center relative bg-[#e67e22] text-white px-10 py-5 rounded-full text-xl font-extrabold font-heading border-[1.5px] border-uxsg-ink shadow-[1px_1px_0_0_var(--uxsg-ink),-1px_2px_0_0_var(--uxsg-ink)] hover:scale-105 active:scale-95 transition-all"
+                  className="relative inline-flex items-center justify-center rounded-full border-[1.5px] border-uxsg-ink bg-[#e67e22] px-10 py-5 font-heading text-xl font-extrabold text-white shadow-[1px_1px_0_0_var(--uxsg-ink),-1px_2px_0_0_var(--uxsg-ink)] transition-all hover:scale-105 active:scale-95"
                 >
                   Save My Spot
                 </button>
@@ -421,25 +433,24 @@ const Summit2026V1 = () => {
                   id="hero-limited-seats-badge"
                   variant="white"
                   rotation="subtle"
-                  className="pointer-events-none absolute -top-2.5 -right-2 z-20 shadow-sm"
+                  className="pointer-events-none absolute -right-2 -top-2.5 z-20 shadow-sm"
                 >
                   Limited seats
                 </SketchyBadge>
               </div>
-              <div className="font-hand text-xl text-muted-foreground inline-flex max-w-full flex-row flex-wrap items-center justify-center gap-x-2 gap-y-0.5 text-center sm:flex-nowrap">
-                <span className="text-3xl shrink-0 leading-none" aria-hidden>
+              <div className="font-hand inline-flex max-w-full flex-row flex-wrap items-center justify-center gap-x-2 gap-y-0.5 text-center text-xl text-muted-foreground sm:flex-nowrap">
+                <span className="shrink-0 text-3xl leading-none" aria-hidden>
                   ✨
                 </span>
                 <span>10+ tools covered. Attendees from 3 continents.</span>
                 <Link
                   to="/summit-2025"
-                  className="font-hand text-xl text-muted-foreground underline underline-offset-6 decoration-uxsg-ink/40 hover:text-foreground hover:decoration-uxsg-ink transition-colors"
+                  className="font-hand text-xl text-muted-foreground underline decoration-uxsg-ink/40 underline-offset-6 transition-colors hover:text-foreground hover:decoration-uxsg-ink"
                 >
                   See last year →
                 </Link>
               </div>
             </div>
-          </div>
         </div>
       </section>
 
@@ -698,35 +709,6 @@ const Summit2026V1 = () => {
                     : "Get Regular Ticket"}
               </SketchyRectButton>
             </SketchyTallCard>
-            <SketchyTallCard
-              variant="light"
-              fill={CARD_FILL}
-              strokeWidth={1.5}
-              paddingClassName="p-8"
-              tapes={[
-                { position: "topLeft", size: "sm" },
-                { position: "bottomRight", size: "sm" },
-              ]}
-              className="h-full md:col-span-2"
-              innerClassName="flex flex-col justify-between min-h-[300px] md:flex-row md:items-center md:gap-8"
-            >
-              <div className="md:flex-1">
-                <h3 className="font-headline text-2xl mb-4 text-uxsg-ink">UXSG Members</h3>
-                <div className="text-4xl font-black mb-2 text-uxsg-ink">Free</div>
-                <p className="font-body text-sm mb-0 md:mb-0 opacity-80">
-                  Included in your Skool membership.
-                </p>
-              </div>
-              <a
-                href="https://www.skool.com/ux-support-group-5388/about"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="relative flex items-center justify-center w-full md:w-auto md:min-w-[200px] py-3 px-4 text-base font-body mt-4 md:mt-0"
-              >
-                <HandDrawnRect fill="#090907" stroke="#090907" strokeWidth={2} />
-                <span className="relative z-10 text-white">Redeem via Skool</span>
-              </a>
-            </SketchyTallCard>
           </div>
         </div>
       </section>
@@ -781,6 +763,7 @@ const Summit2026V1 = () => {
           ))}
         </Accordion>
       </section>
+      </div>
     </main>
   );
 };
