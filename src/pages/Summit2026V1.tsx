@@ -198,6 +198,14 @@ const Summit2026V1 = () => {
         setEarlyBirdRemaining(EARLY_BIRD_SEATS);
         return;
       }
+      if (import.meta.env.DEV && data && typeof data === "object") {
+        console.info("[TICKETS] Availability", {
+          earlyBirdSold: (data as { earlyBirdSold?: number }).earlyBirdSold,
+          earlyBirdRemaining: (data as { earlyBirdRemaining?: number }).earlyBirdRemaining,
+          truncated: (data as { truncated?: boolean }).truncated,
+          sessionsExamined: (data as { sessionsExamined?: number }).sessionsExamined,
+        });
+      }
       setIsEarlyBird(Boolean(data.isEarlyBird));
       setEarlyBirdRemaining(
         typeof data.earlyBirdRemaining === "number"

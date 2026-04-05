@@ -92,6 +92,7 @@ serve(async (req) => {
       metadata: {
         price_id: priceId,
         ticket_type: priceId === EARLY_BIRD_PRICE_ID ? "early_bird" : "regular",
+        product: "aixux_summit_2026",
       },
       success_url: `${base}/summit?checkout=success`,
       cancel_url: `${base}/summit?checkout=canceled`,
