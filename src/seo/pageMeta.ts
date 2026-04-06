@@ -34,7 +34,7 @@ const EXACT: Record<string, PageMeta> = {
   "/index-v6": { title: formatPageTitle("Home (Index v6)") },
   "/index-v7": { title: formatPageTitle("Home (Index v7)") },
   "/summit": {
-    title: formatPageTitle("AIxUX Summit 2026: Designing AI Agents"),
+    title: formatPageTitle("AIxUX Summit 2026: Agentic Designer"),
     description: SUMMIT_2026_DESCRIPTION,
   },
   "/summit-2025": { title: formatPageTitle("AIxUX Summit 2025") },

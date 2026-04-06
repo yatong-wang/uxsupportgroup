@@ -25,7 +25,7 @@
 
 ## Agenda
 
-**Theme: Becoming AI Designer**
+**Theme: Agentic Designer**
 
 ### DAY 1 — "The Shift"
 - 9:00 AM — Welcome
