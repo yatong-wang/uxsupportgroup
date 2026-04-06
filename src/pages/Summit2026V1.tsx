@@ -406,7 +406,7 @@ const Summit2026V1 = () => {
               </span>
             </h1>
             <p className="font-headline relative mt-5 inline-block text-xl text-amber-100/95 sm:text-2xl md:text-3xl lg:text-4xl">
-              Becoming AI Designer
+              Agentic Designer
               <span className="pointer-events-none absolute -bottom-1 left-0 right-0 block w-full text-amber-400/90">
                 <RoughWavyUnderline className="h-2.5 w-full sm:h-3 md:h-3.5" strokeW={6} expandToBounds />
               </span>
