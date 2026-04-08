@@ -203,7 +203,7 @@ const FAQ_ITEMS: { q: string; a: string }[] = [
   },
   {
     q: "What is the refund policy?",
-    a: "We offer a 100% refund if you cancel up to 14 days before the event. After that, your ticket can be transferred to someone else. Contact us at hello@uxsupportgroup.com for any changes.",
+    a: "We offer a 100% refund if you cancel up to 14 days before the event. After that, your ticket can be transferred to someone else. Contact us at info@uxsupportgroup.com for any changes.",
   },
   {
     q: "Is this event virtual or in-person?",
@@ -211,7 +211,7 @@ const FAQ_ITEMS: { q: string; a: string }[] = [
   },
   {
     q: "Can I bring my team?",
-    a: "Yes! If you're interested in group tickets, reach out to us at hello@uxsupportgroup.com and we'll work out the details.",
+    a: "Yes! If you're interested in group tickets, reach out to us at info@uxsupportgroup.com and we'll work out the details.",
   },
 ];
 
