@@ -189,6 +189,30 @@ const FAQ_ITEMS: { q: string; a: string }[] = [
     q: "Which platform will be used?",
     a: "The summit will be hosted on Zoom. Attendees will receive their unique Zoom link and a quick-start guide via email before the event.",
   },
+  {
+    q: "Do I need prior AI experience?",
+    a: "You should have a working familiarity with AI tools, but you don't need to be an expert. This summit is designed for UX and product designers who are actively exploring how AI fits into their practice — not a beginner-level introduction.",
+  },
+  {
+    q: "Who are the speakers?",
+    a: "Our sessions are led by 6-8 practitioners who are actively shipping AI-powered products — not professional keynote speakers. Check the agenda section above for confirmed facilitators and session topics.",
+  },
+  {
+    q: "Will there be networking opportunities?",
+    a: "Absolutely. Day 2 includes a dedicated AI-Powered Networking session and collaborative activities designed to help you make meaningful connections with fellow designers and product builders.",
+  },
+  {
+    q: "What is the refund policy?",
+    a: "We offer a 100% refund if you cancel up to 14 days before the event. After that, your ticket can be transferred to someone else. Contact us at hello@uxsupportgroup.com for any changes.",
+  },
+  {
+    q: "Is this event virtual or in-person?",
+    a: "The summit is fully virtual — attend from anywhere in the world. The two half-day format is designed to minimize screen fatigue while maximizing engagement and interaction.",
+  },
+  {
+    q: "Can I bring my team?",
+    a: "Yes! If you're interested in group tickets, reach out to us at hello@uxsupportgroup.com and we'll work out the details.",
+  },
 ];
 
 const Summit2026V1 = () => {
