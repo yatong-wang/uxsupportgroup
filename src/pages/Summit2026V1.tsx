@@ -100,7 +100,6 @@ const AGENDA_DAY1: AgendaRow[] = [
   {
     time: "11:00 AM",
     title: "Why Executives Don't Care About Your Design Work (And How to Fix It)",
-    facilitator: "Alexis Brochu",
   },
   {
     time: "12:00 PM",
@@ -123,13 +122,11 @@ const AGENDA_DAY2: AgendaRow[] = [
   {
     time: "09:15 AM",
     title: "Live Design Challenge: Agentic UX in Action",
-    facilitator: "3–5 Designers",
   },
   { time: "10:15 AM", title: "Break (15 min)" },
   {
     time: "10:30 AM",
     title: "Learning to Learn with AI Agents",
-    facilitator: "Volkan Unsal",
   },
   {
     time: "11:30 AM",
@@ -140,12 +137,10 @@ const AGENDA_DAY2: AgendaRow[] = [
   {
     time: "12:20 PM",
     title: "AI-Powered Networking",
-    facilitator: "Caitlyn Brady",
   },
   {
     time: "12:50 PM",
     title: "Break the AI — Chaos Challenge",
-    facilitator: "Carissa Sinclair",
   },
   {
     time: "01:35 PM",
