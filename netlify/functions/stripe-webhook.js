@@ -44,8 +44,24 @@ export const handler = async (event) => {
     return { statusCode: 400, body: 'No email in session' };
   }
 
-  // Early Bird = $2.90 (290 cents), Regular = $29.00 (2900 cents)
-  const ticketType = amountTotal <= 290 ? 'Early Bird' : 'Regular';
+  // Only summit tickets at exact prices: $2.90 (290¢) and $29.00 (2900¢)
+  const EARLY_BIRD_CENTS = 290;
+  const REGULAR_CENTS = 2900;
+  let ticketType;
+  if (amountTotal === EARLY_BIRD_CENTS) {
+    ticketType = 'Early Bird';
+  } else if (amountTotal === REGULAR_CENTS) {
+    ticketType = 'Regular';
+  } else {
+    console.log(
+      `Ignoring checkout: amount_total=${amountTotal} (only ${EARLY_BIRD_CENTS} or ${REGULAR_CENTS} cents sync to Brevo)`
+    );
+    return {
+      statusCode: 200,
+      body: 'Event ignored: not a summit ticket price',
+    };
+  }
+
   const firstName = name ? name.split(' ')[0] : '';
   const lastName = name ? name.split(' ').slice(1).join(' ') : '';
 
