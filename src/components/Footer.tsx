@@ -62,7 +62,7 @@ const Footer = ({ variant }: { variant?: 'default' | 'sketchy' }) => {
             
             <ul className="space-y-2 text-background/80">
               <li><Link to="/summit-2025" className="hover:text-primary transition-colors">AIxUX Summit 2025</Link></li>
-              <li><PlaceholderPageLink to="/about" className="hover:text-primary transition-colors">About</PlaceholderPageLink></li>
+              <li><Link to="/about" className="hover:text-primary transition-colors">About</Link></li>
               <li><Link to="/sponsor" className="hover:text-primary transition-colors">Become a Sponsor</Link></li>
               <li><PlaceholderPageLink to="/partner" className="hover:text-primary transition-colors">Partner Inquiry</PlaceholderPageLink></li>
               <li><PlaceholderPageLink to="/media-kit" className="hover:text-primary transition-colors">Media Kit</PlaceholderPageLink></li>

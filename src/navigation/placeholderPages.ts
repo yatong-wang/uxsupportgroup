@@ -1,5 +1,5 @@
 /** Routes that currently render only a “Coming Soon” placeholder — keep in sync with those page components. */
-export const PLACEHOLDER_PAGE_PATHS = ["/about", "/media-kit", "/partner"] as const;
+export const PLACEHOLDER_PAGE_PATHS = ["/media-kit", "/partner"] as const;
 
 export type PlaceholderPagePath = (typeof PLACEHOLDER_PAGE_PATHS)[number];
 

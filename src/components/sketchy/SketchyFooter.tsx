@@ -59,9 +59,9 @@ export const SketchyFooter = () => {
             <FooterColumnHeading id="footer-about-heading">About</FooterColumnHeading>
             <ul className="flex flex-col gap-2 items-center md:items-start">
               <li>
-                <PlaceholderPageLink to="/about" className={FOOTER_NAV_LINK_CLASS}>
+                <Link to="/about" className={FOOTER_NAV_LINK_CLASS}>
                   About
-                </PlaceholderPageLink>
+                </Link>
               </li>
               <li>
                 <Link to="/contact" className={FOOTER_NAV_LINK_CLASS}>

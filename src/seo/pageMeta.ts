@@ -38,7 +38,11 @@ const EXACT: Record<string, PageMeta> = {
     description: SUMMIT_2026_DESCRIPTION,
   },
   "/summit-2025": { title: formatPageTitle("AIxUX Summit 2025") },
-  "/about": { title: formatPageTitle("About") },
+  "/about": {
+    title: formatPageTitle("About UX Support Group"),
+    description:
+      "UXSG is a playground for curious UX and product designers — active exploration, permission to play, and human-first learning. Rooted in NYC, 9000+ members nationwide.",
+  },
   "/contact": { title: formatPageTitle("Contact") },
   "/membership": { title: formatPageTitle("Membership") },
   "/sponsor": { title: formatPageTitle("Sponsor") },
