@@ -2,10 +2,18 @@ export const EARLY_BIRD_PRICE_ID = "price_1TIEduEt4aAP5ylPU5RJtO6s";
 export const REGULAR_PRICE_ID = "price_1TIEdyEt4aAP5ylPN6ffwF5U";
 export const EARLY_BIRD_CAPACITY = 20;
 
+type SessionLineItems = {
+  data?: Array<{ price?: unknown }>;
+  has_more?: boolean;
+};
+
 type SessionListItem = {
   id: string;
   payment_status: string;
+  status?: string;
   metadata?: Record<string, string> | null;
+  /** Present when listing with `expand: ["data.line_items"]`. */
+  line_items?: SessionLineItems;
 };
 
 type StripeForEarlyBird = {
@@ -41,6 +49,21 @@ function isEarlyBirdFromMetadata(meta: Record<string, string> | null | undefined
   return false;
 }
 
+/**
+ * Uses expanded `line_items` from list when possible (one round-trip per page).
+ * Returns null when expanded data is missing or truncated (`has_more`), so callers
+ * can fall back to `listLineItems`.
+ */
+function earlyBirdFromExpandedLineItems(
+  lineItems: SessionLineItems | undefined
+): boolean | null {
+  if (!lineItems?.data) return null;
+  const hit = lineItems.data.some((item) => lineItemPriceId(item) === EARLY_BIRD_PRICE_ID);
+  if (hit) return true;
+  if (lineItems.has_more) return null;
+  return false;
+}
+
 async function sessionHasEarlyBirdPrice(
   stripe: StripeForEarlyBird,
   sessionId: string,
@@ -66,7 +89,8 @@ export type EarlyBirdCountResult = {
 
 /**
  * Count paid Checkout sessions for early-bird tickets.
- * Prefer session metadata (set by create-checkout); fall back to listLineItems (reliable vs expand).
+ * Prefer session metadata (set by create-checkout); otherwise use line items expanded on each list page
+ * (avoids one Stripe round-trip per session). Falls back to listLineItems when expansion is incomplete.
  */
 export async function countPaidEarlyBirdSales(
   stripe: StripeForEarlyBird,
@@ -90,7 +114,11 @@ export async function countPaidEarlyBirdSales(
   let done = false;
 
   while (sessionsExamined < maxSessions && !done) {
-    const params: Record<string, unknown> = { limit: 100 };
+    const params: Record<string, unknown> = {
+      limit: 100,
+      status: "complete",
+      expand: ["data.line_items"],
+    };
     if (startingAfter) params.starting_after = startingAfter;
     if (createdGte != null && !Number.isNaN(createdGte)) {
       params.created = { gte: createdGte };
@@ -103,17 +131,26 @@ export async function countPaidEarlyBirdSales(
       sessionsExamined++;
       if (session.payment_status !== "paid") continue;
 
-      let isEarly = isEarlyBirdFromMetadata(session.metadata ?? undefined);
+      const fromMeta = isEarlyBirdFromMetadata(session.metadata ?? undefined);
+      let isEarly = fromMeta;
+      let lineItemSource: "expanded" | "fetched" | undefined;
 
       if (!isEarly) {
-        isEarly = await sessionHasEarlyBirdPrice(stripe, session.id, log);
+        const fromExpand = earlyBirdFromExpandedLineItems(session.line_items);
+        if (fromExpand === null) {
+          isEarly = await sessionHasEarlyBirdPrice(stripe, session.id, log);
+          lineItemSource = "fetched";
+        } else {
+          isEarly = fromExpand;
+          lineItemSource = "expanded";
+        }
       }
 
       if (isEarly) {
         earlyBirdSold++;
         log?.("Early bird sale counted", {
           sessionId: session.id,
-          source: isEarlyBirdFromMetadata(session.metadata ?? undefined) ? "metadata" : "line_items",
+          source: fromMeta ? "metadata" : lineItemSource === "fetched" ? "line_items" : "line_items_expanded",
         });
         if (earlyBirdSold >= EARLY_BIRD_CAPACITY) {
           done = true;
