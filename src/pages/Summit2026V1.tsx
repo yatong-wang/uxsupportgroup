@@ -83,69 +83,70 @@ type AgendaRow = { time: string; title: string; facilitator?: string };
 const AGENDA_DAY1: AgendaRow[] = [
   {
     time: "09:00 AM",
-    title: "Welcome & Framing: What is Agentic UX?",
-    facilitator: "Suyen Stevenson",
+    title: "Welcome",
+    facilitator: "Suyen",
   },
   {
     time: "09:15 AM",
-    title: "Keynote: The Agentic UX Era",
-    facilitator: "Danny Setiawan",
+    title: "Keynote: Designer's New Mandate",
+    facilitator: "Danny",
   },
   {
     time: "10:00 AM",
-    title: "Express Yourself with AI",
-    facilitator: "Silvia Balu",
+    title:
+      "Create Your Summit Agent (build a simple agent you'll use/refine throughout the summit)",
+    facilitator: "Danny",
   },
-  { time: "10:45 AM", title: "Break (15 min)" },
+  { time: "10:45 AM", title: "Break" },
   {
     time: "11:00 AM",
-    title: "Why Executives Don't Care About Your Design Work (And How to Fix It)",
+    title: "Trust, Transparency & Control",
+    facilitator: "Silvia",
   },
   {
     time: "12:00 PM",
-    title: "Community AMA — Day 1 Themes",
-    facilitator: "Suyen Stevenson",
+    title: "Multimodal Futures",
+    facilitator: "Corey",
   },
   {
-    time: "12:30 PM",
-    title: "Closing Day 1 & Preview of Day 2",
-    facilitator: "Danny Setiawan",
+    time: "12:45 PM",
+    title: "Close & Day 2 preview",
+    facilitator: "Suyen/Danny",
   },
 ];
 
 const AGENDA_DAY2: AgendaRow[] = [
   {
     time: "09:00 AM",
-    title: "Welcome Back & Day 2 Framing",
-    facilitator: "Suyen Stevenson",
+    title: "Welcome back",
+    facilitator: "Suyen",
   },
   {
     time: "09:15 AM",
-    title: "TBD",
+    title: "Orchestrating Complexity",
+    facilitator: "Volkan",
   },
-  { time: "10:15 AM", title: "Break (15 min)" },
+  { time: "10:15 AM", title: "Break" },
   {
     time: "10:30 AM",
-    title: "Learning to Learn with AI Agents",
+    title: "Building Your Process",
+    facilitator: "Suyen",
   },
   {
     time: "11:30 AM",
-    title: "AI Learning & Development Roadmap",
-    facilitator: "Renata Rocha",
+    title: "Your Path Forward",
+    facilitator: "Renata",
   },
-  { time: "12:05 PM", title: "Break (15 min)" },
+  { time: "12:15 PM", title: "Break" },
   {
-    time: "12:20 PM",
-    title: "AI-Powered Networking",
-  },
-  {
-    time: "12:50 PM",
-    title: "TBD",
+    time: "12:30 PM",
+    title: "Design Your AI Networking Agent (teams refine + collaborate with other agents)",
+    facilitator: "Alexis",
   },
   {
     time: "01:35 PM",
-    title: "Closing, Next Steps & Community CTA",
-    facilitator: "Suyen Stevenson + Danny Setiawan",
+    title: "Close",
+    facilitator: "Suyen/Danny",
   },
 ];
 
@@ -194,7 +195,7 @@ const FAQ_ITEMS: { q: string; a: string }[] = [
   },
   {
     q: "Will there be networking opportunities?",
-    a: "Absolutely. Day 2 includes a dedicated AI-Powered Networking session and collaborative activities designed to help you make meaningful connections with fellow designers and product builders.",
+    a: "Absolutely. Day 2 includes a hands-on session to design your AI networking agent—teams refine their agents and collaborate with others—so you leave with something practical and new connections with fellow designers and product builders.",
   },
   {
     q: "What is the refund policy?",
@@ -530,8 +531,10 @@ const Summit2026V1 = () => {
           The Agenda
         </SketchySectionTitle>
         <p className="font-body text-lg text-center text-foreground/90 mb-16 max-w-2xl mx-auto">
-          Theme:{" "}
-          <HandDrawnHighlight className="-rotate-[0.35deg]">Agentic UX</HandDrawnHighlight>
+          Day 1 —{" "}
+          <HandDrawnHighlight className="-rotate-[0.35deg]">The Shift</HandDrawnHighlight>
+          <span aria-hidden> · </span>
+          Day 2 — <HandDrawnHighlight className="rotate-[0.25deg]">The Practice</HandDrawnHighlight>
         </p>
         <p className="mt-0 mb-4 text-left font-hand text-xl text-muted-foreground">
           *All times are in UTC-4 (Eastern Daylight Time).
@@ -540,8 +543,8 @@ const Summit2026V1 = () => {
         <div className="grid md:grid-cols-2 gap-12">
           {(
             [
-              { day: "Day 1 - June 18 (Thursday)", theme: "The Agentic Shift", rows: AGENDA_DAY1 },
-              { day: "Day 2 -June 19 (Friday)", theme: "Build & Ship", rows: AGENDA_DAY2 },
+              { day: "Day 1 - June 18 (Thursday)", theme: "The Shift", rows: AGENDA_DAY1 },
+              { day: "Day 2 -June 19 (Friday)", theme: "The Practice", rows: AGENDA_DAY2 },
             ] as const
           ).map(({ day, theme, rows }) => (
             <div key={day} className="summit-notebook-sheet p-8 pl-14 relative">
