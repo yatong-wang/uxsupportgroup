@@ -105,11 +105,15 @@ const AGENDA_DAY1: AgendaRow[] = [
   },
   {
     time: "12:00 PM",
+    title: "TBD",
+  },
+  {
+    time: "12:45 PM",
     title: "Multimodal Futures",
     facilitator: "Corey",
   },
   {
-    time: "12:45 PM",
+    time: "01:30 PM",
     title: "Close & Day 2 preview",
     facilitator: "Suyen/Danny",
   },
@@ -137,14 +141,17 @@ const AGENDA_DAY2: AgendaRow[] = [
     title: "Your Path Forward",
     facilitator: "Renata",
   },
-  { time: "12:15 PM", title: "Break" },
   {
-    time: "12:30 PM",
+    time: "12:15 PM",
+    title: "TBD",
+  },
+  {
+    time: "01:00 PM",
     title: "Design Your AI Networking Agent (teams refine + collaborate with other agents)",
     facilitator: "Alexis",
   },
   {
-    time: "01:35 PM",
+    time: "01:45 PM",
     title: "Close",
     facilitator: "Suyen/Danny",
   },
@@ -179,7 +186,7 @@ const FAQ_ITEMS: { q: string; a: string }[] = [
   },
   {
     q: "What time zone are the sessions in?",
-    a: "All sessions run in Eastern Daylight Time (EDT, UTC−4). Day 1 and Day 2 both start at 9:00 AM EDT and will run for 3.5-5 hours, with multiple 15-minute breaks in between.",
+    a: "All sessions run in Eastern Daylight Time (EDT, UTC−4). Day 1 and Day 2 both start at 9:00 AM EDT. Each day includes one scheduled break plus a few hours of programming; Day 1 ends around 1:30 PM and Day 2 around 1:45 PM (times are approximate until the final run-of-show is locked).",
   },
   {
     q: "Which platform will be used?",
