@@ -121,7 +121,7 @@ const AGENDA_DAY2: AgendaRow[] = [
   },
   {
     time: "09:15 AM",
-    title: "Live Design Challenge: Agentic UX in Action",
+    title: "TBD",
   },
   { time: "10:15 AM", title: "Break (15 min)" },
   {
@@ -140,7 +140,7 @@ const AGENDA_DAY2: AgendaRow[] = [
   },
   {
     time: "12:50 PM",
-    title: "Break the AI — Chaos Challenge",
+    title: "TBD",
   },
   {
     time: "01:35 PM",
