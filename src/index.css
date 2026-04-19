@@ -205,6 +205,7 @@ All colors MUST be HSL for shadcn/ui compatibility; UXSG sketchy tokens are in :
     border: 2px solid #090907;
     border-radius: 6px 10px 4px 8px;
   }
+
   /* Paper-like background texture (DESIGN.md) */
   .paper-bg {
     background-color: var(--uxsg-paper);
@@ -298,5 +299,61 @@ All colors MUST be HSL for shadcn/ui compatibility; UXSG sketchy tokens are in :
     left: -20px;
     border: 1px solid rgba(0, 0, 0, 0.05);
     z-index: 10;
+  }
+
+  /* Summit 2026 testimonial wall — scroll-driven settle-in (inner wrapper; keeps outer rotate/transform) */
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      @keyframes summit-testimonial-settle-0 {
+        0%,
+        12% {
+          opacity: 0;
+          translate: 0 1.125rem;
+        }
+        100% {
+          opacity: 1;
+          translate: 0 0;
+        }
+      }
+      @keyframes summit-testimonial-settle-1 {
+        0%,
+        26% {
+          opacity: 0;
+          translate: 0 1.125rem;
+        }
+        100% {
+          opacity: 1;
+          translate: 0 0;
+        }
+      }
+      @keyframes summit-testimonial-settle-2 {
+        0%,
+        40% {
+          opacity: 0;
+          translate: 0 1.125rem;
+        }
+        100% {
+          opacity: 1;
+          translate: 0 0;
+        }
+      }
+
+      .summit-testimonial-settle-in {
+        animation-duration: auto;
+        animation-timing-function: linear;
+        animation-fill-mode: both;
+        animation-timeline: view(block);
+        animation-range: entry 0% cover 38%;
+      }
+      .summit-testimonial-settle-in--0 {
+        animation-name: summit-testimonial-settle-0;
+      }
+      .summit-testimonial-settle-in--1 {
+        animation-name: summit-testimonial-settle-1;
+      }
+      .summit-testimonial-settle-in--2 {
+        animation-name: summit-testimonial-settle-2;
+      }
+    }
   }
 }
