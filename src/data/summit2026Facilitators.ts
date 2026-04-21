@@ -5,6 +5,7 @@ import VolkanU from "@/assets/Summit2026-VolkanU.png";
 import RenataR from "@/assets/Summit2026-RenataR.png";
 import AlexisB from "@/assets/Summit2026-AlexisB.png";
 import CoreyM from "@/assets/CoreyM-2.png";
+import EstherGJ from "@/assets/Summit2026-EstherGJ.png";
 
 /** Agenda-aligned order: Day 1 appearance, then Day 2 (see Summit2026V1 agenda). */
 export type Summit2026FacilitatorEntry = {
@@ -41,11 +42,19 @@ export const SUMMIT_2026_FACILITATORS: Summit2026FacilitatorEntry[] = [
   },
   {
     name: "Silvia Balu",
-    title: "UX/UI Designer, International UX & AI Community Lead",
+    title: "UX Designer shaping human-centered AI experiences | Community Lead",
     company: null,
-    bio: "Recognized for innovation in design research and for bridging psychology, user experience, and AI to inspire more emotionally intelligent digital products.",
+    bio: "**Designing AI experiences people can understand and trust.**\nI work at the intersection of UX, psychology, and AI, helping teams design systems that are transparent, usable, and in human control. Community Lead at IxDF and UX Support Group, bringing together designers shaping the future of AI.",
     linkedin: "https://www.linkedin.com/in/silviabalu/",
     image: SilviaB,
+  },
+  {
+    name: "Esther Greenfield-Jakar",
+    title: "Product Design Lead & AI Generalist",
+    company: null,
+    bio: "Multidisciplinary product designer with over 10 years of experience leading cross-functional teams and using AI to improve workflows. Esther builds intuitive end-to-end digital experiences for startups, nonprofits, and complex SaaS platforms. She is recognized for her ability to streamline decision-making and unlock new possibilities in product development through agentic workflows that transform raw input into diverse, high-fidelity materials and knowledge.",
+    linkedin: "https://www.linkedin.com/in/esther-g-j/",
+    image: EstherGJ,
   },
   {
     name: "Corey Malone",
@@ -57,9 +66,9 @@ export const SUMMIT_2026_FACILITATORS: Summit2026FacilitatorEntry[] = [
   },
   {
     name: "Volkan Unsal",
-    title: "Senior Front End Engineer",
-    company: "Amazon Web Services (AWS)",
-    bio: "Expert in cloud technology, civic tech, and startup development. Former: Co-Founder, Citiesense; Code for America.",
+    title: "Senior Software Engineer @ Scale AI",
+    company: null,
+    bio: "Expert in cloud technology, civic tech, and startup development. Former: Senior Front End Engineer @ Amazon Web Services (AWS); Co-Founder, Citiesense; Code for America.",
     linkedin: "https://www.linkedin.com/in/volkanunsal/",
     image: VolkanU,
   },
