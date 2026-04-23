@@ -46,10 +46,7 @@ export function Summit2026FacilitatorCard({
 
   useEffect(() => {
     if (bioRef.current) {
-      const lineHeight = parseFloat(getComputedStyle(bioRef.current).lineHeight);
-      const maxHeight = lineHeight * 4;
-      const isOverflowing = bioRef.current.scrollHeight > maxHeight;
-      setShowToggle(isOverflowing);
+      setShowToggle(bioRef.current.scrollHeight > bioRef.current.clientHeight + 1);
     }
   }, [bio]);
 
@@ -101,7 +98,7 @@ export function Summit2026FacilitatorCard({
           <p
             ref={bioRef}
             className={cn(
-              "font-body text-sm text-muted-foreground leading-relaxed transition-all duration-300 inline",
+              "font-body text-sm text-muted-foreground leading-relaxed transition-all duration-300",
               !isExpanded && "line-clamp-4",
             )}
           >

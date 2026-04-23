@@ -68,7 +68,7 @@ const SUMMIT_TESTIMONIALS = [
     quote:
       "A truly great day of learning, getting to know incredible people, and giving deep into AI.",
     name: "Esther Greenfield-Jakar",
-    role: "Product Designer | Product Manager",
+    role: "Product Design Lead | AI Generalist",
     avatarSrc: EstherJ,
   },
   {
